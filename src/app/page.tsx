@@ -1,10 +1,10 @@
-import ConversionWizard from "@/components/ConversionWizard";
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ServicesGrid from "@/components/ServicesGrid";
-import TrackingSection from "@/components/TrackingSection";
-import TrustProof from "@/components/TrustProof";
+import Services from "@/components/Services";
+import Wizard from "@/components/Wizard";
+import Tracking from "@/components/Tracking";
+import Trust from "@/components/Trust";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -12,10 +12,10 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <ServicesGrid />
-        <ConversionWizard />
-        <TrackingSection />
-        <TrustProof />
+        <Services />
+        <Wizard />
+        <Tracking />
+        <Trust />
       </main>
       <Footer />
     </>
