@@ -53,15 +53,21 @@ export default function Trust() {
           {REASONS.map((reason) => (
             <div
               key={reason.title}
-              className="group rounded-2xl border border-zinc-100 bg-white p-6 transition hover:border-zinc-200 hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)]"
+              className="group relative overflow-hidden rounded-2xl border border-zinc-100 bg-gradient-to-br from-white via-zinc-50/60 to-blue-50/40 p-6 transition hover:border-zinc-200 hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)]"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-50 text-zinc-700 transition group-hover:from-zinc-900 group-hover:to-zinc-700 group-hover:text-white">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br from-blue-200/40 via-fuchsia-200/25 to-rose-200/25 blur-2xl"
+              />
+
+              <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-900 via-fuchsia-600 to-rose-500 text-white shadow-sm transition group-hover:shadow-md">
                 <reason.icon className="h-4 w-4" strokeWidth={1.75} />
               </span>
-              <h3 className="mt-4 text-[14.5px] font-semibold tracking-tight text-zinc-900">
+
+              <h3 className="relative mt-4 text-[14.5px] font-semibold tracking-tight text-zinc-900">
                 {reason.title}
               </h3>
-              <p className="mt-2 text-[12.5px] leading-relaxed text-zinc-500">
+              <p className="relative mt-2 text-[12.5px] leading-relaxed text-zinc-500">
                 {reason.line}
               </p>
             </div>

@@ -42,24 +42,29 @@ export default function Services() {
           {SERVICES.map((service) => (
             <article
               key={service.title}
-              className="group relative rounded-2xl border border-zinc-100 bg-white p-6 transition hover:border-zinc-200 hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)]"
+              className="group relative overflow-hidden rounded-2xl border border-zinc-100 bg-gradient-to-br from-white via-zinc-50/60 to-rose-50/40 p-6 transition hover:border-zinc-200 hover:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)]"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-50 text-zinc-700 transition group-hover:from-zinc-900 group-hover:to-zinc-700 group-hover:text-white">
-                <service.icon className="h-5 w-5" strokeWidth={1.5} />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br from-rose-200/40 via-fuchsia-200/30 to-blue-200/30 blur-2xl"
+              />
+
+              <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 via-fuchsia-500 to-blue-900 text-white shadow-sm transition group-hover:shadow-md">
+                <service.icon className="h-5 w-5" strokeWidth={1.75} />
               </span>
 
-              <h3 className="mt-5 text-[15px] font-semibold tracking-tight text-zinc-900">
+              <h3 className="relative mt-5 text-[15px] font-semibold tracking-tight text-zinc-900">
                 {service.title}
               </h3>
-              <p className="mt-2 text-[12.5px] leading-relaxed text-zinc-500">
+              <p className="relative mt-2 text-[12.5px] leading-relaxed text-zinc-500">
                 {service.line}
               </p>
 
-              <ul className="mt-5 space-y-2.5 border-t border-zinc-100 pt-5">
+              <ul className="relative mt-5 space-y-2.5 border-t border-zinc-100 pt-5">
                 {service.points.map((point) => (
                   <li key={point} className="flex items-start gap-2">
                     <Check
-                      className="mt-0.5 h-3 w-3 shrink-0 text-emerald-600"
+                      className="mt-0.5 h-3 w-3 shrink-0 text-rose-500"
                       strokeWidth={2.5}
                     />
                     <span className="text-[12.5px] leading-relaxed text-zinc-600">

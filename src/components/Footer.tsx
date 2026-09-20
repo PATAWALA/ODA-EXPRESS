@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 sm:flex-row sm:justify-between sm:text-left">
         <div className="text-center sm:text-left">
           <div className="flex items-center justify-center gap-2.5 sm:justify-start">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-zinc-900 to-zinc-700 text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 via-fuchsia-500 to-blue-900 text-white shadow-sm">
               <Package className="h-4 w-4" strokeWidth={1.75} />
             </span>
             <span className="text-[13.5px] font-semibold tracking-tight text-zinc-900">
