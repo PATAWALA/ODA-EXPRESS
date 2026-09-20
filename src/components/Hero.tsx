@@ -1,39 +1,48 @@
-import { WHATSAPP } from "@/data/oda";
-
-const LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "Devis", href: "#devis" },
-  { label: "Suivi", href: "#suivi" },
-  { label: "Pourquoi nous", href: "#confiance" },
-];
-
-export default function Header() {
+export default function Hero() {
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <a href="#top" className="text-[14px] font-semibold tracking-tight text-zinc-900">
-          ODA Express
-        </a>
+    <section id="top" className="px-5 py-20 sm:py-28">
+      <div className="mx-auto max-w-3xl text-center">
+        <h1 className="text-[30px] font-semibold leading-tight tracking-tight text-zinc-900 sm:text-[44px]">
+          Vos achats en Chine, livrés en Afrique.
+        </h1>
 
-        <nav className="hidden items-center gap-7 sm:flex">
-          {LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[12.5px] font-medium text-zinc-500 transition hover:text-zinc-900"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <p className="mx-auto mt-5 max-w-lg text-[14.5px] leading-relaxed text-zinc-500">
+          Sourcing, inspection et fret. Un seul interlocuteur, basé physiquement
+          à Guangzhou. Estimez votre coût en 60 secondes, sans intermédiaire.
+        </p>
 
-        <a
-          href="#devis"
-          className="rounded-full bg-zinc-900 px-4 py-2 text-[12.5px] font-medium text-white transition hover:bg-zinc-800"
-        >
-          Démarrer
-        </a>
+        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a
+            href="#devis"
+            className="w-full rounded-full bg-zinc-900 px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-zinc-800 sm:w-auto"
+          >
+            Calculer mon devis
+          </a>
+          <a
+            href="#suivi"
+            className="w-full rounded-full border border-zinc-200 px-6 py-3.5 text-[13.5px] font-medium text-zinc-700 transition hover:border-zinc-300 sm:w-auto"
+          >
+            Suivre un colis
+          </a>
+        </div>
+
+        <div className="mt-20 grid grid-cols-3 divide-x divide-zinc-100 border-y border-zinc-100">
+          <Stat value="+500" label="inspections d'usines" />
+          <Stat value="12" label="pays desservis" />
+          <Stat value="99.4%" label="livraisons à l'heure" />
+        </div>
       </div>
-    </header>
+    </section>
+  );
+}
+
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="px-3 py-6">
+      <p className="text-[24px] font-semibold tracking-tight text-zinc-900">
+        {value}
+      </p>
+      <p className="mt-1.5 text-[11.5px] leading-snug text-zinc-500">{label}</p>
+    </div>
   );
 }
