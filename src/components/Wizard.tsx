@@ -1,22 +1,41 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import {
-  AIR_PER_KG,
-  CITIES,
-  PRODUCTS,
-  SEA_PER_CBM,
-  SERVICES,
-  WHATSAPP,
-  type Service,
-} from "@/data/oda";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { Search, ShieldCheck, Ship } from "lucide-react";
+
+const AIR_PER_KG = 10;
+const SEA_PER_CBM = 180;
+const WHATSAPP = "8619515660197";
+
+const SERVICES = [
+  { id: "sourcing", icon: Search, title: "Sourcing & Achat", line: "Trouver et négocier un fournisseur" },
+  { id: "inspection", icon: ShieldCheck, title: "Inspection Usine", line: "Vérifier la marchandise avant paiement" },
+  { id: "shipping", icon: Ship, title: "Fret & Shipping", line: "Expédier vers l'Afrique" },
+];
+
+const PRODUCTS = [
+  "Téléphones & accessoires",
+  "Électronique",
+  "Pièces auto / moto",
+  "Textile & chaussures",
+  "Mobilier",
+  "Matériel médical",
+  "Machines industrielles",
+  "Autre",
+];
+
+const CITIES = [
+  "Kinshasa", "Lubumbashi", "Douala", "Yaoundé",
+  "Abidjan", "Dakar", "Libreville", "Brazzaville",
+  "Pointe-Noire", "Ouagadougou", "Cotonou", "Lomé",
+];
 
 type Mode = "air" | "sea";
 
 export default function Wizard() {
   const [step, setStep] = useState(1);
-  const [service, setService] = useState<Service | null>(null);
+  const [service, setService] = useState<(typeof SERVICES)[number] | null>(null);
   const [product, setProduct] = useState("");
   const [city, setCity] = useState("");
   const [mode, setMode] = useState<Mode>("air");
@@ -48,35 +67,66 @@ export default function Wizard() {
     step === 3;
 
   return (
-    <section id="devis" className="border-t border-zinc-100 px-5 py-20">
+    <section
+      id="devis"
+      className="relative overflow-hidden border-t border-zinc-100 px-5 py-20"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-white via-zinc-50/60 to-white"
+      />
+
       <div className="mx-auto max-w-md">
         <div className="text-center">
-          <h2 className="text-[22px] font-semibold tracking-tight text-zinc-900 sm:text-[28px]">
+          <p className="text-[11.5px] font-semibold uppercase tracking-[0.16em] text-zinc-400">
+            Devis express
+          </p>
+          <h2 className="mt-3 text-[22px] font-semibold tracking-tight text-zinc-900 sm:text-[28px]">
             Votre demande en 3 étapes
           </h2>
           <p className="mt-3 text-[13.5px] leading-relaxed text-zinc-500">
             60 secondes, aucune inscription. À la fin, votre demande part
-            directement sur WhatsApp.
+            directement sur WhatsApp — déjà qualifiée.
           </p>
         </div>
 
-        <div className="mt-10 flex items-center gap-2">
-          {[1, 2, 3].map((n) => (
-            <div
-              key={n}
-              className={
-                "h-1 flex-1 rounded-full transition " +
-                (step >= n ? "bg-zinc-900" : "bg-zinc-100")
-              }
-            />
-          ))}
+        {/* Étapes */}
+        <div className="mt-10 flex items-center gap-3">
+          {[1, 2, 3].map((n) => {
+            const done = step > n;
+            const active = step === n;
+            return (
+              <div key={n} className="flex flex-1 items-center gap-3">
+                <span
+                  className={
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold transition " +
+                    (done
+                      ? "bg-emerald-600 text-white"
+                      : active
+                        ? "bg-zinc-900 text-white"
+                        : "bg-zinc-100 text-zinc-400")
+                  }
+                >
+                  {done ? <Check className="h-3 w-3" strokeWidth={3} /> : n}
+                </span>
+                {n < 3 && (
+                  <span
+                    className={
+                      "h-px flex-1 transition " +
+                      (done ? "bg-emerald-500" : "bg-zinc-200")
+                    }
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-10">
           {step === 1 && (
             <div className="space-y-3">
               <p className="text-[12.5px] font-medium text-zinc-500">
-                Quel est votre besoin ?
+                Quel est votre besoin principal ?
               </p>
               {SERVICES.map((item) => {
                 const active = service?.id === item.id;
@@ -86,14 +136,17 @@ export default function Wizard() {
                     type="button"
                     onClick={() => setService(item)}
                     className={
-                      "flex w-full items-start gap-4 rounded-2xl border p-4 text-left transition " +
+                      "flex w-full items-start gap-4 rounded-2xl border bg-white p-4 text-left transition " +
                       (active
-                        ? "border-zinc-900 bg-zinc-50"
-                        : "border-zinc-200 hover:border-zinc-300")
+                        ? "border-zinc-900 shadow-sm"
+                        : "border-zinc-200 hover:border-zinc-300 hover:shadow-sm")
                     }
                   >
                     <item.icon
-                      className="mt-0.5 h-4 w-4 shrink-0 text-zinc-700"
+                      className={
+                        "mt-0.5 h-4 w-4 shrink-0 transition " +
+                        (active ? "text-emerald-600" : "text-zinc-700")
+                      }
                       strokeWidth={1.75}
                     />
                     <span>
@@ -160,18 +213,22 @@ export default function Wizard() {
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   placeholder="Ex. 150"
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-3 text-[13.5px] outline-none transition focus:border-zinc-400"
+                  className="w-full rounded-xl border border-zinc-200 bg-white px-3.5 py-3 text-[13.5px] outline-none transition focus:border-zinc-400"
                 />
               </label>
 
-              <div className="rounded-2xl bg-zinc-900 p-6 text-center">
-                <p className="text-[11px] uppercase tracking-wider text-zinc-400">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-800 p-6 text-center">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl"
+                />
+                <p className="relative text-[11px] uppercase tracking-wider text-zinc-400">
                   Estimation
                 </p>
-                <p className="mt-2 text-[28px] font-semibold tracking-tight text-white">
+                <p className="relative mt-2 text-[28px] font-semibold tracking-tight text-white">
                   {estimate ? `$${estimate}` : "—"}
                 </p>
-                <p className="mt-1 text-[11.5px] text-zinc-500">
+                <p className="relative mt-1 text-[11.5px] text-zinc-400">
                   {mode === "air"
                     ? "Transit 5 à 7 jours"
                     : "Transit 35 à 50 jours"}
@@ -185,7 +242,7 @@ export default function Wizard() {
               <button
                 type="button"
                 onClick={() => setStep(step - 1)}
-                className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-5 py-2.5 text-[12.5px] font-medium text-zinc-700 transition hover:border-zinc-300"
+                className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-[12.5px] font-medium text-zinc-700 transition hover:border-zinc-300"
               >
                 <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.75} />
                 Retour
@@ -202,7 +259,7 @@ export default function Wizard() {
                 className={
                   "inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[12.5px] font-medium text-white transition " +
                   (canContinue
-                    ? "bg-zinc-900 hover:bg-zinc-800"
+                    ? "bg-gradient-to-br from-zinc-900 to-zinc-700 shadow-sm hover:shadow-md"
                     : "cursor-not-allowed bg-zinc-300")
                 }
               >
@@ -214,7 +271,7 @@ export default function Wizard() {
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-5 py-2.5 text-[12.5px] font-medium text-white transition hover:bg-emerald-700"
+                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-700 px-5 py-2.5 text-[12.5px] font-medium text-white shadow-sm transition hover:shadow-md"
               >
                 Envoyer sur WhatsApp
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
@@ -279,8 +336,8 @@ function ModeButton({
       className={
         "rounded-xl border py-3 text-[12.5px] font-medium transition " +
         (active
-          ? "border-zinc-900 bg-zinc-900 text-white"
-          : "border-zinc-200 text-zinc-700 hover:border-zinc-300")
+          ? "border-zinc-900 bg-gradient-to-br from-zinc-900 to-zinc-700 text-white shadow-sm"
+          : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300")
       }
     >
       {label}
