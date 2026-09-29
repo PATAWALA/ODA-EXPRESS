@@ -1,3 +1,5 @@
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -32,9 +34,10 @@ export default function ActualitesPage() {
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {ARTICLES.map((article) => (
-                <article
+                <Link
                   key={article.id}
-                  className="group overflow-hidden rounded-2xl border border-zinc-100 bg-white transition hover:-translate-y-0.5 hover:border-zinc-200 hover:shadow-[0_12px_32px_-12px_rgba(10,25,49,0.15)]"
+                  href={`/actualites/${article.id}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white transition hover:-translate-y-0.5 hover:border-zinc-200 hover:shadow-[0_12px_32px_-12px_rgba(10,25,49,0.15)]"
                 >
                   <div className="aspect-[16/10] overflow-hidden bg-zinc-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -45,21 +48,30 @@ export default function ActualitesPage() {
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                     />
                   </div>
-                  <div className="p-5">
+                  <div className="flex flex-1 flex-col p-5">
                     <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide">
                       <span className="rounded-full bg-navy-50 px-2.5 py-1 text-navy-700">
                         {article.category}
                       </span>
                       <span className="text-zinc-400">{article.date}</span>
+                      <span className="text-zinc-300">·</span>
+                      <span className="text-zinc-400">{article.readTime}</span>
                     </div>
                     <h2 className="mt-3 text-[15px] font-bold tracking-tight text-navy-900 group-hover:text-express-600">
                       {article.title}
                     </h2>
-                    <p className="mt-2 line-clamp-3 text-[12.5px] leading-relaxed text-zinc-600">
+                    <p className="mt-2 line-clamp-3 flex-1 text-[12.5px] leading-relaxed text-zinc-600">
                       {article.excerpt}
                     </p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-express-600">
+                      Lire l&apos;article
+                      <ArrowRight
+                        className="h-3 w-3 transition group-hover:translate-x-0.5"
+                        strokeWidth={2.5}
+                      />
+                    </span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
