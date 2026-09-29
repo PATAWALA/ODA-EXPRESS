@@ -9,7 +9,7 @@ export default function Hero() {
     >
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1600&q=80')] bg-cover bg-center"
+        className="absolute inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&q=85')] bg-cover bg-center"
       />
       <div
         aria-hidden
@@ -27,20 +27,21 @@ export default function Hero() {
               <span className="pulse-soft absolute inline-flex h-full w-full rounded-full bg-express-500" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-express-500" />
             </span>
-            Fret maritime · Groupage & conteneur
+            Sourcing · Inspection · Fret maritime
           </div>
 
           <h1 className="fade-up fade-up-d1 mt-7 text-[32px] font-bold leading-[1.1] tracking-tight text-white sm:text-[54px]">
-            Importez de Chine.
+            Nous achetons et vérifions
             <br />
             <span className="bg-gradient-to-r from-white via-white to-express-400 bg-clip-text text-transparent">
-              Livrez en Afrique.
+              pour vous, en Chine.
             </span>
           </h1>
 
           <p className="fade-up fade-up-d2 mt-6 max-w-xl text-[14.5px] leading-relaxed text-navy-100">
-            Catalogue produits, sourcing sécurisé, inspection usine et fret
-            maritime groupé. Un seul interlocuteur à Guangzhou.
+            Vous avez un produit en tête ? Envoyez-nous le lien ou la photo.
+            Nous trouvons le fournisseur, négocions le prix et livrons en
+            Afrique par voie maritime.
           </p>
 
           <div className="fade-up fade-up-d3 mt-9 flex flex-col gap-3 sm:flex-row">
@@ -55,11 +56,11 @@ export default function Hero() {
               />
             </Link>
             <Link
-              href="/maritime"
+              href="/#sur-mesure"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3.5 text-[13.5px] font-semibold text-white backdrop-blur transition hover:bg-white/10"
             >
               <Anchor className="h-3.5 w-3.5" strokeWidth={2} />
-              Calculer mon CBM
+              Envoyer mon lien produit
             </Link>
           </div>
 

@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from "react";
 import BottomNav from "@/components/BottomNav";
+import CustomRequestForm from "@/components/CustomRequestForm";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
+import AboutSection from "@/components/AboutSection";
 import { CATEGORIES, PRODUCTS, type CategoryId } from "@/data/odaData";
 
 type Filter = CategoryId | "all";
@@ -41,15 +43,14 @@ export default function Home() {
                 Catalogue
               </p>
               <h2 className="mt-3 text-[24px] font-bold tracking-tight text-navy-900 sm:text-[32px]">
-                Produits disponibles à l&apos;import
+                Voici les produits que nos clients commandent le plus
               </h2>
               <p className="mt-3 text-[13.5px] leading-relaxed text-zinc-600">
                 Cliquez sur « Je veux ce produit » : votre demande part
-                directement sur WhatsApp, déjà pré-remplie avec la référence.
+                directement sur WhatsApp avec toutes les informations.
               </p>
             </div>
 
-            {/* Filtres + recherche */}
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-wrap gap-2">
                 <FilterButton
@@ -76,7 +77,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Grille */}
             <div className="mt-10">
               {filtered.length === 0 ? (
                 <p className="rounded-2xl border border-zinc-100 bg-zinc-50/50 p-10 text-center text-[13px] text-zinc-500">
@@ -92,6 +92,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <CustomRequestForm />
+        <AboutSection />
       </main>
       <Footer />
       <BottomNav />

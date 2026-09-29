@@ -8,6 +8,8 @@ const NAV = [
   { label: "Accueil", href: "/" },
   { label: "Catalogue", href: "/#catalogue" },
   { label: "Maritime", href: "/maritime" },
+  { label: "Actualités", href: "/actualites" },
+  { label: "À propos", href: "/a-propos" },
 ];
 
 export default function Header() {
@@ -30,7 +32,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}

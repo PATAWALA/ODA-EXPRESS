@@ -1,12 +1,13 @@
 import { Container, Mail, PhoneCall } from "lucide-react";
+import Link from "next/link";
 import { EMAIL, PHONE_DISPLAY, WHATSAPP } from "@/data/odaData";
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-zinc-100 bg-gradient-to-b from-white to-navy-50/50 px-4 py-12 sm:px-6">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 sm:flex-row sm:justify-between sm:text-left">
-        <div className="text-center sm:text-left">
-          <div className="flex items-center justify-center gap-2.5 sm:justify-start">
+      <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-900 via-navy-700 to-express-600 text-white shadow-sm">
               <Container className="h-4 w-4" strokeWidth={1.75} />
             </span>
@@ -19,28 +20,62 @@ export default function Footer() {
               </span>
             </span>
           </div>
-          <p className="mt-3 text-[12px] leading-relaxed text-zinc-500">
+          <p className="mt-4 text-[12px] leading-relaxed text-zinc-500">
             Sourcing · Inspection usine · Fret maritime Chine — Afrique
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-2 sm:items-end">
-          <a
-            href={`https://wa.me/${WHATSAPP}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[12.5px] font-semibold text-navy-900 transition hover:text-express-600"
-          >
-            <PhoneCall className="h-3.5 w-3.5" strokeWidth={1.75} />
-            {PHONE_DISPLAY}
-          </a>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="inline-flex items-center gap-2 text-[12px] text-zinc-500 transition hover:text-navy-900"
-          >
-            <Mail className="h-3.5 w-3.5" strokeWidth={1.75} />
-            {EMAIL}
-          </a>
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-navy-900">
+            Navigation
+          </p>
+          <ul className="mt-3 space-y-2">
+            <li><Link href="/" className="text-[12.5px] text-zinc-500 transition hover:text-navy-900">Accueil</Link></li>
+            <li><Link href="/#catalogue" className="text-[12.5px] text-zinc-500 transition hover:text-navy-900">Catalogue</Link></li>
+            <li><Link href="/maritime" className="text-[12.5px] text-zinc-500 transition hover:text-navy-900">Maritime</Link></li>
+            <li><Link href="/actualites" className="text-[12.5px] text-zinc-500 transition hover:text-navy-900">Actualités</Link></li>
+            <li><Link href="/a-propos" className="text-[12.5px] text-zinc-500 transition hover:text-navy-900">À propos</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-navy-900">
+            Services
+          </p>
+          <ul className="mt-3 space-y-2 text-[12.5px] text-zinc-500">
+            <li>Sourcing 1688 / Taobao</li>
+            <li>Inspection usine</li>
+            <li>Groupage maritime</li>
+            <li>Conteneur complet</li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-navy-900">
+            Contact
+          </p>
+          <ul className="mt-3 space-y-2">
+            <li>
+              <a
+                href={`https://wa.me/${WHATSAPP}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[12.5px] font-semibold text-navy-900 transition hover:text-express-600"
+              >
+                <PhoneCall className="h-3.5 w-3.5" strokeWidth={1.75} />
+                {PHONE_DISPLAY}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="inline-flex items-center gap-2 text-[12px] text-zinc-500 transition hover:text-navy-900"
+              >
+                <Mail className="h-3.5 w-3.5" strokeWidth={1.75} />
+                {EMAIL}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 

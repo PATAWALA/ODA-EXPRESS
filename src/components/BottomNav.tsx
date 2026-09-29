@@ -1,6 +1,6 @@
 "use client";
 
-import { Boxes, Container, Home } from "lucide-react";
+import { Boxes, Container, Home, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,6 +8,7 @@ const ITEMS = [
   { label: "Accueil", href: "/", icon: Home },
   { label: "Catalogue", href: "/#catalogue", icon: Boxes },
   { label: "Maritime", href: "/maritime", icon: Container },
+  { label: "Actus", href: "/actualites", icon: Newspaper },
 ];
 
 export default function BottomNav() {
