@@ -7,27 +7,27 @@ import { useState } from "react";
 import { WHATSAPP } from "@/data/odaData";
 
 const NAV = [
-  { label: "Accueil", href: "/" },
-  { label: "Catalogue", href: "/#catalogue" },
-  { label: "Maritime", href: "/maritime" },
-  { label: "Actualités", href: "/actualites" },
-  { label: "À propos", href: "/a-propos" },
+  { label: "Accueil", href: "/", match: "exact" as const },
+  { label: "Boutique", href: "/catalogue", match: "prefix" as const },
+  { label: "Maritime", href: "/maritime", match: "prefix" as const },
+  { label: "Actualités", href: "/actualites", match: "prefix" as const },
+  { label: "À propos", href: "/a-propos", match: "prefix" as const },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  function isActive(href: string) {
+  function isActive(match: "exact" | "prefix", href: string) {
+    if (match === "exact") return pathname === href;
+    // Évite que "/" matche tout
     if (href === "/") return pathname === "/";
-    if (href.startsWith("/#")) return false;
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(href + "/");
   }
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-900 via-navy-700 to-express-600 text-white shadow-sm">
             <Container className="h-4 w-4" strokeWidth={1.75} />
@@ -42,25 +42,29 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Navigation desktop */}
         <nav className="hidden items-center gap-6 lg:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={
-                "text-[12.5px] font-semibold transition " +
-                (isActive(item.href)
-                  ? "text-navy-900"
-                  : "text-zinc-600 hover:text-navy-900")
-              }
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV.map((item) => {
+            const active = isActive(item.match, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  "relative text-[12.5px] font-semibold transition " +
+                  (active
+                    ? "text-navy-900"
+                    : "text-zinc-500 hover:text-navy-900")
+                }
+              >
+                {item.label}
+                {active && (
+                  <span className="absolute -bottom-1 left-0 right-0 mx-auto h-0.5 w-4 rounded-full bg-express-600" />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* CTA desktop */}
         <div className="hidden items-center gap-2 lg:flex">
           <a
             href={`https://wa.me/${WHATSAPP}`}
@@ -81,14 +85,13 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/#catalogue"
+            href="/catalogue"
             className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-express-500 to-express-700 px-4 py-2 text-[12.5px] font-bold text-white shadow-sm transition hover:shadow-md"
           >
-            Demander un devis
+            Voir la boutique
           </Link>
         </div>
 
-        {/* Bouton menu mobile */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -99,25 +102,27 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Menu mobile */}
       {open && (
         <div className="border-t border-zinc-100 bg-white lg:hidden">
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className={
-                  "rounded-xl px-3 py-2.5 text-[13px] font-semibold transition " +
-                  (isActive(item.href)
-                    ? "bg-navy-50 text-navy-900"
-                    : "text-navy-900 hover:bg-zinc-50")
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV.map((item) => {
+              const active = isActive(item.match, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={
+                    "rounded-xl px-3 py-2.5 text-[13px] font-semibold transition " +
+                    (active
+                      ? "bg-navy-50 text-navy-900"
+                      : "text-navy-900 hover:bg-zinc-50")
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <div className="mt-3 flex flex-col gap-2 border-t border-zinc-100 pt-3">
               <Link
@@ -129,11 +134,11 @@ export default function Header() {
                 Envoyer un produit
               </Link>
               <Link
-                href="/#catalogue"
+                href="/catalogue"
                 onClick={() => setOpen(false)}
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-express-500 to-express-700 px-4 py-3 text-[13px] font-bold text-white"
               >
-                Demander un devis
+                Voir la boutique
               </Link>
             </div>
           </div>
