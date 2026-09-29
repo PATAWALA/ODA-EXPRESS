@@ -1,4 +1,5 @@
 import { Anchor, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -7,20 +8,30 @@ export default function Hero() {
       id="top"
       className="relative overflow-hidden bg-navy-900 px-4 py-20 sm:px-6 sm:py-32"
     >
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&q=85')] bg-cover bg-center"
+      {/* Image de fond optimisée */}
+      <Image
+        src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=2000&q=85"
+        alt="Port de conteneurs"
+        fill
+        priority
+        quality={85}
+        sizes="100vw"
+        className="absolute inset-0 -z-20 object-cover"
       />
+
+      {/* Voile bleu nuit */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-br from-navy-900/95 via-navy-900/85 to-navy-900/70"
       />
+
+      {/* Halo rouge décoratif */}
       <div
         aria-hidden
         className="pointer-events-none absolute right-[-100px] top-[-100px] -z-10 h-[420px] w-[420px] rounded-full bg-express-600/30 blur-3xl"
       />
 
-      <div className="mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <div className="fade-up inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[11.5px] font-semibold text-white/90 backdrop-blur">
             <span className="relative flex h-1.5 w-1.5">
