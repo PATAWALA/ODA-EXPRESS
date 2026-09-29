@@ -1,5 +1,4 @@
 import { Anchor, ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -8,18 +7,15 @@ export default function Hero() {
       id="top"
       className="relative overflow-hidden bg-navy-900 px-4 py-20 sm:px-6 sm:py-32"
     >
-      {/* Image de fond optimisée */}
-      <Image
+      {/* Image de fond — même méthode que les produits */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=2000&q=85"
         alt="Port de conteneurs"
-        fill
-        priority
-        quality={85}
-        sizes="100vw"
-        className="absolute inset-0 -z-20 object-cover"
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
 
-      {/* Voile bleu nuit */}
+      {/* Voile bleu nuit par-dessus */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-br from-navy-900/95 via-navy-900/85 to-navy-900/70"
