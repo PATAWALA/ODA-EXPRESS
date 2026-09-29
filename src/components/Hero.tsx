@@ -5,26 +5,25 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-navy-900 px-4 py-20 sm:px-6 sm:py-32"
+      className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-32"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=2000&q=85')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundColor: "#0a1931",
+      }}
     >
-      {/* Image de fond — même méthode que les produits */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=2000&q=85"
-        alt="Port de conteneurs"
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-      />
-
-      {/* Voile bleu nuit par-dessus */}
+      {/* Voile bleu nuit par-dessus l'image */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-navy-900/95 via-navy-900/85 to-navy-900/70"
+        className="absolute inset-0 bg-gradient-to-br from-navy-900/95 via-navy-900/85 to-navy-900/70"
       />
 
       {/* Halo rouge décoratif */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-100px] top-[-100px] -z-10 h-[420px] w-[420px] rounded-full bg-express-600/30 blur-3xl"
+        className="pointer-events-none absolute right-[-100px] top-[-100px] h-[420px] w-[420px] rounded-full bg-express-600/30 blur-3xl"
       />
 
       <div className="relative mx-auto max-w-6xl">
