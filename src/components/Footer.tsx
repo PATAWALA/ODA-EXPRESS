@@ -4,7 +4,7 @@ import { EMAIL, PHONE_DISPLAY, WHATSAPP } from "@/data/odaData";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-zinc-100 bg-gradient-to-b from-white to-navy-50/50 px-4 py-12 sm:px-6">
+    <footer className="relative hidden overflow-hidden border-t border-zinc-100 bg-gradient-to-b from-white to-navy-50/50 px-4 py-12 sm:px-6 lg:block">
       <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
