@@ -1,10 +1,9 @@
+import BottomNav from "@/components/BottomNav";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import Wizard from "@/components/Wizard";
-import Tracking from "@/components/Tracking";
-import Trust from "@/components/Trust";
-import Footer from "@/components/Footer";
+import MaritimeCalculator from "@/components/MaritimeCalculator";
+import ProductCatalog from "@/components/ProductCatalog";
 
 export default function Home() {
   return (
@@ -12,12 +11,11 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Services />
-        <Wizard />
-        <Tracking />
-        <Trust />
+        <ProductCatalog />
+        <MaritimeCalculator />
       </main>
       <Footer />
+      <BottomNav />
     </>
   );
 }

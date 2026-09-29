@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { CurrencyProvider } from "@/lib/currency";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,15 +9,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ODA EXPRESS — Sourcing Chine & Shipping Afrique | Mr ODA",
+  title: "ODA SOURCES — Import & Export Chine · Afrique | Fret Maritime",
   description:
-    "Sécurisez vos achats en Chine et vos expéditions vers l'Afrique : sourcing fournisseur, inspection qualité en usine et fret aérien ou maritime. Devis qualifié en 60 secondes sur WhatsApp.",
+    "Sourcing sécurisé, inspection usine et fret maritime groupé (CBM) ou conteneur complet. Un seul interlocuteur à Guangzhou pour vos importations vers l'Afrique.",
   keywords: [
     "sourcing Chine Afrique",
-    "import Chine RDC",
-    "fret aérien Guangzhou Kinshasa",
-    "inspection usine Chine",
-    "Mr ODA",
+    "import Chine",
+    "fret maritime CBM",
+    "groupage conteneur",
+    "ODA Sources",
   ],
 };
 
@@ -27,8 +26,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr" className={inter.variable}>
-      <body className="min-h-screen bg-white font-sans text-slate-900 antialiased">
-        <CurrencyProvider>{children}</CurrencyProvider>
+      <body className="min-h-screen bg-white font-sans text-navy-900 antialiased">
+        {children}
       </body>
     </html>
   );

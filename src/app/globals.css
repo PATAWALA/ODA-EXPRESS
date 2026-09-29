@@ -1,44 +1,58 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy-50: #f2f5fa;
+  --color-navy-100: #e3e9f3;
+  --color-navy-200: #c2cee2;
+  --color-navy-300: #92a7c9;
+  --color-navy-400: #5c7aab;
+  --color-navy-500: #3a5a90;
+  --color-navy-700: #0f2c59;
+  --color-navy-800: #0d2447;
+  --color-navy-900: #0a1931;
+
+  --color-express-50: #fef2f5;
+  --color-express-100: #fde3ea;
+  --color-express-500: #d61c4e;
+  --color-express-600: #c01340;
+  --color-express-700: #a00f35;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 5.5rem; /* espace pour la bottom nav */
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
   }
 }
 
-@keyframes pulse-soft {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1.5);
-  }
+@keyframes oda-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up {
-  animation: fade-up 0.7s ease-out both;
+@keyframes oda-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(1.5); }
 }
-.fade-up-delay-1 { animation-delay: 0.1s; }
-.fade-up-delay-2 { animation-delay: 0.2s; }
-.fade-up-delay-3 { animation-delay: 0.3s; }
 
-.pulse-soft {
-  animation: pulse-soft 2s ease-in-out infinite;
-}
+.fade-up { animation: oda-fade-up 0.6s ease-out both; }
+.fade-up-d1 { animation-delay: 0.08s; }
+.fade-up-d2 { animation-delay: 0.16s; }
+.fade-up-d3 { animation-delay: 0.24s; }
+
+.pulse-soft { animation: oda-pulse 2s ease-in-out infinite; }
 
 ::selection {
-  background-color: #09090b;
+  background-color: #0a1931;
   color: #ffffff;
 }
