@@ -1,10 +1,8 @@
 "use client";
 
-import { Container, Menu, PhoneCall, Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { WHATSAPP } from "@/data/odaData";
 
 const NAV = [
   { label: "Accueil", href: "/", match: "exact" as const },
@@ -15,33 +13,36 @@ const NAV = [
 ];
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   function isActive(match: "exact" | "prefix", href: string) {
     if (match === "exact") return pathname === href;
-    // Évite que "/" matche tout
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
   }
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-navy-900 via-navy-700 to-express-600 text-white shadow-sm">
-            <Container className="h-4 w-4" strokeWidth={1.75} />
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.jpeg"
+            alt="ODA SOURCES"
+            className="h-9 w-9 rounded-lg object-cover"
+          />
           <span className="leading-tight">
             <span className="block text-[14.5px] font-bold tracking-tight text-navy-900">
               ODA SOURCES
             </span>
-            <span className="block text-[10.5px] font-medium uppercase tracking-wider text-zinc-500">
+            <span className="hidden text-[10.5px] font-medium uppercase tracking-wider text-zinc-500 sm:block">
               Import & Export
             </span>
           </span>
         </Link>
 
+        {/* Navigation desktop */}
         <nav className="hidden items-center gap-6 lg:flex">
           {NAV.map((item) => {
             const active = isActive(item.match, item.href);
@@ -65,17 +66,8 @@ export default function Header() {
           })}
         </nav>
 
+        {/* CTA desktop */}
         <div className="hidden items-center gap-2 lg:flex">
-          <a
-            href={`https://wa.me/${WHATSAPP}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-navy-900 transition hover:border-navy-700 hover:bg-navy-50"
-          >
-            <PhoneCall className="h-4 w-4" strokeWidth={1.75} />
-          </a>
-
           <Link
             href="/#sur-mesure"
             className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-4 py-2 text-[12.5px] font-semibold text-navy-900 transition hover:border-navy-700 hover:bg-navy-50"
@@ -92,58 +84,14 @@ export default function Header() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Menu"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-navy-900 lg:hidden"
+        {/* CTA mobile : uniquement un bouton stratégique */}
+        <Link
+          href="/catalogue"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-br from-express-500 to-express-700 px-4 py-2 text-[12px] font-bold text-white shadow-sm transition hover:shadow-md lg:hidden"
         >
-          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-        </button>
+          Boutique
+        </Link>
       </div>
-
-      {open && (
-        <div className="border-t border-zinc-100 bg-white lg:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3">
-            {NAV.map((item) => {
-              const active = isActive(item.match, item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={
-                    "rounded-xl px-3 py-2.5 text-[13px] font-semibold transition " +
-                    (active
-                      ? "bg-navy-50 text-navy-900"
-                      : "text-navy-900 hover:bg-zinc-50")
-                  }
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-            <div className="mt-3 flex flex-col gap-2 border-t border-zinc-100 pt-3">
-              <Link
-                href="/#sur-mesure"
-                onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-zinc-200 bg-white px-4 py-3 text-[13px] font-semibold text-navy-900"
-              >
-                <Plus className="h-3.5 w-3.5" strokeWidth={2} />
-                Envoyer un produit
-              </Link>
-              <Link
-                href="/catalogue"
-                onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-express-500 to-express-700 px-4 py-3 text-[13px] font-bold text-white"
-              >
-                Voir la boutique
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
