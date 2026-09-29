@@ -3,10 +3,7 @@ import { EMAIL, PHONE_DISPLAY, WHATSAPP } from "@/data/odaData";
 
 export default function Footer() {
   return (
-    <footer
-      id="demande"
-      className="relative overflow-hidden border-t border-zinc-100 bg-gradient-to-b from-white to-navy-50/50 px-4 py-12 sm:px-6"
-    >
+    <footer className="relative overflow-hidden border-t border-zinc-100 bg-gradient-to-b from-white to-navy-50/50 px-4 py-12 sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 sm:flex-row sm:justify-between sm:text-left">
         <div className="text-center sm:text-left">
           <div className="flex items-center justify-center gap-2.5 sm:justify-start">
@@ -49,8 +46,7 @@ export default function Footer() {
 
       <div className="mx-auto mt-10 max-w-6xl border-t border-zinc-100 pt-6 text-center">
         <p className="text-[11px] text-zinc-400">
-          © {new Date().getFullYear()} ODA SOURCES · Guangzhou, Chine · Réponse
-          sous 24 h
+          © {new Date().getFullYear()} ODA SOURCES · Guangzhou, Chine
         </p>
       </div>
     </footer>

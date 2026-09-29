@@ -9,16 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ODA SOURCES — Import & Export Chine · Afrique | Fret Maritime",
+  title: "ODA SOURCES — Import & Export Chine · Afrique",
   description:
-    "Sourcing sécurisé, inspection usine et fret maritime groupé (CBM) ou conteneur complet. Un seul interlocuteur à Guangzhou pour vos importations vers l'Afrique.",
-  keywords: [
-    "sourcing Chine Afrique",
-    "import Chine",
-    "fret maritime CBM",
-    "groupage conteneur",
-    "ODA Sources",
-  ],
+    "Catalogue produits, sourcing et fret maritime. Commandez vos produits en Chine, nous livrons en Afrique.",
 };
 
 export default function RootLayout({
