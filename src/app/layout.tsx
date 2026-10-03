@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,9 +11,10 @@ const inter = Inter({
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.odasources.com";
 const SITE_NAME = "ODA Sources";
-const SITE_TITLE = "ODA Sources — Import & Export Chine · Afrique";
+const SITE_TITLE =
+  "ODA Sources — Sourcing, Import-Export & Logistique Chine · Afrique";
 const SITE_DESCRIPTION =
-  "ODA Sources — Import & Export. Sourcing, contrôle qualité, fret maritime et logistique internationale entre la Chine et l'Afrique.";
+  "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Sourcing, contrôle qualité, shipping, assistance visa & hôtel, paiement fournisseur. Présence à Hong Kong et en Chine continentale.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -30,15 +30,15 @@ export const metadata: Metadata = {
   keywords: [
     "sourcing Chine Afrique",
     "import Chine",
-    "fret maritime",
+    "export Chine",
     "contrôle qualité usine",
+    "shipping Chine Afrique",
     "ODA Sources",
-    "import export",
+    "sourcing Hong Kong",
     "logistique internationale",
+    "paiement fournisseur Chine",
   ],
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -60,11 +60,7 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     statusBarStyle: "default",
   },
-  formatDetection: {
-    telephone: false,
-    email: false,
-    address: false,
-  },
+  formatDetection: { telephone: false, email: false, address: false },
   openGraph: {
     type: "website",
     url: "/",
@@ -77,7 +73,7 @@ export const metadata: Metadata = {
         url: "/og/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ODA Sources — Import & Export",
+        alt: "ODA Sources — Sourcing & Import-Export Chine · Afrique",
       },
     ],
   },
@@ -122,18 +118,31 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: SITE_NAME,
+              name: "ODA SOURCES IMPORT & EXPORT CO., LIMITED",
+              alternateName: "ODA Sources",
               url: SITE_URL,
               logo: `${SITE_URL}/brand/logo/logo-full-960.png`,
               description: SITE_DESCRIPTION,
-              areaServed: "Afrique",
+              areaServed: ["Afrique", "Chine", "Hong Kong"],
               knowsLanguage: ["fr", "en", "zh"],
+              address: [
+                { "@type": "PostalAddress", addressCountry: "HK" },
+                { "@type": "PostalAddress", addressCountry: "CN" },
+              ],
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  contactType: "customer service",
+                  telephone: "+86-195-1566-0197",
+                  email: "odaxpress10@gmail.com",
+                  availableLanguage: ["fr", "en", "zh"],
+                },
+              ],
             }),
           }}
         />
       </head>
-      <body className="min-h-screen bg-white font-sans text-navy-900 antialiased">
-        <ScrollToTop />
+      <body className="min-h-screen bg-white font-sans text-navy-700 antialiased">
         {children}
       </body>
     </html>
