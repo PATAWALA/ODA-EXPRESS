@@ -82,3 +82,9 @@ body {
   background-color: #01215b;
   color: #ffffff;
 }
+
+#catalogue article,
+#catalogue article img,
+article[id] img {
+  border-radius: 0 !important;
+}
