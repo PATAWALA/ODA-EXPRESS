@@ -1,4 +1,3 @@
-cat > src/app/robots.ts <<'EOF'
 import type { MetadataRoute } from "next";
 
 const SITE_URL =
@@ -17,4 +16,3 @@ export default function robots(): MetadataRoute.Robots {
     host: SITE_URL,
   };
 }
-EOF
