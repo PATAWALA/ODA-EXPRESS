@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { sendWelcomeEmail, sendAdminNotification } from "@/lib/email/send";
 
 export async function POST(request: Request) {
@@ -14,9 +14,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
-    // 1. UPSERT dans Supabase
+    // UPSERT dans Supabase (admin contourne le RLS)
     const { error } = await supabase.from("leads").upsert(
       {
         email,
@@ -31,13 +31,14 @@ export async function POST(request: Request) {
     );
 
     if (error) {
+      console.error("[api/leads] Erreur upsert :", error);
       return NextResponse.json(
         { ok: false, error: error.message },
         { status: 400 },
       );
     }
 
-    // 2. Envoi des emails (en arrière-plan, sans bloquer)
+    // Envoi des emails en arrière-plan
     Promise.all([
       sendWelcomeEmail({
         email,
