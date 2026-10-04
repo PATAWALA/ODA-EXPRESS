@@ -59,9 +59,9 @@ export default function NewArticlePage() {
         {
           name: "cover_image",
           label: "Image de couverture",
-          placeholder:
-            "Collez l'URL d'une image (ou laissez vide pour l'image par défaut)",
-          hint: "Recommandé : 1400 x 800 px",
+          type: "image",
+          prefix: "articles",
+          hint: "Format recommandé : 1400 × 800 px",
         },
         {
           name: "published",

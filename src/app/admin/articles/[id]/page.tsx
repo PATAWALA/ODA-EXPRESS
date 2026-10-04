@@ -71,6 +71,8 @@ export default async function EditArticlePage({
         {
           name: "cover_image",
           label: "Image de couverture",
+          type: "image",
+          prefix: "articles",
           defaultValue: article.cover_image ?? "",
         },
         {

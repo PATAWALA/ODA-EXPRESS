@@ -80,7 +80,8 @@ export default async function EditRealisationPage({
         {
           name: "image_url",
           label: "Image de la réalisation",
-          required: true,
+          type: "image",
+          prefix: "realisations",
           defaultValue: item.image_url,
         },
         {

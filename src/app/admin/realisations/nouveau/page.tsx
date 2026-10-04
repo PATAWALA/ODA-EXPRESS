@@ -61,8 +61,8 @@ export default function NewRealisationPage() {
         {
           name: "image_url",
           label: "Image de la réalisation",
-          required: true,
-          placeholder: "Collez l'URL de l'image",
+          type: "image",
+          prefix: "realisations",
         },
         {
           name: "display_order",

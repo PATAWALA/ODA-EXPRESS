@@ -64,7 +64,8 @@ export default function NewProductPage() {
         {
           name: "image_url",
           label: "Image du produit",
-          placeholder: "Collez l'URL d'une image",
+          type: "image",
+          prefix: "products",
         },
         {
           name: "unit",

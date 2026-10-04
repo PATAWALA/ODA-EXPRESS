@@ -5,6 +5,7 @@ import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import SlugField from "./SlugField";
+import ImageUploader from "./ImageUploader";
 
 interface Field {
   name: string;
@@ -16,7 +17,8 @@ interface Field {
     | "textarea"
     | "select"
     | "checkbox"
-    | "slug";
+    | "slug"
+    | "image";
   placeholder?: string;
   required?: boolean;
   options?: { value: string; label: string }[];
@@ -79,6 +81,19 @@ export default function AdminForm({
 
       <div className="space-y-6 border border-zinc-200 bg-white p-6 sm:p-8">
         {fields.map((field) => {
+          if (field.type === "image") {
+            return (
+              <ImageUploader
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                folder={field.prefix ?? "general"}
+                defaultValue={String(field.defaultValue ?? "")}
+                hint={field.hint}
+              />
+            );
+          }
+
           if (field.type === "slug") {
             return (
               <SlugField

@@ -3,19 +3,8 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  X,
-  ArrowRight,
-  MessageCircle,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-/* ---------- Constantes locales ---------- */
-const WHATSAPP_NUMBER = "8619515660197";
-const CONTACT_PHONE_DISPLAY = "+86 195 1566 0197";
-const CONTACT_EMAIL = "odaxpress10@gmail.com";
 
 interface NavLink {
   href: string;
@@ -40,6 +29,7 @@ interface Props {
 export default function MobileMenu({ open, onClose }: Props) {
   const pathname = usePathname();
 
+  /* Bloquer le scroll du body quand le menu est ouvert */
   useEffect(() => {
     if (!open) return;
     const original = document.body.style.overflow;
@@ -49,6 +39,7 @@ export default function MobileMenu({ open, onClose }: Props) {
     };
   }, [open]);
 
+  /* Fermer avec Échap */
   useEffect(() => {
     if (!open) return;
     function onKey(e: KeyboardEvent) {
@@ -58,6 +49,7 @@ export default function MobileMenu({ open, onClose }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  /* Fermer au changement de route */
   useEffect(() => {
     onClose();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,19 +64,21 @@ export default function MobileMenu({ open, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-[100] lg:hidden">
+      {/* Overlay */}
       <div
         className="absolute inset-0 bg-navy-950/70 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden
       />
 
+      {/* Drawer */}
       <aside
         className="relative flex h-full w-full flex-col bg-white shadow-2xl sm:w-[380px] sm:border-r sm:border-zinc-200"
         style={{
           animation: "oda-slide-in 300ms cubic-bezier(0.32, 0.72, 0, 1) both",
         }}
       >
-        {/* En-tête */}
+        {/* En-tête : logo + fermer */}
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-zinc-200 px-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -118,6 +112,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                       active && "bg-zinc-50/60 -mx-5 px-5",
                     )}
                   >
+                    {/* Numéro */}
                     <span
                       className={cn(
                         "w-6 shrink-0 text-[11px] font-bold uppercase tracking-[0.2em] transition",
@@ -129,6 +124,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                       {String(index + 1).padStart(2, "0")}
                     </span>
 
+                    {/* Titre + sous-titre */}
                     <div className="min-w-0 flex-1">
                       <p
                         className={cn(
@@ -145,6 +141,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                       </p>
                     </div>
 
+                    {/* Flèche */}
                     <ArrowRight
                       className={cn(
                         "h-4 w-4 shrink-0 transition",
@@ -161,7 +158,7 @@ export default function MobileMenu({ open, onClose }: Props) {
           </ul>
         </nav>
 
-        {/* CTA + contacts */}
+        {/* CTA en bas */}
         <div className="shrink-0 border-t border-zinc-200 bg-zinc-50/60 px-5 py-5">
           <Link
             href="/contact"
@@ -174,40 +171,6 @@ export default function MobileMenu({ open, onClose }: Props) {
               strokeWidth={2.5}
             />
           </Link>
-
-          <div className="mt-5 space-y-3">
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 text-[12.5px] font-medium text-zinc-600 transition hover:text-navy-900"
-            >
-              <MessageCircle
-                className="h-3.5 w-3.5 shrink-0 text-express-600"
-                strokeWidth={1.75}
-              />
-              WhatsApp · {CONTACT_PHONE_DISPLAY}
-            </a>
-
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="flex items-center gap-3 text-[12.5px] font-medium text-zinc-600 transition hover:text-navy-900"
-            >
-              <Mail
-                className="h-3.5 w-3.5 shrink-0 text-express-600"
-                strokeWidth={1.75}
-              />
-              {CONTACT_EMAIL}
-            </a>
-
-            <div className="flex items-center gap-3 text-[12.5px] text-zinc-500">
-              <MapPin
-                className="h-3.5 w-3.5 shrink-0 text-express-600"
-                strokeWidth={1.75}
-              />
-              Guangzhou · Hong Kong · Chine
-            </div>
-          </div>
         </div>
       </aside>
     </div>

@@ -235,3 +235,49 @@ export async function deleteUserAction(userId: string) {
   revalidatePath("/admin/parametres");
   return { success: "Utilisateur supprimé." };
 }
+
+/* ---------- UPLOAD D'IMAGES ---------- */
+
+export async function uploadImageAction(formData: FormData) {
+  const file = formData.get("file") as File | null;
+  const folder = String(formData.get("folder") ?? "general");
+
+  if (!file) return { error: "Aucun fichier reçu." };
+
+  // Vérifications
+  if (file.size > 5 * 1024 * 1024) {
+    return { error: "Le fichier dépasse 5 Mo." };
+  }
+
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+  if (!allowed.includes(file.type)) {
+    return { error: "Format non supporté (JPG, PNG, WebP, GIF uniquement)." };
+  }
+
+  const supabase = await createClient();
+
+  // Nom unique : dossiers/date-uuid.ext
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const fileName = `${folder}/${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 9)}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from("media")
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+  if (error) return { error: error.message };
+
+  // URL publique
+  const { data: urlData } = supabase.storage
+    .from("media")
+    .getPublicUrl(fileName);
+
+  return {
+    success: "Image uploadée.",
+    url: urlData.publicUrl,
+  };
+}

@@ -80,6 +80,8 @@ export default async function EditProductPage({
         {
           name: "image_url",
           label: "Image du produit",
+          type: "image",
+          prefix: "products",
           defaultValue: product.image_url ?? "",
         },
         {
