@@ -103,7 +103,7 @@ export default function ServicesSection() {
                     {/* Colonne texte */}
                     <div>
                       <p className="text-[14px] leading-[1.75] text-zinc-600">
-                        {service.description}
+                        {service.intro}
                       </p>
 
                       <ul className="mt-6 space-y-2.5">

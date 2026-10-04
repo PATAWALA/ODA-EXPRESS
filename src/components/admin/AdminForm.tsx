@@ -1,116 +1,171 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowLeft, Save } from "lucide-react";
+import Link from "next/link";
+import { Input, Textarea, Select } from "@/components/ui/Input";
+import SlugField from "./SlugField";
 
-interface SlugFieldProps {
+interface Field {
   name: string;
-  label?: string;
-  prefix: string;
-  defaultValue?: string;
+  label: string;
+  type?:
+    | "text"
+    | "email"
+    | "number"
+    | "textarea"
+    | "select"
+    | "checkbox"
+    | "slug";
+  placeholder?: string;
   required?: boolean;
-  /** Utilisé pour générer le slug automatiquement depuis le titre */
-  titleValue?: string;
+  options?: { value: string; label: string }[];
+  hint?: string;
+  defaultValue?: string | number | boolean;
+  prefix?: string;
 }
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // enlever les accents
-    .replace(/[^a-z0-9\s-]/g, "") // garder lettres, chiffres, espaces, tirets
-    .trim()
-    .replace(/\s+/g, "-") // espaces → tirets
-    .replace(/-+/g, "-"); // tirets multiples → 1 seul
+interface AdminFormProps {
+  title: string;
+  backHref: string;
+  fields: Field[];
+  saveAction: (formData: FormData) => Promise<{ error?: string } | void>;
 }
 
-export default function SlugField({
-  name,
-  label = "Lien de la page",
-  prefix,
-  defaultValue = "",
-  required = false,
-}: SlugFieldProps) {
-  const [value, setValue] = useState(defaultValue);
+export default function AdminForm({
+  title,
+  backHref,
+  fields,
+  saveAction,
+}: AdminFormProps) {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const raw = e.target.value
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
-    setValue(raw);
-  }
-
-  function autoGenerate() {
-    const titleInput = document.querySelector<HTMLInputElement>(
-      'input[name="title"]',
-    );
-    if (titleInput && titleInput.value) {
-      setValue(slugify(titleInput.value));
+  async function handleSubmit(formData: FormData) {
+    setLoading(true);
+    setError(null);
+    const result = await saveAction(formData);
+    if (result?.error) {
+      setError(result.error);
+      setLoading(false);
     }
   }
 
-  const preview = `${prefix}${value || "mon-article"}`;
-
   return (
-    <div>
-      {/* Label + bouton auto */}
-      <div className="mb-2 flex items-center justify-between gap-3">
-        <label
-          htmlFor={name}
-          className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500"
-        >
-          {label}
-        </label>
+    <form action={handleSubmit} className="mx-auto max-w-3xl">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <Link
+            href={backHref}
+            className="inline-flex items-center gap-1.5 text-[11.5px] font-bold uppercase tracking-[0.15em] text-zinc-500 transition hover:text-navy-900"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+            Retour
+          </Link>
+          <h1 className="mt-3 text-[24px] font-bold tracking-tight text-navy-900">
+            {title}
+          </h1>
+        </div>
+
         <button
-          type="button"
-          onClick={autoGenerate}
-          className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-express-600 transition hover:text-express-700"
+          type="submit"
+          disabled={loading}
+          className="inline-flex items-center gap-2 bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
         >
-          Générer depuis le titre
+          <Save className="h-3.5 w-3.5" strokeWidth={2} />
+          {loading ? "Enregistrement..." : "Enregistrer"}
         </button>
       </div>
 
-      {/* Champ avec préfixe visuel */}
-      <div className="flex border border-zinc-200 bg-white focus-within:border-navy-700">
-        {/* Préfixe — affiché en gris, non éditable */}
-        <span className="flex items-center border-r border-zinc-200 bg-zinc-50 px-3 text-[13px] font-mono text-zinc-500">
-          {prefix}
-        </span>
+      <div className="space-y-6 border border-zinc-200 bg-white p-6 sm:p-8">
+        {fields.map((field) => {
+          if (field.type === "slug") {
+            return (
+              <SlugField
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                prefix={field.prefix ?? "/"}
+                defaultValue={String(field.defaultValue ?? "")}
+                required={field.required}
+              />
+            );
+          }
 
-        {/* Input */}
-        <input
-          id={name}
-          name={name}
-          type="text"
-          required={required}
-          value={value}
-          onChange={handleChange}
-          placeholder="mon-article"
-          className="flex-1 px-3 py-3 text-[13.5px] font-mono text-navy-900 outline-none placeholder:text-zinc-300"
-        />
-      </div>
+          if (field.type === "textarea") {
+            return (
+              <Textarea
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                placeholder={field.placeholder}
+                required={field.required}
+                rows={6}
+                defaultValue={String(field.defaultValue ?? "")}
+                hint={field.hint}
+              />
+            );
+          }
 
-      {/* Aperçu du lien final */}
-      <div className="mt-2 flex items-start gap-2 text-[11.5px] text-zinc-500">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400"
-        >
-          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-        </svg>
-        <span className="min-w-0">
-          Lien final :{" "}
-          <code className="break-all font-mono text-navy-900">
-            odasources.com{preview}
-          </code>
-        </span>
+          if (field.type === "select") {
+            return (
+              <Select
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                placeholder={field.placeholder}
+                required={field.required}
+                options={field.options ?? []}
+                defaultValue={String(field.defaultValue ?? "")}
+                hint={field.hint}
+              />
+            );
+          }
+
+          if (field.type === "checkbox") {
+            return (
+              <label
+                key={field.name}
+                className="flex cursor-pointer items-center gap-3"
+              >
+                <input
+                  type="checkbox"
+                  name={field.name}
+                  defaultChecked={Boolean(field.defaultValue)}
+                  className="h-4 w-4 border-zinc-300"
+                />
+                <span className="text-[13.5px] font-medium text-navy-900">
+                  {field.label}
+                </span>
+                {field.hint && (
+                  <span className="text-[11.5px] text-zinc-500">
+                    — {field.hint}
+                  </span>
+                )}
+              </label>
+            );
+          }
+
+          return (
+            <Input
+              key={field.name}
+              name={field.name}
+              type={field.type ?? "text"}
+              label={field.label}
+              placeholder={field.placeholder}
+              required={field.required}
+              defaultValue={String(field.defaultValue ?? "")}
+              hint={field.hint}
+            />
+          );
+        })}
+
+        {error && (
+          <p className="border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
+            {error}
+          </p>
+        )}
       </div>
-    </div>
+    </form>
   );
 }
