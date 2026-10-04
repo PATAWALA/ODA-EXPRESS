@@ -1,13 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 
 export default function WhatsAppFloat() {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  /* Cacher le widget tant que le Hero (#top) est visible */
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero) {
+      // Pas de Hero (page autre que l'accueil) → toujours visible
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(!entry.isIntersecting);
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="fixed bottom-24 right-4 z-40 md:bottom-6 md:right-6">
+    <div
+      className={
+        "fixed bottom-6 right-4 z-40 md:right-6 transition-all duration-500 " +
+        (visible
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none translate-y-6 opacity-0")
+      }
+    >
       {open && (
         <div className="mb-3 w-72 overflow-hidden border border-zinc-200 bg-white shadow-2xl">
           <div className="border-b border-zinc-200 bg-white px-5 py-4">
