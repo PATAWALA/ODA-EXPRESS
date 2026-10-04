@@ -68,10 +68,11 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   options: { value: string; label: string }[];
   placeholder?: string;
+  hint?: string;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, label, options, placeholder, id, ...props }, ref) => {
+  ({ className, label, options, placeholder, hint, id, ...props }, ref) => {
     const inputId = id ?? props.name;
     return (
       <label className="block" htmlFor={inputId}>
@@ -96,6 +97,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             </option>
           ))}
         </select>
+        {hint && <p className="mt-1.5 text-[11px] text-zinc-400">{hint}</p>}
       </label>
     );
   },
