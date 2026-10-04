@@ -7,24 +7,34 @@ export default function WhatsAppFloat() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  /* Cacher le widget tant que le Hero (#top) est visible */
   useEffect(() => {
     const hero = document.getElementById("top");
+
+    // Pas de Hero sur cette page → widget toujours visible
     if (!hero) {
-      // Pas de Hero (page autre que l'accueil) → toujours visible
       setVisible(true);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(!entry.isIntersecting);
-      },
-      { threshold: 0.3 },
-    );
+    // Au chargement : vérifier si le Hero est visible
+    function checkVisibility() {
+      const rect = hero!.getBoundingClientRect();
+      // Le Hero est encore visible si son bas est au-dessus du milieu de l'écran
+      const heroStillVisible = rect.bottom > window.innerHeight * 0.5;
+      setVisible(!heroStillVisible);
+    }
 
-    observer.observe(hero);
-    return () => observer.disconnect();
+    // Vérifier au chargement
+    checkVisibility();
+
+    // Vérifier à chaque scroll
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    window.addEventListener("resize", checkVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", checkVisibility);
+      window.removeEventListener("resize", checkVisibility);
+    };
   }, []);
 
   return (
@@ -35,6 +45,7 @@ export default function WhatsAppFloat() {
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-6 opacity-0")
       }
+      aria-hidden={!visible}
     >
       {open && (
         <div className="mb-3 w-72 overflow-hidden border border-zinc-200 bg-white shadow-2xl">
