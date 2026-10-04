@@ -15,7 +15,7 @@ export default function SectorsSection() {
         />
 
         {/* Grille */}
-        <div className="mx-auto mt-16 grid max-w-6xl gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-16 grid max-w-6xl gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
           {SECTORS.map((sector) => (
             <Link
               key={sector.slug}
@@ -54,7 +54,7 @@ export default function SectorsSection() {
 
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+            className="group inline-flex items-center gap-2 rounded-2xl border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
           >
             Nous consulter
             <ArrowRight

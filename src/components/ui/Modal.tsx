@@ -41,7 +41,7 @@ export function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "relative w-full max-w-md border border-zinc-200 bg-white shadow-2xl",
+          "relative w-full max-w-md rounded-t-2xl border border-zinc-200 bg-white shadow-2xl sm:rounded-2xl",
           className,
         )}
       >

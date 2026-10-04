@@ -52,7 +52,7 @@ export default function GalleryLightbox({
         type="button"
         onClick={onClose}
         aria-label="Fermer"
-        className="absolute right-6 top-6 z-10 flex h-11 w-11 items-center justify-center border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10"
+        className="absolute right-6 top-6 z-10 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10"
       >
         <X className="h-5 w-5" strokeWidth={1.75} />
       </button>
@@ -65,7 +65,7 @@ export default function GalleryLightbox({
           onNavigate((index - 1 + items.length) % items.length);
         }}
         aria-label="Précédent"
-        className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10 sm:left-8"
+        className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10 sm:left-8"
       >
         <ChevronLeft className="h-5 w-5" strokeWidth={2} />
       </button>
@@ -78,7 +78,7 @@ export default function GalleryLightbox({
           onNavigate((index + 1) % items.length);
         }}
         aria-label="Suivant"
-        className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10 sm:right-8"
+        className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 text-white transition hover:border-white/50 hover:bg-white/10 sm:right-8"
       >
         <ChevronRight className="h-5 w-5" strokeWidth={2} />
       </button>

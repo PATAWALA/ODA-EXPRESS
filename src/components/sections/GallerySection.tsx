@@ -54,7 +54,7 @@ export default function GallerySection() {
 
               {/* Badge vidéo */}
               {item.type === "video" && (
-                <span className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center border border-white/30 bg-navy-950/70 text-white backdrop-blur">
+                <span className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-2xl border border-white/30 bg-navy-950/70 text-white backdrop-blur">
                   <Play className="h-3.5 w-3.5" fill="currentColor" />
                 </span>
               )}
@@ -70,7 +70,7 @@ export default function GallerySection() {
 
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+            className="group inline-flex items-center gap-2 rounded-2xl border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
           >
             Se faire accompagner
             <ArrowRight

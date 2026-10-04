@@ -43,7 +43,7 @@ export default async function AdminArticlesPage() {
 
         <Link
           href="/admin/articles/nouveau"
-          className="group inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+          className="group inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
         >
           <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
           Nouvel article
@@ -52,7 +52,7 @@ export default async function AdminArticlesPage() {
 
       {/* Liste */}
       {!articles || articles.length === 0 ? (
-        <div className="border border-zinc-200 bg-white px-6 py-16 text-center">
+        <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-16 text-center">
           <FileText
             className="mx-auto h-8 w-8 text-zinc-300"
             strokeWidth={1.5}
@@ -66,14 +66,14 @@ export default async function AdminArticlesPage() {
           </p>
           <Link
             href="/admin/articles/nouveau"
-            className="mt-6 inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
             Créer le premier article
           </Link>
         </div>
       ) : (
-        <div className="border border-zinc-200 bg-white">
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           {/* En-tête tableau (desktop) */}
           <div className="hidden border-b border-zinc-200 bg-zinc-50/60 px-6 py-3 text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-500 lg:grid lg:grid-cols-[1fr_140px_120px_120px_140px] lg:gap-4">
             <div>Article</div>
@@ -101,7 +101,7 @@ export default async function AdminArticlesPage() {
 
                 {/* Catégorie */}
                 <div>
-                  <span className="inline-flex border border-zinc-200 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-zinc-600">
+                  <span className="inline-flex rounded-2xl border border-zinc-200 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-zinc-600">
                     {article.category}
                   </span>
                 </div>
@@ -130,14 +130,14 @@ export default async function AdminArticlesPage() {
                     href={`/actualites/${article.slug}`}
                     target="_blank"
                     title="Voir sur le site"
-                    className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
+                    className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
                   >
                     <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </Link>
                   <Link
                     href={`/admin/articles/${article.id}`}
                     title="Modifier"
-                    className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
+                    className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
                   >
                     <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </Link>

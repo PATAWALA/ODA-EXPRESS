@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Lock, Mail, ArrowRight } from "lucide-react";
+import { Lock, Mail, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { loginAction } from "../actions";
 
 export default function AdminLoginPage() {
@@ -10,6 +10,7 @@ export default function AdminLoginPage() {
   const redirectTo = params.get("redirect") ?? "/admin";
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -23,9 +24,19 @@ export default function AdminLoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12">
-      <div className="w-full max-w-md border border-zinc-200 bg-white p-8 shadow-sm">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
         <div className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center border border-express-600 bg-express-600 text-white">
+          {/* Logo ODA — variante navbar */}
+          <div className="flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/navbar/logo-navbar@3x.png"
+              alt="ODA Sources — Import & Export"
+              className="h-auto max-h-12 w-[180px] object-contain"
+            />
+          </div>
+
+          <div className="mx-auto mt-8 flex h-14 w-14 items-center justify-center rounded-2xl border border-express-600 bg-express-600 text-white">
             <Lock className="h-6 w-6" strokeWidth={1.75} />
           </div>
           <h1 className="mt-6 text-[22px] font-bold tracking-tight text-navy-900">
@@ -51,7 +62,7 @@ export default function AdminLoginPage() {
                 name="email"
                 required
                 placeholder="votre@email.com"
-                className="w-full border border-zinc-200 bg-white py-3 pl-10 pr-4 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-10 pr-4 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
               />
             </div>
           </label>
@@ -66,19 +77,36 @@ export default function AdminLoginPage() {
                 strokeWidth={1.75}
               />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 required
                 placeholder="••••••••"
-                className="w-full border border-zinc-200 bg-white py-3 pl-10 pr-4 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-10 pr-12 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={
+                  showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"
+                }
+                title={
+                  showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"
+                }
+                className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" strokeWidth={1.75} />
+                ) : (
+                  <Eye className="h-4 w-4" strokeWidth={1.75} />
+                )}
+              </button>
             </div>
           </label>
 
           <input type="hidden" name="redirect" value={redirectTo} />
 
           {error && (
-            <p className="border border-red-200 bg-red-50 px-3 py-2 text-[12px] text-red-700">
+            <p className="rounded-2xl border border-red-200 bg-red-50 px-3 py-2 text-[12px] text-red-700">
               {error}
             </p>
           )}
@@ -86,7 +114,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex w-full items-center justify-center gap-2 bg-navy-900 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800 disabled:opacity-60"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-navy-900 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800 disabled:opacity-60"
           >
             {loading ? "Connexion..." : "Se connecter"}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -96,4 +124,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-

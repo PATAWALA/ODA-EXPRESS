@@ -91,7 +91,7 @@ export default function MobileMenu({ open, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Fermer le menu"
-            className="flex h-9 w-9 items-center justify-center border border-zinc-200 text-zinc-500 transition hover:border-navy-900 hover:text-navy-900"
+            className="flex h-9 w-9 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-500 transition hover:border-navy-900 hover:text-navy-900"
           >
             <X className="h-4 w-4" strokeWidth={1.75} />
           </button>
@@ -163,7 +163,7 @@ export default function MobileMenu({ open, onClose }: Props) {
           <Link
             href="/contact"
             onClick={onClose}
-            className="group inline-flex w-full items-center justify-between gap-3 bg-express-600 px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700"
+            className="group inline-flex w-full items-center justify-between gap-3 rounded-2xl bg-express-600 px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700"
           >
             Se faire accompagner
             <ArrowRight

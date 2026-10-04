@@ -137,9 +137,9 @@ function UserMenu({ email }: { email: string }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-3 rounded border border-zinc-200 bg-white px-3 py-2 transition hover:bg-zinc-50"
+        className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white px-3 py-2 transition hover:bg-zinc-50"
       >
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-navy-900 text-[11px] font-bold text-white">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-navy-900 text-[11px] font-bold text-white">
           {initial}
         </span>
         <span className="hidden min-w-0 text-left lg:block">
@@ -160,7 +160,7 @@ function UserMenu({ email }: { email: string }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-[calc(100%+6px)] z-50 w-64 overflow-hidden rounded border border-zinc-200 bg-white shadow-xl">
+        <div className="absolute right-0 top-[calc(100%+6px)] z-50 w-64 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl">
           <div className="border-b border-zinc-200 px-4 py-3">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
               Compte
@@ -174,7 +174,7 @@ function UserMenu({ email }: { email: string }) {
             <Link
               href="/admin/parametres"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded px-3 py-2.5 text-[12.5px] font-medium text-zinc-600 transition hover:bg-zinc-50 hover:text-navy-900"
+              className="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[12.5px] font-medium text-zinc-600 transition hover:bg-zinc-50 hover:text-navy-900"
             >
               <Settings
                 className="h-3.5 w-3.5 shrink-0"
@@ -187,7 +187,7 @@ function UserMenu({ email }: { email: string }) {
               href="/"
               target="_blank"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded px-3 py-2.5 text-[12.5px] font-medium text-zinc-600 transition hover:bg-zinc-50 hover:text-navy-900"
+              className="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[12.5px] font-medium text-zinc-600 transition hover:bg-zinc-50 hover:text-navy-900"
             >
               <ExternalLink
                 className="h-3.5 w-3.5 shrink-0"
@@ -199,7 +199,7 @@ function UserMenu({ email }: { email: string }) {
             <form action={logoutAction}>
               <button
                 type="submit"
-                className="flex w-full items-center gap-3 rounded px-3 py-2.5 text-left text-[12.5px] font-medium text-zinc-600 transition hover:bg-red-50 hover:text-red-600"
+                className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-[12.5px] font-medium text-zinc-600 transition hover:bg-red-50 hover:text-red-600"
               >
                 <LogOut className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
                 Se déconnecter
@@ -291,7 +291,7 @@ export default function AdminShell({
             type="button"
             onClick={toggleCollapsed}
             title={collapsed ? "Déployer" : "Replier"}
-            className="flex h-8 w-8 items-center justify-center rounded text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
+            className="flex h-8 w-8 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
           >
             {collapsed ? (
               <PanelLeftOpen className="h-4 w-4" strokeWidth={1.75} />
@@ -332,7 +332,7 @@ export default function AdminShell({
                         href={item.href}
                         title={collapsed ? item.label : undefined}
                         className={cn(
-                          "group relative flex items-center rounded transition",
+                          "group relative flex items-center rounded-2xl transition",
                           collapsed
                             ? "justify-center px-0 py-2.5"
                             : "gap-3 px-3 py-2.5",
@@ -362,7 +362,7 @@ export default function AdminShell({
                         )}
 
                         {collapsed && (
-                          <span className="pointer-events-none absolute left-full z-50 ml-2 hidden whitespace-nowrap rounded border border-zinc-200 bg-white px-2.5 py-1.5 text-[11.5px] font-semibold text-navy-900 opacity-0 shadow-lg transition group-hover:opacity-100 lg:block">
+                          <span className="pointer-events-none absolute left-full z-50 ml-2 hidden whitespace-nowrap rounded-2xl border border-zinc-200 bg-white px-2.5 py-1.5 text-[11.5px] font-semibold text-navy-900 opacity-0 shadow-lg transition group-hover:opacity-100 lg:block">
                             {item.label}
                           </span>
                         )}
@@ -387,7 +387,7 @@ export default function AdminShell({
             target="_blank"
             title={collapsed ? "Voir le site" : undefined}
             className={cn(
-              "group relative flex items-center rounded transition",
+              "group relative flex items-center rounded-2xl transition",
               collapsed ? "justify-center py-2.5" : "gap-2.5 px-3 py-2.5",
               "text-[12px] font-medium text-zinc-500 hover:bg-zinc-50 hover:text-navy-900",
             )}
@@ -395,7 +395,7 @@ export default function AdminShell({
             <ExternalLink className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
             {!collapsed && <span>Voir le site public</span>}
             {collapsed && (
-              <span className="pointer-events-none absolute left-full z-50 ml-2 hidden whitespace-nowrap rounded border border-zinc-200 bg-white px-2.5 py-1.5 text-[11.5px] font-semibold text-navy-900 opacity-0 shadow-lg transition group-hover:opacity-100 lg:block">
+              <span className="pointer-events-none absolute left-full z-50 ml-2 hidden whitespace-nowrap rounded-2xl border border-zinc-200 bg-white px-2.5 py-1.5 text-[11.5px] font-semibold text-navy-900 opacity-0 shadow-lg transition group-hover:opacity-100 lg:block">
                 Voir le site public
               </span>
             )}
@@ -448,9 +448,9 @@ export default function AdminShell({
               <input
                 type="text"
                 placeholder="Rechercher un article, un produit, une demande..."
-                className="h-10 w-full rounded border border-zinc-200 bg-zinc-50/50 pl-10 pr-14 text-[12.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700 focus:bg-white"
+                className="h-10 w-full rounded-2xl border border-zinc-200 bg-zinc-50/50 pl-10 pr-14 text-[12.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700 focus:bg-white"
               />
-              <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-zinc-200 bg-white px-1.5 py-0.5 text-[9.5px] font-bold text-zinc-400">
+              <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded-2xl border border-zinc-200 bg-white px-1.5 py-0.5 text-[9.5px] font-bold text-zinc-400">
                 ⌘K
               </kbd>
             </div>
@@ -515,13 +515,13 @@ export default function AdminShell({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-1 flex-col items-center justify-center gap-1 rounded px-1 py-1.5 text-[10px] font-semibold transition",
+                  "flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-1.5 text-[10px] font-semibold transition",
                   active ? "text-navy-900" : "text-zinc-400",
                 )}
               >
                 <span
                   className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded transition",
+                    "flex h-9 w-9 items-center justify-center rounded-2xl transition",
                     active
                       ? "bg-navy-900 text-white"
                       : "bg-transparent text-zinc-500",

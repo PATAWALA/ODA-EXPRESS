@@ -61,8 +61,8 @@ export default function ContactForm() {
 
   if (state === "done") {
     return (
-      <div className="border border-emerald-200 bg-emerald-50 p-8 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center border border-emerald-300 bg-white">
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300 bg-white">
           <CheckCircle2
             className="h-6 w-6 text-emerald-700"
             strokeWidth={1.75}
@@ -82,7 +82,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border border-zinc-200 bg-white p-6 shadow-[0_1px_2px_rgba(1,18,52,0.04)] sm:p-8"
+      className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-[0_1px_2px_rgba(1,18,52,0.04)] sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
@@ -132,7 +132,7 @@ export default function ContactForm() {
       </div>
 
       {error && (
-        <p className="mt-5 border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] font-medium text-amber-800">
+        <p className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] font-medium text-amber-800">
           {error}
         </p>
       )}

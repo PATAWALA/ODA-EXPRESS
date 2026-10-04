@@ -77,7 +77,7 @@ export default function ProductRequestCTA() {
           <div className="mt-14 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 bg-express-600 px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 sm:w-64"
+              className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-express-600 px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 sm:w-64"
             >
               Envoyer ma demande
               <ArrowRight
@@ -90,7 +90,7 @@ export default function ProductRequestCTA() {
               href="https://wa.me/8619515660197?text=Bonjour%20ODA%20SOURCES%2C%20je%20recherche%20un%20produit%20sp%C3%A9cifique."
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 border border-emerald-600 bg-white px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-emerald-700 transition hover:bg-emerald-50 sm:w-64"
+              className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-600 bg-white px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-emerald-700 transition hover:bg-emerald-50 sm:w-64"
             >
               <MessageCircle className="h-4 w-4" strokeWidth={2} />
               WhatsApp

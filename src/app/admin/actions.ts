@@ -49,11 +49,57 @@ export async function saveArticleAction(id: string | null, formData: FormData) {
   if (!payload.slug || !payload.title || !payload.excerpt || !payload.content)
     return { error: "Slug, titre, résumé et contenu sont obligatoires." };
 
+  // Détecter si c'est une nouvelle publication
+  let isNewPublication = !id; // Création + publié immédiatement
+
   let error;
-  if (id) ({ error } = await supabase.from("articles").update(payload).eq("id", id));
-  else ({ error } = await supabase.from("articles").insert(payload));
+  if (id) {
+    // Vérifier l'état publié actuel avant la mise à jour
+    const { data: existing } = await supabase
+      .from("articles")
+      .select("published")
+      .eq("id", id)
+      .single();
+
+    // Nouvelle publication si :
+    // - Il était brouillon et on le publie
+    const wasDraft = existing?.published === false;
+    isNewPublication = wasDraft && payload.published;
+
+    ({ error } = await supabase.from("articles").update(payload).eq("id", id));
+  } else {
+    ({ error } = await supabase.from("articles").insert(payload));
+  }
 
   if (error) return { error: error.message };
+
+  // Envoyer l'article à tous les leads (uniquement si nouvelle publication)
+  if (isNewPublication && payload.published) {
+    try {
+      const admin = createAdminClient();
+      const { data: leads } = await admin
+        .from("leads")
+        .select("email")
+        .not("email", "is", null);
+
+      if (leads && leads.length > 0) {
+        // Envoyer en arrière-plan sans bloquer la redirection
+        sendNewArticleEmail({
+          recipients: leads.map((l) => l.email),
+          title: payload.title,
+          excerpt: payload.excerpt,
+          slug: payload.slug,
+          imageUrl: payload.cover_image,
+        }).catch((err) => {
+          console.error("[saveArticleAction] Erreur envoi email :", err);
+        });
+      }
+    } catch (err) {
+      console.error("[saveArticleAction] Erreur récupération leads :", err);
+      // On ne bloque pas l'enregistrement si l'envoi échoue
+    }
+  }
+
   revalidatePath("/admin/articles");
   revalidatePath("/actualites");
   redirect("/admin/articles");
@@ -85,14 +131,71 @@ export async function saveProductAction(id: string | null, formData: FormData) {
     updated_at: new Date().toISOString(),
   };
 
-  if (!payload.slug || !payload.title || !payload.category || !payload.short_description)
-    return { error: "Slug, titre, catégorie et description courte sont obligatoires." };
+  if (
+    !payload.slug ||
+    !payload.title ||
+    !payload.category ||
+    !payload.short_description
+  )
+    return {
+      error: "Slug, titre, catégorie et description courte sont obligatoires.",
+    };
+
+  // Détecter si c'est une nouveauté à annoncer
+  let isNewFeaturedProduct = false;
 
   let error;
-  if (id) ({ error } = await supabase.from("products").update(payload).eq("id", id));
-  else ({ error } = await supabase.from("products").insert(payload));
+  if (id) {
+    // Vérifier l'état actuel avant la mise à jour
+    const { data: existing } = await supabase
+      .from("products")
+      .select("published, featured")
+      .eq("id", id)
+      .single();
+
+    // Nouveauté si :
+    // - Il était brouillon/non-featured et devient publié ET featured
+    const wasNotFeatured =
+      existing?.published === false || existing?.featured === false;
+    isNewFeaturedProduct =
+      wasNotFeatured && payload.published && payload.featured;
+
+    ({ error } = await supabase.from("products").update(payload).eq("id", id));
+  } else {
+    // Nouveau produit publié ET featured
+    isNewFeaturedProduct = payload.published && payload.featured;
+
+    ({ error } = await supabase.from("products").insert(payload));
+  }
 
   if (error) return { error: error.message };
+
+  // Envoyer le produit à tous les leads (uniquement si nouveauté mise en avant)
+  if (isNewFeaturedProduct) {
+    try {
+      const admin = createAdminClient();
+      const { data: leads } = await admin
+        .from("leads")
+        .select("email")
+        .not("email", "is", null);
+
+      if (leads && leads.length > 0) {
+        // Envoyer en arrière-plan sans bloquer la redirection
+        sendNewArticleEmail({
+          recipients: leads.map((l) => l.email),
+          title: `Nouveau produit : ${payload.title}`,
+          excerpt: payload.short_description,
+          slug: payload.slug,
+          imageUrl: payload.image_url,
+        }).catch((err) => {
+          console.error("[saveProductAction] Erreur envoi email :", err);
+        });
+      }
+    } catch (err) {
+      console.error("[saveProductAction] Erreur récupération leads :", err);
+    }
+  }
+
   revalidatePath("/admin/produits");
   revalidatePath("/produits");
   redirect("/admin/produits");

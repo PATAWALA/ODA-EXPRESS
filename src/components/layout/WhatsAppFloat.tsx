@@ -48,7 +48,7 @@ export default function WhatsAppFloat() {
       aria-hidden={!visible}
     >
       {open && (
-        <div className="mb-3 w-72 overflow-hidden border border-zinc-200 bg-white shadow-2xl">
+        <div className="mb-3 w-72 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl">
           <div className="border-b border-zinc-200 bg-white px-5 py-4">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-express-600">
               ODA SOURCES
@@ -68,7 +68,7 @@ export default function WhatsAppFloat() {
               href="https://wa.me/8619515660197?text=Bonjour%20ODA%20SOURCES%2C%20je%20souhaite%20discuter%20de%20mon%20projet."
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex w-full items-center justify-center gap-2 bg-emerald-600 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
             >
               <Send className="h-3.5 w-3.5" strokeWidth={2} />
               Ouvrir WhatsApp
@@ -81,7 +81,7 @@ export default function WhatsAppFloat() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Fermer" : "Contacter sur WhatsApp"}
-        className="ml-auto flex h-14 w-14 items-center justify-center bg-emerald-600 text-white shadow-xl transition hover:bg-emerald-700"
+        className="ml-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-xl transition hover:bg-emerald-700"
       >
         {open ? (
           <X className="h-6 w-6" strokeWidth={2} />

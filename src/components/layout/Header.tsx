@@ -35,14 +35,14 @@ export default function Header() {
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Ouvrir le menu"
-            className="flex h-10 w-10 items-center justify-center rounded border border-zinc-200 text-navy-900 transition hover:border-navy-900 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900 transition hover:border-navy-900 lg:hidden"
           >
             <Menu className="h-4 w-4" strokeWidth={2} />
           </button>
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded bg-express-600 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:hidden"
+            className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:hidden"
           >
             Se faire accompagner
           </Link>
@@ -78,7 +78,7 @@ export default function Header() {
 
           <Link
             href="/contact"
-            className="group hidden items-center gap-2 rounded bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:inline-flex"
+            className="group hidden items-center gap-2 rounded-2xl bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:inline-flex"
           >
             Se faire accompagner
             <ArrowRight

@@ -99,11 +99,3 @@ body {
   background-color: #01215b;
   color: #ffffff;
 }
-
-/* ---------- Correction coins droits sur les cartes ---------- */
-
-#catalogue article,
-#catalogue article img,
-article[id] img {
-  border-radius: 0 !important;
-}

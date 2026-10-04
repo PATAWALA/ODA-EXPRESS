@@ -68,7 +68,7 @@ export default function SlugField({
         </button>
       </div>
 
-      <div className="flex overflow-hidden rounded border border-zinc-200 bg-white focus-within:border-navy-700">
+      <div className="flex overflow-hidden rounded-2xl border border-zinc-200 bg-white focus-within:border-navy-700">
         <span className="flex items-center border-r border-zinc-200 bg-zinc-50 px-3 font-mono text-[13px] text-zinc-500">
           {prefix}
         </span>

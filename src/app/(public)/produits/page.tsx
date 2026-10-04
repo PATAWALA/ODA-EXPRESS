@@ -60,7 +60,7 @@ export default function ProduitsPage() {
                 personnalisable selon vos besoins.
               </p>
             </div>
-            <div className="relative aspect-[5/4] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=85"
@@ -86,7 +86,7 @@ export default function ProduitsPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Rechercher un produit ou une catégorie..."
-                className="w-full border border-zinc-200 bg-white py-3 pl-11 pr-4 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-11 pr-4 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
               />
             </div>
 
@@ -97,7 +97,7 @@ export default function ProduitsPage() {
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
                   className={cn(
-                    "border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition",
+                    "rounded-2xl border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition",
                     activeCategory === cat.id
                       ? "border-navy-900 bg-navy-900 text-white"
                       : "border-zinc-200 bg-white text-zinc-600 hover:border-navy-300 hover:text-navy-900",
@@ -111,11 +111,11 @@ export default function ProduitsPage() {
 
           <div className="mt-14">
             {loading ? (
-              <p className="border border-zinc-200 bg-white p-10 text-center text-[13.5px] text-zinc-500">
+              <p className="rounded-2xl border border-zinc-200 bg-white p-10 text-center text-[13.5px] text-zinc-500">
                 Chargement...
               </p>
             ) : filtered.length === 0 ? (
-              <div className="border border-zinc-200 bg-zinc-50/50 p-10 text-center">
+              <div className="rounded-2xl border border-zinc-200 bg-zinc-50/50 p-10 text-center">
                 <p className="text-[14px] font-semibold text-navy-900">
                   Aucun produit ne correspond à votre recherche.
                 </p>
@@ -133,7 +133,7 @@ export default function ProduitsPage() {
                 </ButtonLink>
               </div>
             ) : (
-              <div className="grid gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((product) => (
                   <article
                     key={product.id}
@@ -150,7 +150,7 @@ export default function ProduitsPage() {
                           className="h-full w-full object-cover"
                         />
                         <div className="absolute left-3 top-3">
-                          <span className="border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
+                          <span className="rounded-2xl border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
                             {product.category}
                           </span>
                         </div>

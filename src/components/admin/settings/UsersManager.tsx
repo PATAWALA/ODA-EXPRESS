@@ -45,7 +45,7 @@ export default function UsersManager({ users }: { users: UserItem[] }) {
         <button
           type="button"
           onClick={() => setShowForm((v) => !v)}
-          className="inline-flex items-center gap-2 bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+          className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
         >
           {showForm ? (
             <>
@@ -65,7 +65,7 @@ export default function UsersManager({ users }: { users: UserItem[] }) {
       {showForm && <CreateUserForm onDone={() => setShowForm(false)} />}
 
       {/* Liste */}
-      <div className="border border-zinc-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
         <ul className="divide-y divide-zinc-100">
           {users.map((u) => (
             <UserRow key={u.id} user={u} />
@@ -170,11 +170,11 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
   }
 
   return (
-    <div className="border border-zinc-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
       {/* En-tête */}
       <div className="border-b border-zinc-200 px-6 py-5">
         <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center bg-navy-900 text-white">
+          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-navy-900 text-white">
             <UserPlus className="h-4 w-4" strokeWidth={1.75} />
           </span>
           <div>
@@ -220,7 +220,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
                 placeholder="Ex. Jean Mbala"
-                className="w-full border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
               />
             </label>
 
@@ -234,7 +234,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
                 onChange={(e) => update("email", e.target.value)}
                 required
                 placeholder="utilisateur@exemple.com"
-                className="w-full border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
               />
             </label>
           </div>
@@ -250,7 +250,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
 
           {/* Erreur */}
           {state.error && (
-            <div className="flex items-start gap-2.5 border border-red-200 bg-red-50 px-4 py-3">
+            <div className="flex items-start gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
               <AlertCircle
                 className="mt-0.5 h-4 w-4 shrink-0 text-red-600"
                 strokeWidth={2}
@@ -262,7 +262,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+              className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
             >
               Continuer
               <span className="text-[14px] leading-none">→</span>
@@ -275,7 +275,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
       {step === 2 && (
         <form onSubmit={handleConfirm} className="space-y-4 p-6">
           {/* Récap étape 1 */}
-          <div className="border border-zinc-200 bg-zinc-50/60 p-4">
+          <div className="rounded-2xl border border-zinc-200 bg-zinc-50/60 p-4">
             <p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-zinc-400">
               Récapitulatif
             </p>
@@ -306,7 +306,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
 
           {/* Erreur */}
           {state.error && (
-            <div className="flex items-start gap-2.5 border border-red-200 bg-red-50 px-4 py-3">
+            <div className="flex items-start gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
               <AlertCircle
                 className="mt-0.5 h-4 w-4 shrink-0 text-red-600"
                 strokeWidth={2}
@@ -317,7 +317,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
 
           {/* Succès */}
           {state.success && (
-            <div className="flex items-start gap-2.5 border border-emerald-200 bg-emerald-50 px-4 py-3">
+            <div className="flex items-start gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
               <Check
                 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
                 strokeWidth={2.5}
@@ -331,7 +331,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
               type="button"
               onClick={cancel}
               disabled={state.loading}
-              className="inline-flex items-center justify-center border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
+              className="inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
             >
               Annuler
             </button>
@@ -339,7 +339,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
             <button
               type="submit"
               disabled={state.loading}
-              className="inline-flex items-center gap-2 bg-express-600 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
             >
               <UserPlus className="h-3.5 w-3.5" strokeWidth={2} />
               {state.loading ? "Création..." : "Créer l'utilisateur"}
@@ -368,7 +368,7 @@ function StepBadge({
     <div className="flex items-center gap-2">
       <span
         className={
-          "flex h-6 w-6 shrink-0 items-center justify-center text-[11px] font-bold transition " +
+          "flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl text-[11px] font-bold transition " +
           (done
             ? "bg-emerald-600 text-white"
             : active
@@ -420,7 +420,7 @@ function UserRow({ user }: { user: UserItem }) {
   return (
     <>
       <li className="flex items-center gap-4 px-6 py-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-zinc-100 text-[13px] font-bold text-navy-900">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-zinc-100 text-[13px] font-bold text-navy-900">
           {initial}
         </span>
 
@@ -430,7 +430,7 @@ function UserRow({ user }: { user: UserItem }) {
               {user.name || user.email}
             </p>
             {user.isCurrent && (
-              <span className="border border-express-600 bg-express-600/[0.06] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-express-600">
+              <span className="rounded-2xl border border-express-600 bg-express-600/[0.06] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-express-600">
                 Vous
               </span>
             )}
@@ -452,7 +452,7 @@ function UserRow({ user }: { user: UserItem }) {
         <div className="shrink-0">
           {user.isCurrent ? (
             <span
-              className="flex h-8 w-8 items-center justify-center text-zinc-300"
+              className="flex h-8 w-8 items-center justify-center rounded-2xl text-zinc-300"
               title="Vous ne pouvez pas supprimer votre propre compte"
             >
               <Shield className="h-4 w-4" strokeWidth={1.75} />
@@ -462,7 +462,7 @@ function UserRow({ user }: { user: UserItem }) {
               type="button"
               onClick={() => setOpenConfirm(true)}
               title="Supprimer cet utilisateur"
-              className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+              className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
             >
               <X className="h-4 w-4" strokeWidth={2} />
             </button>

@@ -33,7 +33,7 @@ export default async function AdminProductsPage() {
 
         <Link
           href="/admin/produits/nouveau"
-          className="inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+          className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
         >
           <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
           Nouveau produit
@@ -41,7 +41,7 @@ export default async function AdminProductsPage() {
       </div>
 
       {!products || products.length === 0 ? (
-        <div className="border border-zinc-200 bg-white px-6 py-16 text-center">
+        <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-16 text-center">
           <Package className="mx-auto h-8 w-8 text-zinc-300" strokeWidth={1.5} />
           <p className="mt-5 text-[14px] font-bold text-navy-900">
             Aucun produit pour l&apos;instant
@@ -52,14 +52,14 @@ export default async function AdminProductsPage() {
           </p>
           <Link
             href="/admin/produits/nouveau"
-            className="mt-6 inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
             Créer le premier produit
           </Link>
         </div>
       ) : (
-        <div className="border border-zinc-200 bg-white">
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           {/* En-tête tableau (desktop) */}
           <div className="hidden border-b border-zinc-200 bg-zinc-50/60 px-6 py-3 text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-500 lg:grid lg:grid-cols-[80px_1fr_140px_120px_140px] lg:gap-4">
             <div>Image</div>
@@ -76,7 +76,7 @@ export default async function AdminProductsPage() {
                 className="group grid gap-4 px-6 py-4 transition hover:bg-zinc-50/60 lg:grid-cols-[80px_1fr_140px_120px_140px] lg:items-center"
               >
                 {/* Image */}
-                <div className="hidden h-14 w-14 overflow-hidden border border-zinc-200 bg-zinc-100 lg:block">
+                <div className="hidden h-14 w-14 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100 lg:block">
                   {product.image_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -104,7 +104,7 @@ export default async function AdminProductsPage() {
 
                 {/* Catégorie */}
                 <div>
-                  <span className="inline-flex border border-zinc-200 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-zinc-600">
+                  <span className="inline-flex rounded-2xl border border-zinc-200 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-zinc-600">
                     {product.category}
                   </span>
                 </div>
@@ -127,7 +127,7 @@ export default async function AdminProductsPage() {
                   <Link
                     href={`/admin/produits/${product.id}`}
                     title="Modifier"
-                    className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
+                    className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
                   >
                     <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </Link>

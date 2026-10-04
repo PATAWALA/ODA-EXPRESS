@@ -35,7 +35,7 @@ export default async function AdminRealisationsPage() {
 
         <Link
           href="/admin/realisations/nouveau"
-          className="inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+          className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
         >
           <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
           Nouvelle réalisation
@@ -43,7 +43,7 @@ export default async function AdminRealisationsPage() {
       </div>
 
       {!items || items.length === 0 ? (
-        <div className="border border-zinc-200 bg-white px-6 py-16 text-center">
+        <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-16 text-center">
           <ImageIcon
             className="mx-auto h-8 w-8 text-zinc-300"
             strokeWidth={1.5}
@@ -56,14 +56,14 @@ export default async function AdminRealisationsPage() {
           </p>
           <Link
             href="/admin/realisations/nouveau"
-            className="mt-6 inline-flex items-center gap-2 bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
             Créer la première réalisation
           </Link>
         </div>
       ) : (
-        <div className="border border-zinc-200 bg-white">
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <ul className="divide-y divide-zinc-100">
             {items.map((item) => (
               <li
@@ -71,7 +71,7 @@ export default async function AdminRealisationsPage() {
                 className="group flex items-center gap-5 px-6 py-4 transition hover:bg-zinc-50/60"
               >
                 {/* Image */}
-                <div className="relative h-16 w-24 shrink-0 overflow-hidden border border-zinc-200 bg-zinc-100">
+                <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.image_url}
@@ -79,7 +79,7 @@ export default async function AdminRealisationsPage() {
                     className="h-full w-full object-cover"
                   />
                   {item.featured && (
-                    <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center bg-express-600 text-white">
+                    <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-2xl bg-express-600 text-white">
                       <Star
                         className="h-2.5 w-2.5"
                         fill="currentColor"
@@ -95,7 +95,7 @@ export default async function AdminRealisationsPage() {
                     {item.title}
                   </p>
                   <div className="mt-1.5 flex flex-wrap items-center gap-2">
-                    <span className="inline-flex border border-zinc-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-600">
+                    <span className="inline-flex rounded-2xl border border-zinc-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-600">
                       {item.category}
                     </span>
                     <span
@@ -115,7 +115,7 @@ export default async function AdminRealisationsPage() {
                   <Link
                     href={`/admin/realisations/${item.id}`}
                     title="Modifier"
-                    className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
+                    className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-navy-300 hover:bg-white hover:text-navy-900"
                   >
                     <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </Link>

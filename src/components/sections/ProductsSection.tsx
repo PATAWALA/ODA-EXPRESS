@@ -38,7 +38,7 @@ export default function ProductsSection() {
               type="button"
               onClick={() => setActiveCategory(cat.id)}
               className={cn(
-                "border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition",
+                "rounded-2xl border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition",
                 activeCategory === cat.id
                   ? "border-navy-900 bg-navy-900 text-white"
                   : "border-zinc-200 bg-white text-zinc-600 hover:border-navy-300 hover:text-navy-900",
@@ -50,7 +50,7 @@ export default function ProductsSection() {
         </div>
 
         {/* Grille produits */}
-        <div className="mx-auto mt-12 grid max-w-6xl gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-12 grid max-w-6xl gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((family) => (
             <Link
               key={family.slug}
@@ -66,7 +66,7 @@ export default function ProductsSection() {
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/10 to-transparent opacity-0 transition group-hover:opacity-100" />
-                <span className="absolute left-3 top-3 border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
+                <span className="absolute left-3 top-3 rounded-2xl border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
                   {family.category}
                 </span>
               </div>
@@ -92,7 +92,7 @@ export default function ProductsSection() {
         </div>
 
         {filtered.length === 0 && (
-          <div className="mx-auto mt-12 max-w-6xl border border-zinc-200 bg-white p-10 text-center">
+          <div className="mx-auto mt-12 max-w-6xl rounded-2xl border border-zinc-200 bg-white p-10 text-center">
             <p className="text-[14px] font-semibold text-navy-900">
               Aucun produit dans cette catégorie pour l&apos;instant.
             </p>
@@ -105,7 +105,7 @@ export default function ProductsSection() {
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+            className="group inline-flex items-center gap-2 rounded-2xl border border-navy-900 bg-white px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
           >
             Décrire mon produit
             <ArrowRight

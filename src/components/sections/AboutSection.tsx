@@ -15,7 +15,7 @@ export default function AboutSection() {
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
           {/* Image équipe */}
           <div className="relative order-2 lg:order-1">
-            <div className="relative aspect-[4/5] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/equipe-showroom.jpeg"
@@ -24,7 +24,7 @@ export default function AboutSection() {
               />
             </div>
 
-            <div className="absolute -bottom-5 -right-5 hidden border border-zinc-200 bg-white px-5 py-4 shadow-xl lg:block">
+            <div className="absolute -bottom-5 -right-5 hidden rounded-2xl border border-zinc-200 bg-white px-5 py-4 shadow-xl lg:block">
               <p className="text-[20px] font-bold leading-none text-navy-900">
                 +500
               </p>
@@ -80,7 +80,7 @@ export default function AboutSection() {
             <div className="mt-10">
               <Link
                 href="/a-propos"
-                className="group inline-flex items-center gap-2 border border-navy-900 bg-white px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+                className="group inline-flex items-center gap-2 rounded-2xl border border-navy-900 bg-white px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
               >
                 En savoir plus
                 <ArrowRight

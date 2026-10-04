@@ -39,7 +39,7 @@ export default function NotFound() {
 
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 border border-zinc-200 bg-white px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300 hover:bg-zinc-50"
+              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300 hover:bg-zinc-50"
             >
               <Search className="h-3.5 w-3.5" strokeWidth={2} />
               Découvrir nos services

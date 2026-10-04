@@ -40,7 +40,7 @@ export default function ServicesPage() {
               </p>
             </div>
 
-            <div className="relative aspect-[5/4] overflow-hidden rounded-lg shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[5/4] overflow-hidden shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1400&q=85"
@@ -155,7 +155,7 @@ export default function ServicesPage() {
                       "relative " + (isEven ? "" : "lg:order-1")
                     }
                   >
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-lg shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)] lg:sticky lg:top-24">
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)] lg:sticky lg:top-24">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={service.image}

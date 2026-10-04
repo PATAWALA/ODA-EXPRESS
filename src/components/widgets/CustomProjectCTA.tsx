@@ -36,7 +36,7 @@ export default function CustomProjectCTA() {
             <div className="flex flex-col gap-3 lg:min-w-[240px]">
               <Link
                 href="/contact"
-                className="group inline-flex items-center justify-center gap-2 bg-navy-900 px-6 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-navy-900 px-6 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
               >
                 <FolderPlus className="h-4 w-4" strokeWidth={2.25} />
                 Décrire mon projet
@@ -50,7 +50,7 @@ export default function CustomProjectCTA() {
                 href="https://wa.me/8619515660197?text=Bonjour%20ODA%20SOURCES%2C%20j%27ai%20un%20projet%20sp%C3%A9cifique%20%C3%A0%20vous%20soumettre."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 border border-zinc-300 bg-white px-6 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-700"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-zinc-300 bg-white px-6 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-700"
               >
                 <MessageCircle className="h-4 w-4" strokeWidth={2} />
                 WhatsApp direct

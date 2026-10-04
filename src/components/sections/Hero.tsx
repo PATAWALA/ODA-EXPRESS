@@ -115,7 +115,7 @@ export default function Hero() {
 
           {/* Colonne image — 2e sur mobile, 2e sur desktop */}
           <div className="relative order-2">
-            <div className="relative aspect-[5/4] overflow-hidden rounded-lg shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
               {IMAGES.map((src, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -129,7 +129,7 @@ export default function Hero() {
                 />
               ))}
 
-              <div className="absolute bottom-6 left-6 rounded-xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur">
+              <div className="absolute bottom-6 left-6 rounded-2xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur">
                 <p className="text-[20px] font-bold leading-none text-navy-900">
                   +500
                 </p>

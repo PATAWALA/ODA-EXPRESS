@@ -49,13 +49,13 @@ export default function ConfirmDialog({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md border border-zinc-200 bg-white shadow-2xl"
+        className="relative w-full max-w-md rounded-2xl border border-zinc-200 bg-white shadow-2xl"
       >
         {/* En-tête */}
         <div className="flex items-start gap-4 border-b border-zinc-200 px-6 py-5">
           <span
             className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center",
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl",
               variant === "danger"
                 ? "bg-red-50 text-red-600"
                 : "bg-zinc-100 text-navy-900",
@@ -77,7 +77,7 @@ export default function ConfirmDialog({
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="flex h-8 w-8 shrink-0 items-center justify-center text-zinc-400 transition hover:text-navy-900 disabled:opacity-40"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl text-zinc-400 transition hover:text-navy-900 disabled:opacity-40"
             aria-label="Fermer"
           >
             <X className="h-4 w-4" strokeWidth={1.75} />
@@ -90,7 +90,7 @@ export default function ConfirmDialog({
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="inline-flex items-center justify-center border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
           >
             {cancelLabel}
           </button>
@@ -100,7 +100,7 @@ export default function ConfirmDialog({
             onClick={onConfirm}
             disabled={loading}
             className={cn(
-              "inline-flex items-center justify-center px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition disabled:opacity-60",
+              "inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition disabled:opacity-60",
               variant === "danger"
                 ? "bg-red-600 hover:bg-red-700"
                 : "bg-navy-900 hover:bg-navy-800",

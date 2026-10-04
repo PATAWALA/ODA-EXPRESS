@@ -34,7 +34,7 @@ export default function DeleteButton({
         type="button"
         onClick={() => setOpen(true)}
         title={label}
-        className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+        className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
       >
         <Trash2 className="h-3.5 w-3.5" strokeWidth={1.75} />
       </button>

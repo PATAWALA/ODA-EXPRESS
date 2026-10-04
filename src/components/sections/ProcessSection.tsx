@@ -76,12 +76,12 @@ function StepItem({
           {/* Point */}
           <span
             className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center border-2 border-express-600 bg-white",
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border-2 border-express-600 bg-white",
               baseAnim,
               visibleState,
             )}
           >
-            <span className="h-2.5 w-2.5 bg-express-600" />
+            <span className="h-2.5 w-2.5 rounded-2xl bg-express-600" />
           </span>
 
           {/* Ligne rouge entre les points */}
@@ -151,8 +151,8 @@ export default function ProcessSection() {
             <div className="grid grid-cols-4 gap-8">
               {STEPS.map((step) => (
                 <div key={step.number} className="flex justify-center">
-                  <span className="relative z-10 flex h-10 w-10 items-center justify-center border-2 border-express-600 bg-white">
-                    <span className="h-2.5 w-2.5 bg-express-600" />
+                  <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-2xl border-2 border-express-600 bg-white">
+                    <span className="h-2.5 w-2.5 rounded-2xl bg-express-600" />
                   </span>
                 </div>
               ))}

@@ -25,19 +25,22 @@ export default function ServicesSection() {
           subtitle="De la recherche du fournisseur jusqu'au paiement international, nous couvrons l'ensemble de vos opérations en Chine."
         />
 
-        {/* Accordéon */}
-        <div className="mx-auto mt-16 max-w-5xl border-t border-zinc-200">
+        {/* Cartes services */}
+        <div className="mx-auto mt-16 max-w-5xl space-y-3">
           {SERVICES.map((service, index) => {
             const isOpen = openSlug === service.slug;
 
             return (
-              <div key={service.slug} className="border-b border-zinc-200">
+              <div
+                key={service.slug}
+                className="overflow-hidden rounded-2xl border border-zinc-200 bg-white"
+              >
                 {/* En-tête cliquable */}
                 <button
                   type="button"
                   onClick={() => toggle(service.slug)}
                   aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-6 py-7 text-left transition hover:bg-zinc-50/60"
+                  className="group flex w-full items-center gap-6 px-6 py-6 text-left transition hover:bg-zinc-50/60"
                 >
                   {/* Numéro */}
                   <span
@@ -52,7 +55,7 @@ export default function ServicesSection() {
                   {/* Icône */}
                   <span
                     className={cn(
-                      "flex h-11 w-11 shrink-0 items-center justify-center border transition",
+                      "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition",
                       isOpen
                         ? "border-express-600 bg-express-600 text-white"
                         : "border-zinc-200 bg-white text-navy-900 group-hover:border-navy-300",
@@ -74,7 +77,7 @@ export default function ServicesSection() {
                   {/* Plus / croix */}
                   <span
                     className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center border transition",
+                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border transition",
                       isOpen
                         ? "border-express-600 bg-express-600 text-white"
                         : "border-zinc-200 bg-white text-navy-900 group-hover:border-navy-300",
@@ -99,7 +102,7 @@ export default function ServicesSection() {
                       : "max-h-0 opacity-0",
                   )}
                 >
-                  <div className="grid gap-8 pb-10 pl-0 sm:pl-[100px] lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+                  <div className="grid gap-8 px-6 pb-10 sm:pl-[100px] lg:grid-cols-[1.1fr_1fr] lg:gap-12">
                     {/* Colonne texte */}
                     <div>
                       <p className="text-[14px] leading-[1.75] text-zinc-600">
@@ -109,7 +112,7 @@ export default function ServicesSection() {
                       <ul className="mt-6 space-y-2.5">
                         {service.features.map((feature) => (
                           <li key={feature} className="flex gap-3">
-                            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border border-express-600/30 bg-express-600/5">
+                            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-2xl border border-express-600/30 bg-express-600/5">
                               <Check
                                 className="h-2.5 w-2.5 text-express-600"
                                 strokeWidth={3}
@@ -135,7 +138,7 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Colonne image */}
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={service.image}

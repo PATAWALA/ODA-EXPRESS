@@ -77,7 +77,7 @@ export default function ImageUploader({
 
       {url ? (
         // Aperçu si image déjà définie
-        <div className="relative border border-zinc-200 bg-white">
+        <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="relative aspect-[16/9] overflow-hidden bg-zinc-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -102,7 +102,7 @@ export default function ImageUploader({
               <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="border border-zinc-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-zinc-600 transition hover:border-navy-300 hover:text-navy-900"
+                className="rounded-2xl border border-zinc-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-zinc-600 transition hover:border-navy-300 hover:text-navy-900"
               >
                 Remplacer
               </button>
@@ -110,7 +110,7 @@ export default function ImageUploader({
                 type="button"
                 onClick={remove}
                 title="Retirer l'image"
-                className="flex h-8 w-8 items-center justify-center border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                className="flex h-8 w-8 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -128,7 +128,7 @@ export default function ImageUploader({
           onDrop={onDrop}
           onClick={() => inputRef.current?.click()}
           className={
-            "flex cursor-pointer flex-col items-center justify-center border-2 border-dashed bg-white px-6 py-10 text-center transition " +
+            "flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed bg-white px-6 py-10 text-center transition " +
             (dragging
               ? "border-navy-700 bg-navy-50/40"
               : "border-zinc-200 hover:border-navy-300 hover:bg-zinc-50/60")
@@ -146,7 +146,7 @@ export default function ImageUploader({
             </>
           ) : (
             <>
-              <span className="flex h-12 w-12 items-center justify-center border border-zinc-200 bg-white text-navy-900">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-navy-900">
                 <Upload className="h-5 w-5" strokeWidth={1.6} />
               </span>
               <p className="mt-4 text-[13px] font-bold text-navy-900">
@@ -169,7 +169,7 @@ export default function ImageUploader({
       )}
 
       {error && (
-        <div className="mt-3 flex items-start gap-2 border border-red-200 bg-red-50 px-3 py-2">
+        <div className="mt-3 flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50 px-3 py-2">
           <AlertCircle
             className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-600"
             strokeWidth={2}

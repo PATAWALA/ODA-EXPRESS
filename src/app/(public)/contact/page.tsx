@@ -41,9 +41,9 @@ export default function ContactPage() {
       <section className="bg-zinc-50/60 py-16 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <div className="flex flex-col items-start gap-6 border border-zinc-200 bg-white p-8 sm:flex-row sm:items-center sm:p-10">
+            <div className="flex flex-col items-start gap-6 rounded-2xl border border-zinc-200 bg-white p-8 sm:flex-row sm:items-center sm:p-10">
               {/* Icône */}
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center bg-emerald-600 text-white">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-white">
                 <MessageCircle className="h-6 w-6" strokeWidth={1.75} />
               </span>
 
@@ -65,7 +65,7 @@ export default function ContactPage() {
                 href="https://wa.me/8619515660197"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 bg-emerald-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
+                className="inline-flex shrink-0 items-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
               >
                 <MessageCircle className="h-3.5 w-3.5" strokeWidth={2} />
                 Ouvrir WhatsApp

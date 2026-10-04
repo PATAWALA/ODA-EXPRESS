@@ -70,7 +70,7 @@ export default async function ArticlePage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="relative aspect-[16/9] overflow-hidden border border-zinc-200">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-zinc-200">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={article.image}
@@ -85,7 +85,7 @@ export default async function ArticlePage({ params }: PageProps) {
         <Container>
           <div className="mx-auto max-w-3xl">
             {article.keyPoints && article.keyPoints.length > 0 && (
-              <div className="mb-12 border border-zinc-200 bg-zinc-50/50 p-6 sm:p-8">
+              <div className="mb-12 rounded-2xl border border-zinc-200 bg-zinc-50/50 p-6 sm:p-8">
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
                   À retenir
                 </p>
@@ -114,7 +114,7 @@ export default async function ArticlePage({ params }: PageProps) {
               ))}
             </div>
 
-            <div className="mt-16 border border-zinc-200 bg-navy-950 p-8 sm:p-10">
+            <div className="mt-16 rounded-2xl border border-zinc-200 bg-navy-950 p-8 sm:p-10">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Passer à l&apos;action
               </p>
@@ -147,7 +147,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 <Link
                   key={other.slug}
                   href={`/actualites/${other.slug}`}
-                  className="group flex flex-col overflow-hidden border border-zinc-200 bg-white transition hover:border-navy-300"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:border-navy-300"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

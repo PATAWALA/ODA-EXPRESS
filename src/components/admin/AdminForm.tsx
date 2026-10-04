@@ -72,14 +72,14 @@ export default function AdminForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center gap-2 bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
         >
           <Save className="h-3.5 w-3.5" strokeWidth={2} />
           {loading ? "Enregistrement..." : "Enregistrer"}
         </button>
       </div>
 
-      <div className="space-y-6 border border-zinc-200 bg-white p-6 sm:p-8">
+      <div className="space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8">
         {fields.map((field) => {
           if (field.type === "image") {
             return (
@@ -147,7 +147,7 @@ export default function AdminForm({
                   type="checkbox"
                   name={field.name}
                   defaultChecked={Boolean(field.defaultValue)}
-                  className="h-4 w-4 border-zinc-300"
+                  className="h-4 w-4 rounded-2xl border-zinc-300"
                 />
                 <span className="text-[13.5px] font-medium text-navy-900">
                   {field.label}
@@ -176,7 +176,7 @@ export default function AdminForm({
         })}
 
         {error && (
-          <p className="border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
+          <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-[12.5px] text-red-700">
             {error}
           </p>
         )}

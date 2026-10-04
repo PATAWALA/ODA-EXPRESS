@@ -65,7 +65,7 @@ export default async function ActualitesPage() {
               </p>
             </div>
 
-            <div className="relative aspect-[5/4] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=85"
@@ -86,7 +86,7 @@ export default async function ActualitesPage() {
 
           <Link
             href={`/actualites/${featured.slug}`}
-            className="group mt-8 grid gap-8 border border-zinc-200 bg-white transition hover:border-navy-300 lg:grid-cols-[1.2fr_1fr]"
+            className="group mt-8 grid gap-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:border-navy-300 lg:grid-cols-[1.2fr_1fr]"
           >
             <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -140,7 +140,7 @@ export default async function ActualitesPage() {
                 <Link
                   key={article.slug}
                   href={`/actualites/${article.slug}`}
-                  className="group flex flex-col overflow-hidden border border-zinc-200 bg-white transition hover:border-navy-300"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:border-navy-300"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -151,7 +151,7 @@ export default async function ActualitesPage() {
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                     />
                     <div className="absolute left-3 top-3">
-                      <span className="border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
+                      <span className="rounded-2xl border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
                         {article.category}
                       </span>
                     </div>

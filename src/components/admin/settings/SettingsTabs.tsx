@@ -36,7 +36,7 @@ export default function SettingsTabs({
           type="button"
           onClick={() => setTab("profile")}
           className={cn(
-            "relative flex items-center gap-2 px-5 py-3 text-[13px] font-semibold transition",
+            "relative flex items-center gap-2 rounded-t-2xl px-5 py-3 text-[13px] font-semibold transition",
             tab === "profile"
               ? "text-navy-900"
               : "text-zinc-500 hover:text-navy-900",
@@ -53,7 +53,7 @@ export default function SettingsTabs({
           type="button"
           onClick={() => setTab("users")}
           className={cn(
-            "relative flex items-center gap-2 px-5 py-3 text-[13px] font-semibold transition",
+            "relative flex items-center gap-2 rounded-t-2xl px-5 py-3 text-[13px] font-semibold transition",
             tab === "users"
               ? "text-navy-900"
               : "text-zinc-500 hover:text-navy-900",
@@ -61,7 +61,7 @@ export default function SettingsTabs({
         >
           <Users className="h-4 w-4" strokeWidth={1.75} />
           Utilisateurs
-          <span className="ml-1 border border-zinc-200 bg-white px-1.5 py-0.5 text-[10px] font-bold text-zinc-500">
+          <span className="ml-1 rounded-2xl border border-zinc-200 bg-white px-1.5 py-0.5 text-[10px] font-bold text-zinc-500">
             {users.length}
           </span>
           {tab === "users" && (

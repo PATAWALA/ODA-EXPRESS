@@ -41,10 +41,10 @@ export default function Footer() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <span className="border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
+              <span className="rounded-2xl border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
                 Hong Kong
               </span>
-              <span className="border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
+              <span className="rounded-2xl border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
                 Chine Continentale
               </span>
             </div>
@@ -149,7 +149,7 @@ export default function Footer() {
 
             <Link
               href="/contact"
-              className="group mt-6 inline-flex items-center gap-2 border border-white/20 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:border-white/50 hover:bg-white/5"
+              className="group mt-6 inline-flex items-center gap-2 rounded-2xl border border-white/20 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:border-white/50 hover:bg-white/5"
             >
               Se faire accompagner
               <ArrowUpRight

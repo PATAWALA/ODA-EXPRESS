@@ -63,7 +63,7 @@ function NameSection({ currentName }: { currentName: string }) {
             required
             defaultValue={currentName}
             placeholder="Ex. Da Olivier"
-            className="w-full border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+            className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
           />
         </label>
 
@@ -115,7 +115,7 @@ function EmailSection({ currentEmail }: { currentEmail: string }) {
             name="email"
             required
             defaultValue={currentEmail}
-            className="w-full border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
+            className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
           />
         </label>
 
@@ -224,7 +224,7 @@ function PasswordSection() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+              className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
             >
               Continuer
               <span className="text-[14px] leading-none">→</span>
@@ -233,7 +233,7 @@ function PasswordSection() {
         </form>
       ) : (
         <form onSubmit={handleConfirm} className="space-y-4">
-          <div className="border border-zinc-200 bg-zinc-50/60 px-4 py-3 text-[12px] text-zinc-600">
+          <div className="rounded-2xl border border-zinc-200 bg-zinc-50/60 px-4 py-3 text-[12px] text-zinc-600">
             Vous confirmez le mot de passe saisi à l&apos;étape 1.
           </div>
 
@@ -253,7 +253,7 @@ function PasswordSection() {
               type="button"
               onClick={cancel}
               disabled={state.loading}
-              className="inline-flex items-center justify-center border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
+              className="inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
             >
               Annuler
             </button>
@@ -261,7 +261,7 @@ function PasswordSection() {
             <button
               type="submit"
               disabled={state.loading}
-              className="inline-flex items-center gap-2 bg-express-600 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
             >
               <Save className="h-3.5 w-3.5" strokeWidth={2} />
               {state.loading ? "Enregistrement..." : "Confirmer et enregistrer"}
@@ -297,7 +297,7 @@ function StepIndicator({
     <div className="flex items-center gap-2">
       <span
         className={
-          "flex h-6 w-6 shrink-0 items-center justify-center text-[11px] font-bold transition " +
+          "flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl text-[11px] font-bold transition " +
           (done
             ? "bg-emerald-600 text-white"
             : active
@@ -331,7 +331,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border border-zinc-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
       <div className="border-b border-zinc-200 px-6 py-5">
         <p className="text-[14px] font-bold tracking-tight text-navy-900">
           {title}
@@ -350,7 +350,7 @@ function SaveButton({ loading }: { loading: boolean }) {
     <button
       type="submit"
       disabled={loading}
-      className="inline-flex items-center gap-2 bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800 disabled:opacity-60"
+      className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800 disabled:opacity-60"
     >
       <Save className="h-3.5 w-3.5" strokeWidth={2} />
       {loading ? "Enregistrement..." : "Enregistrer"}
@@ -365,7 +365,7 @@ function Feedback({
 }) {
   if (state.error) {
     return (
-      <div className="flex items-start gap-2.5 border border-red-200 bg-red-50 px-4 py-3">
+      <div className="flex items-start gap-2.5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
         <AlertCircle
           className="mt-0.5 h-4 w-4 shrink-0 text-red-600"
           strokeWidth={2}
@@ -377,7 +377,7 @@ function Feedback({
 
   if (state.success) {
     return (
-      <div className="flex items-start gap-2.5 border border-emerald-200 bg-emerald-50 px-4 py-3">
+      <div className="flex items-start gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
         <Check
           className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
           strokeWidth={2.5}

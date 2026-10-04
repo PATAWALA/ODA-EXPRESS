@@ -1,5 +1,3 @@
-import { createClient } from "@/lib/supabase/client";
-
 export type LeadSource = "newsletter" | "exit-intent" | "contact" | "project";
 
 interface SaveLeadInput {
@@ -14,29 +12,22 @@ interface SaveLeadInput {
 export async function saveLead(
   input: SaveLeadInput,
 ): Promise<{ ok: boolean; error?: string }> {
-  const supabase = createClient();
+  try {
+    const response = await fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    });
 
-  const email = input.email.trim().toLowerCase();
+    const data = await response.json();
 
-  // UPSERT : si l'email existe déjà, on met à jour. Sinon on insère.
-  const { error } = await supabase.from("leads").upsert(
-    {
-      email,
-      name: input.name?.trim() || null,
-      phone: input.phone?.trim() || null,
-      message: input.message?.trim() || null,
-      source: input.source,
-      metadata: (input.metadata as never) ?? {},
-      updated_at: new Date().toISOString(),
-    },
-    {
-      onConflict: "email",
-      ignoreDuplicates: false,
-    },
-  );
+    if (!response.ok) {
+      return { ok: false, error: data.error ?? "Une erreur est survenue." };
+    }
 
-  if (error) {
-    return { ok: false, error: error.message };
+    return { ok: true };
+  } catch (err) {
+    console.error("[saveLead] Erreur réseau :", err);
+    return { ok: false, error: "Erreur de connexion." };
   }
-  return { ok: true };
 }

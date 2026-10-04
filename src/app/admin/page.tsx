@@ -155,7 +155,7 @@ export default async function AdminDashboard() {
         <Link
           href="/"
           target="_blank"
-          className="group inline-flex items-center gap-2 border border-zinc-200 bg-white px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-900"
+          className="group inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-900"
         >
           <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} />
           Voir le site public
@@ -170,10 +170,10 @@ export default async function AdminDashboard() {
       {counts.nouvelles > 0 && (
         <Link
           href="/admin/leads"
-          className="group mb-8 flex items-center justify-between gap-6 border-l-2 border-express-600 bg-express-600/[0.04] px-6 py-5 transition hover:bg-express-600/[0.08]"
+          className="group mb-8 flex items-center justify-between gap-6 rounded-2xl border-l-2 border-express-600 bg-express-600/[0.04] px-6 py-5 transition hover:bg-express-600/[0.08]"
         >
           <div className="flex items-center gap-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-express-600 text-white">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-express-600 text-white">
               <Users className="h-4 w-4" strokeWidth={2} />
             </span>
             <div>
@@ -194,7 +194,7 @@ export default async function AdminDashboard() {
       )}
 
       {/* ============ MODULES ============ */}
-      <div className="grid gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
         {modules.map((mod) => (
           <div key={mod.href} className="group relative flex flex-col bg-white">
             <Link
@@ -202,11 +202,11 @@ export default async function AdminDashboard() {
               className="flex flex-1 flex-col p-6 transition hover:bg-zinc-50/70"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="flex h-10 w-10 items-center justify-center border border-zinc-200 bg-white text-navy-900 transition group-hover:border-navy-900 group-hover:bg-navy-900 group-hover:text-white">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-navy-900 transition group-hover:border-navy-900 group-hover:bg-navy-900 group-hover:text-white">
                   <mod.icon className="h-4 w-4" strokeWidth={1.75} />
                 </span>
                 {mod.badge && (
-                  <span className="bg-express-600 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-white">
+                  <span className="rounded-2xl bg-express-600 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-white">
                     {mod.badge}
                   </span>
                 )}
@@ -247,7 +247,7 @@ export default async function AdminDashboard() {
       {/* ============ ACTIVITÉ + RACCOURCIS ============ */}
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
         {/* Demandes récentes */}
-        <div className="border border-zinc-200 bg-white">
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-5">
             <div>
               <p className="text-[14px] font-bold tracking-tight text-navy-900">
@@ -286,7 +286,7 @@ export default async function AdminDashboard() {
                   key={demande.id}
                   className="flex items-center gap-4 px-6 py-4 transition hover:bg-zinc-50/60"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-zinc-100 text-[12px] font-bold uppercase text-navy-900">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-zinc-100 text-[12px] font-bold uppercase text-navy-900">
                     {(demande.name ?? demande.email).charAt(0).toUpperCase()}
                   </span>
 
@@ -299,7 +299,7 @@ export default async function AdminDashboard() {
                     </p>
                   </div>
 
-                  <span className="hidden shrink-0 border border-zinc-200 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-zinc-500 md:block">
+                  <span className="hidden shrink-0 rounded-2xl border border-zinc-200 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-zinc-500 md:block">
                     {sourceLabel(demande.source)}
                   </span>
 
@@ -320,7 +320,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Raccourcis */}
-        <div className="border border-zinc-200 bg-white">
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="border-b border-zinc-200 px-6 py-5">
             <p className="text-[14px] font-bold tracking-tight text-navy-900">
               Actions rapides

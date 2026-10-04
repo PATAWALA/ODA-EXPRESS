@@ -198,7 +198,7 @@ export default function AProposPage() {
           <div className="mx-auto max-w-5xl">
             <div className="grid gap-12 lg:grid-cols-[320px_1fr] lg:items-start lg:gap-16">
               {/* Photo fondateur */}
-              <div className="border border-zinc-200 bg-white p-3">
+              <div className="rounded-2xl border border-zinc-200 bg-white p-3">
                 <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -324,7 +324,7 @@ export default function AProposPage() {
       <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-            <article className="border border-zinc-200 bg-white p-8 sm:p-10">
+            <article className="rounded-2xl border border-zinc-200 bg-white p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center border border-express-600 bg-express-600 text-white">
                 <Target className="h-5 w-5" strokeWidth={1.6} />
               </span>
@@ -342,7 +342,7 @@ export default function AProposPage() {
               </p>
             </article>
 
-            <article className="border border-zinc-200 bg-white p-8 sm:p-10">
+            <article className="rounded-2xl border border-zinc-200 bg-white p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center border border-navy-900 bg-navy-900 text-white">
                 <Globe2 className="h-5 w-5" strokeWidth={1.6} />
               </span>
@@ -432,7 +432,7 @@ export default function AProposPage() {
               </ul>
             </div>
 
-            <div className="border border-white/10 bg-white/5 p-8 sm:p-10">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 sm:p-10">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Prêt à démarrer ?
               </p>
@@ -461,7 +461,7 @@ export default function AProposPage() {
 
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10"
                 >
                   Voir nos services
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />

@@ -39,7 +39,7 @@ export default function TrustBar() {
                   : "")
               }
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-express-600/10 text-express-600">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-express-600/10 text-express-600">
                 <point.icon className="h-5 w-5" strokeWidth={1.6} />
               </span>
 
