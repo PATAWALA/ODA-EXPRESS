@@ -11,17 +11,29 @@ interface SaveLeadInput {
   metadata?: Record<string, unknown>;
 }
 
-export async function saveLead(input: SaveLeadInput): Promise<{ ok: boolean; error?: string }> {
+export async function saveLead(
+  input: SaveLeadInput,
+): Promise<{ ok: boolean; error?: string }> {
   const supabase = createClient();
 
-  const { error } = await supabase.from("leads").insert({
-    email: input.email.trim().toLowerCase(),
-    name: input.name?.trim() || null,
-    phone: input.phone?.trim() || null,
-    message: input.message?.trim() || null,
-    source: input.source,
-    metadata: (input.metadata as never) ?? {},
-  });
+  const email = input.email.trim().toLowerCase();
+
+  // UPSERT : si l'email existe déjà, on met à jour. Sinon on insère.
+  const { error } = await supabase.from("leads").upsert(
+    {
+      email,
+      name: input.name?.trim() || null,
+      phone: input.phone?.trim() || null,
+      message: input.message?.trim() || null,
+      source: input.source,
+      metadata: (input.metadata as never) ?? {},
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: "email",
+      ignoreDuplicates: false,
+    },
+  );
 
   if (error) {
     return { ok: false, error: error.message };

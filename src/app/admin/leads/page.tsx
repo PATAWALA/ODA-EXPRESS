@@ -6,7 +6,7 @@ export default async function AdminLeadsPage() {
   const { data: leads } = await supabase
     .from("leads")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("updated_at", { ascending: false });
 
   return (
     <div>
@@ -15,10 +15,11 @@ export default async function AdminLeadsPage() {
           Prospects
         </p>
         <h1 className="mt-2 text-[24px] font-bold tracking-tight text-navy-900">
-          Leads collectés
+          Toutes les demandes reçues
         </h1>
         <p className="mt-2 text-[13px] text-zinc-600">
-          Toutes les demandes issues du site : formulaire, newsletter, exit-intent.
+          Messages collectés via le site : formulaire de contact, newsletter,
+          pop-up.
         </p>
       </div>
 
