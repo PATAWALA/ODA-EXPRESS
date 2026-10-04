@@ -79,9 +79,8 @@ export default function ExitIntentModal() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md border border-zinc-200 bg-white shadow-2xl"
+        className="relative w-full max-w-md overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-2xl"
       >
-        {/* En-tête sobre */}
         <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
             Avant de partir
@@ -90,17 +89,16 @@ export default function ExitIntentModal() {
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Fermer"
-            className="flex h-8 w-8 items-center justify-center text-zinc-400 transition hover:text-navy-900"
+            className="flex h-8 w-8 items-center justify-center rounded text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
           >
             <X className="h-4 w-4" strokeWidth={1.75} />
           </button>
         </div>
 
-        {/* Corps */}
         <div className="p-8">
           {state === "done" ? (
             <div className="text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center border border-emerald-200 bg-emerald-50">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded border border-emerald-200 bg-emerald-50">
                 <CheckCircle2
                   className="h-6 w-6 text-emerald-700"
                   strokeWidth={1.75}
@@ -116,14 +114,14 @@ export default function ExitIntentModal() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="mt-6 inline-flex items-center justify-center border border-navy-900 bg-white px-6 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+                className="mt-6 inline-flex items-center justify-center rounded border border-navy-900 bg-white px-6 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
               >
                 Fermer
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
-              <div className="flex h-12 w-12 items-center justify-center border border-zinc-200 bg-white text-navy-900">
+              <div className="flex h-12 w-12 items-center justify-center rounded border border-zinc-200 bg-white text-navy-900">
                 <Mail className="h-5 w-5" strokeWidth={1.6} />
               </div>
 
@@ -150,13 +148,13 @@ export default function ExitIntentModal() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="votre@email.com"
-                    className="w-full border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                    className="w-full rounded border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
                   />
                 </label>
               </div>
 
               {error && (
-                <p className="mt-3 border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
+                <p className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
                   {error}
                 </p>
               )}
@@ -164,7 +162,7 @@ export default function ExitIntentModal() {
               <button
                 type="submit"
                 disabled={state === "loading"}
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 bg-express-600 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded bg-express-600 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
               >
                 {state === "loading" ? "Envoi..." : "Je m'inscris"}
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />

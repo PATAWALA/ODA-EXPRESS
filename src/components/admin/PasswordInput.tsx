@@ -44,7 +44,7 @@ export default function PasswordInput({
           defaultValue={defaultValue}
           placeholder={placeholder}
           className={cn(
-            "w-full border border-zinc-200 bg-white py-3 pl-4 pr-12 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700",
+            "w-full rounded border border-zinc-200 bg-white py-3 pl-4 pr-12 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700",
             mono && "font-mono",
           )}
         />
@@ -54,7 +54,7 @@ export default function PasswordInput({
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Masquer" : "Afficher"}
           title={visible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-          className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center text-zinc-400 transition hover:text-navy-900"
+          className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
         >
           {visible ? (
             <EyeOff className="h-4 w-4" strokeWidth={1.75} />

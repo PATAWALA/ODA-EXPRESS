@@ -8,7 +8,6 @@ interface SlugFieldProps {
   prefix: string;
   defaultValue?: string;
   required?: boolean;
-  /** Utilisé pour générer le slug automatiquement depuis le titre */
   titleValue?: string;
 }
 
@@ -16,11 +15,11 @@ function slugify(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // enlever les accents
-    .replace(/[^a-z0-9\s-]/g, "") // garder lettres, chiffres, espaces, tirets
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
     .trim()
-    .replace(/\s+/g, "-") // espaces → tirets
-    .replace(/-+/g, "-"); // tirets multiples → 1 seul
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
 }
 
 export default function SlugField({
@@ -53,7 +52,6 @@ export default function SlugField({
 
   return (
     <div>
-      {/* Label + bouton auto */}
       <div className="mb-2 flex items-center justify-between gap-3">
         <label
           htmlFor={name}
@@ -70,14 +68,11 @@ export default function SlugField({
         </button>
       </div>
 
-      {/* Champ avec préfixe visuel */}
-      <div className="flex border border-zinc-200 bg-white focus-within:border-navy-700">
-        {/* Préfixe — affiché en gris, non éditable */}
-        <span className="flex items-center border-r border-zinc-200 bg-zinc-50 px-3 text-[13px] font-mono text-zinc-500">
+      <div className="flex overflow-hidden rounded border border-zinc-200 bg-white focus-within:border-navy-700">
+        <span className="flex items-center border-r border-zinc-200 bg-zinc-50 px-3 font-mono text-[13px] text-zinc-500">
           {prefix}
         </span>
 
-        {/* Input */}
         <input
           id={name}
           name={name}
@@ -86,11 +81,10 @@ export default function SlugField({
           value={value}
           onChange={handleChange}
           placeholder="mon-article"
-          className="flex-1 px-3 py-3 text-[13.5px] font-mono text-navy-900 outline-none placeholder:text-zinc-300"
+          className="flex-1 px-3 py-3 font-mono text-[13.5px] text-navy-900 outline-none placeholder:text-zinc-300"
         />
       </div>
 
-      {/* Aperçu du lien final */}
       <div className="mt-2 flex items-start gap-2 text-[11.5px] text-zinc-500">
         <svg
           viewBox="0 0 24 24"

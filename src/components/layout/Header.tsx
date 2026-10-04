@@ -35,22 +35,23 @@ export default function Header() {
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Ouvrir le menu"
-            className="flex h-10 w-10 items-center justify-center border border-zinc-200 text-navy-900 transition hover:border-navy-900 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded border border-zinc-200 text-navy-900 transition hover:border-navy-900 lg:hidden"
           >
             <Menu className="h-4 w-4" strokeWidth={2} />
           </button>
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 bg-express-600 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:hidden"
+            className="inline-flex items-center gap-2 rounded bg-express-600 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:hidden"
           >
             Se faire accompagner
           </Link>
 
           {/* ========== DESKTOP : logo + nav + CTA ========== */}
-          <Link href="/" className="hidden shrink-0 items-center lg:flex">
+          {/* Logo — il crée déjà son propre lien vers "/", pas besoin de l'envelopper */}
+          <div className="hidden shrink-0 items-center lg:flex">
             <Logo variant="navbar" width={170} priority />
-          </Link>
+          </div>
 
           <nav className="hidden items-center gap-7 lg:flex">
             {NAV.map((item) => {
@@ -77,7 +78,7 @@ export default function Header() {
 
           <Link
             href="/contact"
-            className="group hidden items-center gap-2 bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:inline-flex"
+            className="group hidden items-center gap-2 rounded bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:inline-flex"
           >
             Se faire accompagner
             <ArrowRight
