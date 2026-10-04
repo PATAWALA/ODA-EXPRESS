@@ -1,11 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Container } from "@/components/ui/Container";
-import { ButtonLink } from "@/components/ui/Button";
+import { usePathname } from "next/navigation";
+import { Menu, ArrowRight } from "lucide-react";
 import Logo from "@/components/Logo";
+import MobileMenu from "./MobileMenu";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -19,6 +19,7 @@ const NAV = [
 
 export default function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -26,20 +27,31 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur-md">
-      <Container>
-        <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
-          {/* Logo — le composant Logo crée déjà son propre lien */}
-          <div className="flex shrink-0 items-center">
-            <span className="hidden sm:block">
-              <Logo variant="navbar" width={180} priority />
-            </span>
-            <span className="sm:hidden">
-              <Logo variant="mark" width={36} priority />
-            </span>
-          </div>
+    <>
+      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
+          {/* ========== MOBILE : hamburger + CTA ========== */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Ouvrir le menu"
+            className="flex h-10 w-10 items-center justify-center border border-zinc-200 text-navy-900 transition hover:border-navy-900 lg:hidden"
+          >
+            <Menu className="h-4 w-4" strokeWidth={2} />
+          </button>
 
-          {/* Navigation desktop */}
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-express-600 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:hidden"
+          >
+            Se faire accompagner
+          </Link>
+
+          {/* ========== DESKTOP : logo + nav + CTA ========== */}
+          <Link href="/" className="hidden shrink-0 items-center lg:flex">
+            <Logo variant="navbar" width={170} priority />
+          </Link>
+
           <nav className="hidden items-center gap-7 lg:flex">
             {NAV.map((item) => {
               const active = isActive(item.href);
@@ -63,21 +75,21 @@ export default function Header() {
             })}
           </nav>
 
-          {/* CTA */}
-          <ButtonLink
+          <Link
             href="/contact"
-            variant="primary"
-            size="sm"
-            className="group shrink-0"
+            className="group hidden items-center gap-2 bg-express-600 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 lg:inline-flex"
           >
-            <span>Se faire accompagner</span>
+            Se faire accompagner
             <ArrowRight
-              className="hidden h-3.5 w-3.5 transition group-hover:translate-x-0.5 sm:inline"
+              className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
               strokeWidth={2.5}
             />
-          </ButtonLink>
+          </Link>
         </div>
-      </Container>
-    </header>
+      </header>
+
+      {/* Menu mobile */}
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
 }
