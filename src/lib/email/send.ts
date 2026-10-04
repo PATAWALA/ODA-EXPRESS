@@ -1,4 +1,4 @@
-import { resend, FROM_EMAIL, FROM_NAME, ADMIN_EMAIL } from "./resend";
+import { getResend, FROM_EMAIL, FROM_NAME, ADMIN_EMAIL } from "./resend";
 import { WelcomeEmail } from "./templates/welcome";
 import { AdminNotificationEmail } from "./templates/admin-notification";
 import { NewArticleEmail } from "./templates/new-article";
@@ -39,7 +39,7 @@ export async function sendWelcomeEmail(params: {
     return { ok: true };
   }
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to: [params.email],
     replyTo: ADMIN_EMAIL,
@@ -82,7 +82,7 @@ export async function sendAdminNotification(params: {
     return { ok: true };
   }
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM,
     to: [ADMIN_EMAIL],
     replyTo: params.email,
@@ -144,7 +144,7 @@ export async function sendNewArticleEmail(params: {
   let lastError: string | undefined;
 
   for (const batch of batches) {
-    const { error } = await resend.emails.send({
+    const { error } = await getResend().emails.send({
       from: FROM,
       to: batch,
       subject: `Nouveauté ODA Sources — ${params.title}`,
