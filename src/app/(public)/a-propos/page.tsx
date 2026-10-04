@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   Award,
-  Building2,
   CheckCircle2,
   Eye,
   Globe2,
@@ -16,7 +15,7 @@ import { ButtonLink } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Présence à Hong Kong et en Chine continentale. Plus de trois années d'expérience terrain dans le sourcing.",
+    "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Présence à Hong Kong et en Chine continentale.",
 };
 
 const STATS = [
@@ -96,22 +95,14 @@ export default function AProposPage() {
                     strokeWidth={2.5}
                   />
                 </ButtonLink>
-
-                <ButtonLink
-                  href="/services"
-                  variant="outline"
-                  size="lg"
-                >
-                  Nos services
-                </ButtonLink>
               </div>
             </div>
 
             <div className="relative aspect-[5/4] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1400&q=85"
-                alt="Guangzhou"
+                src="/team/equipe-showroom.jpeg"
+                alt="Notre équipe en Chine"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -180,21 +171,21 @@ export default function AProposPage() {
             <div className="grid grid-cols-2 gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800&q=85"
-                alt="Port de Guangzhou"
+                src="/team/fondateur-showroom-auto.jpeg"
+                alt="Visite showroom automobile"
                 className="col-span-2 aspect-[16/10] w-full border border-zinc-200 object-cover"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=600&q=85"
-                alt="Inspection en usine"
-                className="aspect-square w-full border border-zinc-200 object-cover"
+                src="/team/fondateur-voiture-blanche.jpeg"
+                alt="Livraison véhicule client"
+                className="aspect-[4/5] w-full border border-zinc-200 object-cover"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=85"
-                alt="Entrepôt"
-                className="aspect-square w-full border border-zinc-200 object-cover"
+                src="/team/fondateur-voiture-noire.jpeg"
+                alt="Livraison véhicule client"
+                className="aspect-[4/5] w-full border border-zinc-200 object-cover"
               />
             </div>
           </div>
@@ -205,21 +196,28 @@ export default function AProposPage() {
       <section className="border-b border-zinc-200 bg-zinc-50/50 py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="mx-auto max-w-5xl">
-            <div className="grid gap-12 lg:grid-cols-[260px_1fr] lg:items-start lg:gap-16">
-              {/* Bloc signature */}
-              <div className="border border-zinc-200 bg-white p-8 text-center">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center bg-gradient-to-br from-navy-700 to-express-600 text-[24px] font-bold text-white">
-                  DA
+            <div className="grid gap-12 lg:grid-cols-[320px_1fr] lg:items-start lg:gap-16">
+              {/* Photo fondateur */}
+              <div className="border border-zinc-200 bg-white p-3">
+                <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/team/fondateur-voiture-noire.jpeg"
+                    alt="DA Olivier, fondateur"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
-                <p className="mt-5 text-[16px] font-bold tracking-tight text-navy-900">
-                  DA Olivier
-                </p>
-                <p className="mt-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-express-600">
-                  Fondateur
-                </p>
-                <p className="mt-3 text-[12px] leading-relaxed text-zinc-500">
-                  Entrepreneur burkinabè établi en Chine
-                </p>
+                <div className="px-3 py-5 text-center">
+                  <p className="text-[16px] font-bold tracking-tight text-navy-900">
+                    DA Olivier
+                  </p>
+                  <p className="mt-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-express-600">
+                    Fondateur
+                  </p>
+                  <p className="mt-2 text-[12px] leading-relaxed text-zinc-500">
+                    Entrepreneur burkinabè établi en Chine
+                  </p>
+                </div>
               </div>
 
               {/* Texte fondateur */}
@@ -260,11 +258,72 @@ export default function AProposPage() {
         </Container>
       </section>
 
+      {/* Équipe */}
+      <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <Container>
+          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
+            <div className="relative aspect-[4/5] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/team/equipe-showroom.jpeg"
+                alt="Notre équipe en Chine"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+                Notre équipe
+              </p>
+              <h2 className="mt-6 text-[28px] font-bold leading-tight tracking-tight text-navy-900 sm:text-[34px]">
+                Une équipe sur le terrain,
+                <br />
+                à vos côtés à chaque étape.
+              </h2>
+
+              <div className="mt-7 space-y-5 text-[14.5px] leading-[1.75] text-zinc-600">
+                <p>
+                  Notre force, c&apos;est une présence permanente au cœur des
+                  écosystèmes industriels et commerciaux chinois. Nous allons
+                  physiquement à la rencontre des usines, des fournisseurs et
+                  des marchés pour vous.
+                </p>
+                <p>
+                  Chaque dossier est suivi par un interlocuteur dédié qui parle
+                  votre langue, comprend vos contraintes et négocie directement
+                  en votre nom. Vous ne dépendez d&apos;aucun intermédiaire.
+                </p>
+              </div>
+
+              <ul className="mt-8 space-y-3">
+                {[
+                  "Présence permanente à Guangzhou, Yiwu et Foshan",
+                  "Interlocuteurs francophones et sinophones",
+                  "Accompagnement aux usines et salons professionnels",
+                  "Un seul contact du début à la fin de votre projet",
+                ].map((point) => (
+                  <li key={point} className="flex gap-3">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-express-600/30 bg-express-600/5">
+                      <CheckCircle2
+                        className="h-3 w-3 text-express-600"
+                        strokeWidth={2.5}
+                      />
+                    </span>
+                    <span className="text-[14px] leading-relaxed text-navy-900">
+                      {point}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Mission & Vision */}
       <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* Mission */}
             <article className="border border-zinc-200 bg-white p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center border border-express-600 bg-express-600 text-white">
                 <Target className="h-5 w-5" strokeWidth={1.6} />
@@ -283,7 +342,6 @@ export default function AProposPage() {
               </p>
             </article>
 
-            {/* Vision */}
             <article className="border border-zinc-200 bg-white p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center border border-navy-900 bg-navy-900 text-white">
                 <Globe2 className="h-5 w-5" strokeWidth={1.6} />
@@ -317,10 +375,6 @@ export default function AProposPage() {
             <h2 className="mt-6 text-[28px] font-bold leading-tight tracking-tight text-navy-900 sm:text-[34px]">
               Ce qui guide chacune de nos décisions
             </h2>
-            <p className="mt-5 text-[14.5px] leading-relaxed text-zinc-600">
-              Quatre principes appliqués à chaque projet, du premier contact à
-              la livraison finale.
-            </p>
           </div>
 
           <div className="mx-auto mt-14 grid max-w-6xl gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
@@ -341,15 +395,15 @@ export default function AProposPage() {
         </Container>
       </section>
 
-      {/* Ce qui nous distingue + CTA */}
-      <section className="bg-white py-20 sm:py-24 lg:py-28">
+      {/* CTA final */}
+      <section className="bg-navy-950 py-20 sm:py-24">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Ce qui nous distingue
               </p>
-              <h2 className="mt-6 text-[28px] font-bold leading-tight tracking-tight text-navy-900 sm:text-[34px]">
+              <h2 className="mt-6 text-[28px] font-bold leading-tight tracking-tight text-white sm:text-[34px]">
                 Plus qu&apos;un intermédiaire,
                 <br />
                 un partenaire de terrain.
@@ -364,13 +418,13 @@ export default function AProposPage() {
                   "Une connaissance approfondie du marché africain et de ses contraintes",
                 ].map((point) => (
                   <li key={point} className="flex gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-express-600/30 bg-express-600/5">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-express-500/40 bg-express-600/10">
                       <CheckCircle2
-                        className="h-3 w-3 text-express-600"
+                        className="h-3 w-3 text-express-400"
                         strokeWidth={2.5}
                       />
                     </span>
-                    <span className="text-[14px] leading-relaxed text-navy-900">
+                    <span className="text-[14px] leading-relaxed text-navy-100">
                       {point}
                     </span>
                   </li>
@@ -378,7 +432,7 @@ export default function AProposPage() {
               </ul>
             </div>
 
-            <div className="border border-zinc-200 bg-navy-950 p-8 sm:p-10">
+            <div className="border border-white/10 bg-white/5 p-8 sm:p-10">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Prêt à démarrer ?
               </p>

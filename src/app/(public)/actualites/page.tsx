@@ -1,17 +1,45 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { ARTICLES } from "@/content/articles";
+import NewsletterSection from "@/components/widgets/NewsletterSection";
+import { getArticles } from "@/lib/data/articles";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Actualités",
   description:
     "Guides, conseils et actualités sur le sourcing, l'import-export et la logistique entre la Chine et l'Afrique. Par ODA SOURCES.",
 };
 
-export default function ActualitesPage() {
-  const [featured, ...rest] = ARTICLES;
+export const revalidate = 60;
+
+export default async function ActualitesPage() {
+  const articles = await getArticles();
+
+  if (articles.length === 0) {
+    return (
+      <>
+        <section className="bg-white py-20">
+          <Container>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+                Actualités
+              </p>
+              <h1 className="mt-6 text-[32px] font-bold tracking-tight text-navy-900">
+                Aucun article pour l&apos;instant
+              </h1>
+              <p className="mt-4 text-[14px] text-zinc-600">
+                Les articles seront publiés très prochainement. Inscrivez-vous
+                pour être prévenu.
+              </p>
+            </div>
+          </Container>
+        </section>
+        <NewsletterSection />
+      </>
+    );
+  }
+
+  const [featured, ...rest] = articles;
 
   return (
     <>
@@ -100,59 +128,64 @@ export default function ActualitesPage() {
       </section>
 
       {/* Autres articles */}
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
-          <h2 className="text-[22px] font-bold tracking-tight text-navy-900 sm:text-[26px]">
-            Tous les articles
-          </h2>
+      {rest.length > 0 && (
+        <section className="bg-white py-16 sm:py-20">
+          <Container>
+            <h2 className="text-[22px] font-bold tracking-tight text-navy-900 sm:text-[26px]">
+              Tous les articles
+            </h2>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {rest.map((article) => (
-              <Link
-                key={article.slug}
-                href={`/actualites/${article.slug}`}
-                className="group flex flex-col overflow-hidden border border-zinc-200 bg-white transition hover:border-navy-300"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                  />
-                  <div className="absolute left-3 top-3">
-                    <span className="border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
-                      {article.category}
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {rest.map((article) => (
+                <Link
+                  key={article.slug}
+                  href={`/actualites/${article.slug}`}
+                  className="group flex flex-col overflow-hidden border border-zinc-200 bg-white transition hover:border-navy-300"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    />
+                    <div className="absolute left-3 top-3">
+                      <span className="border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
+                        {article.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-zinc-400">
+                      <span>{article.date}</span>
+                      <span>·</span>
+                      <span>{article.readTime}</span>
+                    </div>
+
+                    <h3 className="mt-3 text-[15.5px] font-bold leading-tight tracking-tight text-navy-900 group-hover:text-express-600">
+                      {article.title}
+                    </h3>
+
+                    <p className="mt-3 flex-1 text-[13px] leading-relaxed text-zinc-600">
+                      {article.excerpt}
+                    </p>
+
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition group-hover:gap-2.5 group-hover:text-express-600">
+                      Lire
+                      <ArrowRight className="h-3 w-3" strokeWidth={2.5} />
                     </span>
                   </div>
-                </div>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-zinc-400">
-                    <span>{article.date}</span>
-                    <span>·</span>
-                    <span>{article.readTime}</span>
-                  </div>
-
-                  <h3 className="mt-3 text-[15.5px] font-bold leading-tight tracking-tight text-navy-900 group-hover:text-express-600">
-                    {article.title}
-                  </h3>
-
-                  <p className="mt-3 flex-1 text-[13px] leading-relaxed text-zinc-600">
-                    {article.excerpt}
-                  </p>
-
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition group-hover:gap-2.5 group-hover:text-express-600">
-                    Lire
-                    <ArrowRight className="h-3 w-3" strokeWidth={2.5} />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* Newsletter — formulaire d'inscription */}
+      <NewsletterSection />
     </>
   );
 }

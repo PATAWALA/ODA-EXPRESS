@@ -1,17 +1,21 @@
 import { createClient } from "@/lib/supabase/server";
+import AdminShell from "@/components/admin/AdminShell";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // La page de login gère son propre style plein écran
-  // (le middleware a déjà redirigé les utilisateurs non connectés ailleurs)
-
-  return <>{children}</>;
+  return (
+    <AdminShell user={user ? { email: user.email ?? "" } : null}>
+      {children}
+    </AdminShell>
+  );
 }
+

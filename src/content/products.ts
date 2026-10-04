@@ -27,6 +27,7 @@ export interface ProductFamily {
   featured?: boolean;
 }
 
+
 export const PRODUCT_FAMILIES: ProductFamily[] = [
   {
     slug: "machines-industrielles",

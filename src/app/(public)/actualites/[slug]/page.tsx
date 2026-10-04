@@ -1,28 +1,20 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import {
-  ARTICLES,
-  getArticle,
+  getArticleBySlug,
   getRelatedArticles,
-} from "@/content/articles";
+} from "@/lib/data/articles";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) return { title: "Article introuvable" };
   return {
     title: article.title,
@@ -30,9 +22,7 @@ export async function generateMetadata({
     openGraph: {
       title: article.title,
       description: article.excerpt,
-      images: [
-        { url: article.image, width: 1400, height: 800, alt: article.title },
-      ],
+      images: [{ url: article.image, width: 1400, height: 800, alt: article.title }],
       type: "article",
     },
   };
@@ -40,15 +30,14 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) notFound();
 
-  const related = getRelatedArticles(slug, 3);
+  const related = await getRelatedArticles(slug, 3);
 
   return (
     <>
-      {/* Hero */}
       <section className="border-b border-zinc-200 bg-white">
         <Container>
           <div className="py-12 sm:py-16 lg:py-20">
@@ -92,11 +81,9 @@ export default async function ArticlePage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* Contenu */}
       <section className="bg-white py-16 sm:py-20">
         <Container>
           <div className="mx-auto max-w-3xl">
-            {/* Points clés */}
             {article.keyPoints && article.keyPoints.length > 0 && (
               <div className="mb-12 border border-zinc-200 bg-zinc-50/50 p-6 sm:p-8">
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
@@ -116,7 +103,6 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
             )}
 
-            {/* Paragraphes */}
             <div className="space-y-6">
               {article.content.map((paragraph, index) => (
                 <p
@@ -128,7 +114,6 @@ export default async function ArticlePage({ params }: PageProps) {
               ))}
             </div>
 
-            {/* CTA */}
             <div className="mt-16 border border-zinc-200 bg-navy-950 p-8 sm:p-10">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Passer à l&apos;action
@@ -141,17 +126,9 @@ export default async function ArticlePage({ params }: PageProps) {
                 coordonnons l&apos;expédition vers votre ville.
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink
-                  href="/contact"
-                  variant="white"
-                  size="md"
-                  className="group"
-                >
+                <ButtonLink href="/contact" variant="white" size="md" className="group">
                   Se faire accompagner
-                  <ArrowRight
-                    className="h-4 w-4 transition group-hover:translate-x-0.5"
-                    strokeWidth={2.5}
-                  />
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" strokeWidth={2.5} />
                 </ButtonLink>
               </div>
             </div>
@@ -159,14 +136,12 @@ export default async function ArticlePage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* Autres articles */}
       {related.length > 0 && (
         <section className="border-t border-zinc-200 bg-zinc-50/50 py-16 sm:py-20">
           <Container>
             <h2 className="text-[22px] font-bold tracking-tight text-navy-900 sm:text-[26px]">
               À lire aussi
             </h2>
-
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((other) => (
                 <Link

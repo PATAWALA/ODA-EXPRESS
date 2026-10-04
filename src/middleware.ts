@@ -47,6 +47,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|favicon.svg|favicon-16x16.png|favicon-32x32.png|favicon-48x48.png|apple-touch-icon.png|safari-pinned-tab.svg|mstile-150x150.png|browserconfig.xml|manifest.webmanifest|robots.txt|sitemap.xml|icons|og|brand|social|temoignages).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|favicon.svg|favicon-16x16.png|favicon-32x32.png|favicon-48x48.png|apple-touch-icon.png|safari-pinned-tab.svg|mstile-150x150.png|browserconfig.xml|manifest.webmanifest|robots.txt|sitemap.xml|icons|og|brand|social|temoignages|team|realisations).*)",
   ],
 };

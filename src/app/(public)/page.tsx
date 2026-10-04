@@ -5,6 +5,7 @@ import SectorsSection from "@/components/sections/SectorsSection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import ProductsSection from "@/components/sections/ProductsSection";
 import GallerySection from "@/components/sections/GallerySection";
+import AboutSection from "@/components/sections/AboutSection";
 import NewsletterSection from "@/components/widgets/NewsletterSection";
 import FinalCTA from "@/components/sections/FinalCTA";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <ProcessSection />
       <ProductsSection />
       <GallerySection />
+      <AboutSection />
       <NewsletterSection />
       <FinalCTA />
     </>
