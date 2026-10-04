@@ -76,24 +76,32 @@ const MOBILE_NAV: NavItem[] = [
 
 const STORAGE_KEY = "oda-admin-sidebar-collapsed";
 
-function getBreadcrumb(pathname: string): { label: string; href?: string }[] {
+type BreadcrumbItem = { label: string; href?: string };
+
+function getBreadcrumb(pathname: string): BreadcrumbItem[] {
   if (pathname === "/admin") return [{ label: "Tableau de bord" }];
   if (pathname.startsWith("/admin/articles")) {
-    const parts = [{ label: "Actualités", href: "/admin/articles" }];
+    const parts: BreadcrumbItem[] = [
+      { label: "Actualités", href: "/admin/articles" },
+    ];
     if (pathname.endsWith("/nouveau")) parts.push({ label: "Nouveau" });
     else if (pathname.match(/\/admin\/articles\/[^/]+$/))
       parts.push({ label: "Éditer" });
     return parts;
   }
   if (pathname.startsWith("/admin/produits")) {
-    const parts = [{ label: "Produits", href: "/admin/produits" }];
+    const parts: BreadcrumbItem[] = [
+      { label: "Produits", href: "/admin/produits" },
+    ];
     if (pathname.endsWith("/nouveau")) parts.push({ label: "Nouveau" });
     else if (pathname.match(/\/admin\/produits\/[^/]+$/))
       parts.push({ label: "Éditer" });
     return parts;
   }
   if (pathname.startsWith("/admin/realisations")) {
-    const parts = [{ label: "Réalisations", href: "/admin/realisations" }];
+    const parts: BreadcrumbItem[] = [
+      { label: "Réalisations", href: "/admin/realisations" },
+    ];
     if (pathname.endsWith("/nouveau")) parts.push({ label: "Nouveau" });
     else if (pathname.match(/\/admin\/realisations\/[^/]+$/))
       parts.push({ label: "Éditer" });
