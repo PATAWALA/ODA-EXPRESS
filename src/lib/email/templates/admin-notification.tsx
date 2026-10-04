@@ -33,6 +33,7 @@ export function AdminNotificationEmail({
           fontWeight: 700,
           textTransform: "uppercase",
           letterSpacing: "0.15em",
+          borderRadius: "8px",
         }}
       >
         Nouvelle demande
@@ -168,6 +169,7 @@ export function AdminNotificationEmail({
               backgroundColor: "#F8FAFC",
               padding: "16px",
               borderLeft: "3px solid #BF0808",
+              borderRadius: "8px",
               margin: "0 0 28px",
               whiteSpace: "pre-wrap",
               fontSize: "14px",
@@ -192,6 +194,7 @@ export function AdminNotificationEmail({
           textTransform: "uppercase",
           fontSize: "12px",
           letterSpacing: "0.1em",
+          borderRadius: "8px",
         }}
       >
         Se connecter au back-office

@@ -13,12 +13,12 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
       preview="Nous avons bien reçu votre demande."
       footerNote="Vous recevez cet email parce que vous avez soumis une demande sur odasources.com. Aucune action de votre part n'est requise."
     >
-      {/* Badge */}
       <p
         style={{
           margin: "0 0 20px",
           display: "inline-block",
           border: "1px solid #E4E4E7",
+          borderRadius: "8px",
           padding: "4px 10px",
           fontSize: "10px",
           textTransform: "uppercase",
@@ -29,7 +29,6 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
         Demande reçue
       </p>
 
-      {/* Titre */}
       <h1
         style={{
           margin: "0 0 24px",
@@ -45,7 +44,6 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
         nous avons bien reçu votre demande.
       </h1>
 
-      {/* Corps */}
       <p style={{ margin: "0 0 16px", fontSize: "15px", lineHeight: 1.65 }}>
         Merci pour votre confiance. Votre demande via{" "}
         <strong>{sourceLabel}</strong> a été enregistrée et transmise à notre
@@ -100,7 +98,6 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
         </li>
       </ul>
 
-      {/* CTA WhatsApp */}
       <p style={{ margin: "0 0 8px" }}>
         <a
           href="https://wa.me/8619515660197?text=Bonjour%20Mr%20ODA%2C%20je%20viens%20de%20recevoir%20votre%20email."
@@ -114,6 +111,7 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
             textTransform: "uppercase",
             fontSize: "12px",
             letterSpacing: "0.1em",
+            borderRadius: "8px",
           }}
         >
           Discuter sur WhatsApp
@@ -141,7 +139,6 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
         }}
       />
 
-      {/* Invitation à partager */}
       <p
         style={{
           margin: "0 0 8px",
