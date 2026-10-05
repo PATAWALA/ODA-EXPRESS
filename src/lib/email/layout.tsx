@@ -106,7 +106,7 @@ export function EmailLayout({ preview, footerNote, children }: LayoutProps) {
                     <p style={{ margin: "0 0 12px" }}>
                       <strong style={{ color: "#01215B" }}>ODA SOURCES</strong>
                       <br />
-                      Guangzhou · Hong Kong · Chine
+                      Chine 🇨🇳
                     </p>
                     <p style={{ margin: "0 0 12px" }}>
                       Sourcing · Contrôle qualité · Fret maritime Chine — Afrique

@@ -12,9 +12,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.odasources.com";
 const SITE_NAME = "ODA Sources";
 const SITE_TITLE =
-  "ODA Sources — Sourcing, Import-Export & Logistique Chine · Afrique";
+  "ODA SOURCES — GLOBAL SOURCING | VÉRIFICATION & CONTRÔLE QUALITÉ | SHIPPING";
 const SITE_DESCRIPTION =
-  "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Sourcing, contrôle qualité, shipping, assistance visa & hôtel, paiement fournisseur. Présence à Hong Kong et en Chine continentale.";
+  "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Sourcing, vérification & contrôle qualité, shipping, assistance visa & hôtel, paiement fournisseur.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,7 +34,6 @@ export const metadata: Metadata = {
     "contrôle qualité usine",
     "shipping Chine Afrique",
     "ODA Sources",
-    "sourcing Hong Kong",
     "logistique internationale",
     "paiement fournisseur Chine",
   ],
@@ -73,7 +72,7 @@ export const metadata: Metadata = {
         url: "/og/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ODA Sources — Sourcing & Import-Export Chine · Afrique",
+        alt: "ODA Sources — Sourcing, Vérification & Contrôle Qualité, Shipping",
       },
     ],
   },
@@ -123,10 +122,9 @@ export default function RootLayout({
               url: SITE_URL,
               logo: `${SITE_URL}/brand/logo/logo-full-960.png`,
               description: SITE_DESCRIPTION,
-              areaServed: ["Afrique", "Chine", "Hong Kong"],
+              areaServed: ["Afrique", "Chine"],
               knowsLanguage: ["fr", "en", "zh"],
               address: [
-                { "@type": "PostalAddress", addressCountry: "HK" },
                 { "@type": "PostalAddress", addressCountry: "CN" },
               ],
               contactPoint: [

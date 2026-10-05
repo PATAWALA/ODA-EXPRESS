@@ -38,7 +38,7 @@ export default function MentionsLegalesPage() {
                   <strong className="font-semibold text-navy-900">
                     Implantations :
                   </strong>{" "}
-                  Hong Kong · Chine continentale
+                  Chine 🇨🇳
                 </p>
                 <p>
                   <strong className="font-semibold text-navy-900">
@@ -134,9 +134,9 @@ export default function MentionsLegalesPage() {
               </h2>
               <p className="mt-4 text-[14.5px] leading-[1.75] text-zinc-600">
                 Les présentes mentions légales sont régies par le droit en
-                vigueur à Hong Kong. Tout litige relatif à l&apos;utilisation du
-                site relève de la compétence exclusive des tribunaux compétents
-                de Hong Kong.
+                vigueur en Chine 🇨🇳. Tout litige relatif à l&apos;utilisation
+                du site relève de la compétence exclusive des tribunaux
+                compétents en Chine.
               </p>
             </div>
           </div>

@@ -15,12 +15,12 @@ import { ButtonLink } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine. Présence à Hong Kong et en Chine continentale.",
+    "ODA SOURCES IMPORT & EXPORT CO., LIMITED — Votre partenaire stratégique pour vos opérations en Chine.",
 };
 
 const STATS = [
   { value: "+3 ans", label: "d'expérience terrain en Chine" },
-  { value: "2", label: "implantations Hong Kong & Chine" },
+  { value: "2", label: "implantations en Chine" },
   { value: "5", label: "pôles d'expertise intégrés" },
   { value: "24 h", label: "délai de réponse moyen" },
 ];
@@ -78,8 +78,7 @@ export default function AProposPage() {
                 ODA SOURCES IMPORT & EXPORT CO., LIMITED est une société
                 spécialisée dans le sourcing, l&apos;import-export et
                 l&apos;accompagnement des opérations commerciales
-                internationales, avec une présence à Hong Kong et en Chine
-                continentale.
+                internationales, avec une présence permanente en Chine 🇨🇳.
               </p>
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -98,7 +97,7 @@ export default function AProposPage() {
               </div>
             </div>
 
-            <div className="relative aspect-[5/4] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/equipe-showroom.jpeg"
@@ -262,7 +261,7 @@ export default function AProposPage() {
       <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
-            <div className="relative aspect-[4/5] overflow-hidden border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/equipe-showroom.jpeg"
@@ -297,7 +296,7 @@ export default function AProposPage() {
 
               <ul className="mt-8 space-y-3">
                 {[
-                  "Présence permanente à Guangzhou, Yiwu et Foshan",
+                  "Présence permanente en Chine 🇨🇳",
                   "Interlocuteurs francophones et sinophones",
                   "Accompagnement aux usines et salons professionnels",
                   "Un seul contact du début à la fin de votre projet",
@@ -352,12 +351,11 @@ export default function AProposPage() {
               <p className="mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
                 Faire de ODA SOURCES IMPORT & EXPORT un acteur reconnu des
                 échanges commerciaux entre la Chine, l&apos;Afrique et le reste
-                du monde. À travers notre présence à Hong Kong et en Chine
-                continentale, nous souhaitons construire un réseau
-                international durable reliant fabricants, fournisseurs,
-                entrepreneurs, distributeurs et investisseurs. Plus
-                qu&apos;un intermédiaire, notre ambition est d&apos;être un
-                partenaire de terrain pour le développement international de
+                du monde. À travers notre présence en Chine, nous souhaitons
+                construire un réseau international durable reliant fabricants,
+                fournisseurs, entrepreneurs, distributeurs et investisseurs.
+                Plus qu&apos;un intermédiaire, notre ambition est d&apos;être
+                un partenaire de terrain pour le développement international de
                 nos clients.
               </p>
             </article>
@@ -377,10 +375,10 @@ export default function AProposPage() {
             </h2>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-6xl gap-px overflow-hidden border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-14 grid max-w-6xl gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((value) => (
               <div key={value.title} className="bg-white p-7">
-                <span className="flex h-11 w-11 items-center justify-center border border-zinc-200 text-navy-900">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900">
                   <value.icon className="h-5 w-5" strokeWidth={1.6} />
                 </span>
                 <h3 className="mt-5 text-[15px] font-bold tracking-tight text-navy-900">
@@ -411,7 +409,7 @@ export default function AProposPage() {
 
               <ul className="mt-8 space-y-4">
                 {[
-                  "Une présence physique permanente à Hong Kong et en Chine continentale",
+                  "Une présence physique permanente en Chine 🇨🇳",
                   "Une vérification terrain de chaque fournisseur avant tout paiement",
                   "Une couverture complète : sourcing, contrôle, shipping, visa, paiement",
                   "Un seul interlocuteur francophone du début à la fin",

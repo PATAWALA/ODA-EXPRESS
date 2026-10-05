@@ -30,7 +30,7 @@ export function NewArticleEmail({
           textTransform: "uppercase",
           letterSpacing: "0.15em",
           color: "#71717A",
-          borderRadius: "8px",
+          borderRadius: "16px",
         }}
       >
         Nouveauté ODA Sources
@@ -60,7 +60,7 @@ export function NewArticleEmail({
             margin: "0 0 24px",
             display: "block",
             border: "1px solid #E4E4E7",
-            borderRadius: "8px",
+            borderRadius: "16px",
           }}
         />
       )}
@@ -82,7 +82,7 @@ export function NewArticleEmail({
             textTransform: "uppercase",
             fontSize: "12px",
             letterSpacing: "0.1em",
-            borderRadius: "8px",
+            borderRadius: "16px",
           }}
         >
           Lire l&apos;article

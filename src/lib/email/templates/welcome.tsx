@@ -18,7 +18,7 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
           margin: "0 0 20px",
           display: "inline-block",
           border: "1px solid #E4E4E7",
-          borderRadius: "8px",
+          borderRadius: "16px",
           padding: "4px 10px",
           fontSize: "10px",
           textTransform: "uppercase",
@@ -47,7 +47,7 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
       <p style={{ margin: "0 0 16px", fontSize: "15px", lineHeight: 1.65 }}>
         Merci pour votre confiance. Votre demande via{" "}
         <strong>{sourceLabel}</strong> a été enregistrée et transmise à notre
-        équipe à Guangzhou.
+        équipe en Chine 🇨🇳.
       </p>
 
       <p style={{ margin: "0 0 24px", fontSize: "15px", lineHeight: 1.65 }}>
@@ -111,7 +111,7 @@ export function WelcomeEmail({ firstName, sourceLabel }: Props) {
             textTransform: "uppercase",
             fontSize: "12px",
             letterSpacing: "0.1em",
-            borderRadius: "8px",
+            borderRadius: "16px",
           }}
         >
           Discuter sur WhatsApp

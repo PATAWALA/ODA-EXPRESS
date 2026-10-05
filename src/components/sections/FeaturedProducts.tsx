@@ -1,77 +1,105 @@
 import Link from "next/link";
-import { ArrowRight, Package } from "lucide-react";
+import {
+  ArrowRight,
+  MessageCircle,
+  Search,
+  Link2,
+  FileText,
+} from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionTitle } from "@/components/ui/SectionTitle";
-import { PRODUCT_FAMILIES } from "@/content/products";
 
-export default function FeaturedProducts() {
-  const featured = PRODUCT_FAMILIES.filter((p) => p.featured).slice(0, 6);
+const STEPS = [
+  {
+    icon: Link2,
+    title: "Envoyez-nous le lien",
+    description:
+      "Collez simplement l'URL du produit depuis n'importe quelle plateforme.",
+  },
+  {
+    icon: FileText,
+    title: "Ou décrivez-le",
+    description:
+      "Nom, photo, quantité, ville de livraison : nous comprenons votre besoin.",
+  },
+  {
+    icon: Search,
+    title: "On s'occupe du reste",
+    description:
+      "Recherche fournisseur, négociation, contrôle qualité et expédition.",
+  },
+];
 
+export default function ProductRequestCTA() {
   return (
-    <section className="border-b border-zinc-100 bg-gradient-to-b from-navy-50/30 to-white py-20 sm:py-24">
+    <section className="border-b border-zinc-200 bg-zinc-50/50 py-16 sm:py-20 lg:py-24">
       <Container>
-        <SectionTitle
-          badge="Catalogue"
-          title="Voici les produits que nos clients commandent le plus"
-          subtitle="Une sélection de familles de produits que nous sourçons régulièrement pour nos clients en Afrique et dans le monde."
-        />
+        <div className="mx-auto max-w-6xl">
+          {/* En-tête */}
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+              Produit introuvable ?
+            </p>
+            <h2 className="mt-6 text-[28px] font-bold leading-tight tracking-tight text-navy-900 sm:text-[34px]">
+              Vous cherchez un produit
+              <br />
+              qui n&apos;est pas dans la liste ?
+            </h2>
+            <p className="mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
+              Nous sourçons tout type de produit depuis la Chine. Envoyez-nous
+              votre demande, nous trouvons le fournisseur, négocions et
+              livrons à votre entrepôt.
+            </p>
+          </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((product) => (
-            <Link
-              key={product.slug}
-              href={`/produits#${product.slug}`}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-[0_1px_2px_rgba(1,18,52,0.04)] transition hover:-translate-y-0.5 hover:border-zinc-200 hover:shadow-[0_12px_32px_-12px_rgba(1,18,52,0.15)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-navy-900/10 to-transparent" />
-
-                <div className="absolute left-3 top-3">
-                  <span className="rounded-2xl bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-700 shadow-sm backdrop-blur">
-                    {product.category}
+          {/* Comment ça marche : 3 étapes */}
+          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-3">
+            {STEPS.map((step, index) => (
+              <div key={step.title} className="bg-white p-6 sm:p-7">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900">
+                    <step.icon className="h-4 w-4" strokeWidth={1.6} />
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-express-600">
+                    Étape {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-
-                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-white/95 text-navy-700 shadow-sm backdrop-blur">
-                    <Package className="h-4 w-4" strokeWidth={1.75} />
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-[15px] font-bold tracking-tight text-navy-700">
-                  {product.title}
+                <h3 className="mt-5 text-[15px] font-bold tracking-tight text-navy-900">
+                  {step.title}
                 </h3>
-                {product.description && (
-                  <p className="mt-2 flex-1 text-[12.5px] leading-relaxed text-zinc-600">
-                    {product.description}
-                  </p>
-                )}
-                <span className="mt-5 inline-flex items-center gap-1.5 text-[12.5px] font-bold text-express-600 transition group-hover:gap-2.5">
-                  Demander un devis
-                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                </span>
+                <p className="mt-2.5 text-[13px] leading-relaxed text-zinc-600">
+                  {step.description}
+                </p>
               </div>
-            </Link>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/produits"
-            className="inline-flex items-center gap-2 rounded-2xl border border-navy-200 bg-white px-6 py-3 text-[13px] font-bold text-navy-700 transition hover:border-navy-700 hover:bg-navy-50"
-          >
-            Voir tout le catalogue
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-          </Link>
+          {/* Actions — centrées */}
+          <div className="mt-14 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+            <Link
+              href="/contact"
+              className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-express-600 px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 sm:w-64"
+            >
+              Envoyer ma demande
+              <ArrowRight
+                className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+                strokeWidth={2.5}
+              />
+            </Link>
+
+            <Link
+              href="https://wa.me/8619515660197?text=Bonjour%20ODA%20SOURCES%2C%20je%20recherche%20un%20produit%20sp%C3%A9cifique."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-600 bg-white px-8 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-emerald-700 transition hover:bg-emerald-50 sm:w-64"
+            >
+              <MessageCircle className="h-4 w-4" strokeWidth={2} />
+              WhatsApp
+            </Link>
+          </div>
+
+          <p className="mt-6 text-center text-[12px] text-zinc-500">
+            Réponse sous 24 heures ouvrées · Sans engagement
+          </p>
         </div>
       </Container>
     </section>

@@ -42,10 +42,7 @@ export default function Footer() {
 
             <div className="mt-6 flex flex-wrap gap-2">
               <span className="rounded-2xl border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
-                Hong Kong
-              </span>
-              <span className="rounded-2xl border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
-                Chine Continentale
+                Chine 🇨🇳
               </span>
             </div>
           </div>
@@ -135,7 +132,7 @@ export default function Footer() {
                   className="mt-0.5 h-4 w-4 shrink-0 text-express-400"
                   strokeWidth={1.75}
                 />
-                <span>Hong Kong · Chine Continentale</span>
+                <span>Chine 🇨🇳</span>
               </li>
 
               <li className="flex items-start gap-3 text-[13px] text-navy-200">
