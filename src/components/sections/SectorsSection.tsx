@@ -23,7 +23,7 @@ export default function SectorsSection() {
               className="group relative flex flex-col bg-white p-7 transition hover:bg-zinc-50"
             >
               {/* Icône */}
-              <span className="flex h-11 w-11 items-center justify-center border border-zinc-200 text-navy-900 transition group-hover:border-express-600 group-hover:bg-express-600 group-hover:text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900 transition group-hover:border-express-600 group-hover:bg-express-600 group-hover:text-white">
                 <sector.icon className="h-5 w-5" strokeWidth={1.6} />
               </span>
 

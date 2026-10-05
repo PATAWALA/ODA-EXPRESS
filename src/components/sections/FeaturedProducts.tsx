@@ -34,13 +34,13 @@ export default function FeaturedProducts() {
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-navy-900/10 to-transparent" />
 
                 <div className="absolute left-3 top-3">
-                  <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-700 shadow-sm backdrop-blur">
+                  <span className="rounded-2xl bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-700 shadow-sm backdrop-blur">
                     {product.category}
                   </span>
                 </div>
 
                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-navy-700 shadow-sm backdrop-blur">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-2xl bg-white/95 text-navy-700 shadow-sm backdrop-blur">
                     <Package className="h-4 w-4" strokeWidth={1.75} />
                   </span>
                 </div>
@@ -67,7 +67,7 @@ export default function FeaturedProducts() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/produits"
-            className="inline-flex items-center gap-2 rounded-full border border-navy-200 bg-white px-6 py-3 text-[13px] font-bold text-navy-700 transition hover:border-navy-700 hover:bg-navy-50"
+            className="inline-flex items-center gap-2 rounded-2xl border border-navy-200 bg-white px-6 py-3 text-[13px] font-bold text-navy-700 transition hover:border-navy-700 hover:bg-navy-50"
           >
             Voir tout le catalogue
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -77,4 +77,3 @@ export default function FeaturedProducts() {
     </section>
   );
 }
-

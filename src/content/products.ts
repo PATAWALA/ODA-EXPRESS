@@ -27,7 +27,6 @@ export interface ProductFamily {
   featured?: boolean;
 }
 
-
 export const PRODUCT_FAMILIES: ProductFamily[] = [
   {
     slug: "machines-industrielles",
@@ -56,7 +55,7 @@ export const PRODUCT_FAMILIES: ProductFamily[] = [
     image:
       "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=85",
     items: [
-      "Carrelage sol et mur (Foshan)",
+      "Carrelage sol et mur",
       "Sanitaires et robinetterie",
       "Portes bois, acier et aluminium",
       "Profilés aluminium et vitrage",

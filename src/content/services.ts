@@ -40,11 +40,11 @@ export const SERVICES: Service[] = [
       "Nous identifions, vérifions et négocions directement auprès des usines chinoises pour vous livrer le produit qui correspond réellement à votre besoin.",
     paragraphs: [
       "Notre rôle n'est pas de chercher le prix le plus bas, mais la solution la plus adaptée à vos contraintes : qualité attendue, fiabilité du fournisseur, quantité minimum de commande, délais de production et contraintes logistiques.",
-      "Nous intervenons sur l'ensemble des marchés chinois : 1688, Alibaba, Taobao, ainsi que sur les grands salons professionnels de Guangzhou, Yiwu, Shenzhen et Foshan. Nous vérifions chaque fournisseur avant d'engager votre commande.",
+      "Nous intervenons partout en Chine auprès des usines et fournisseurs locaux, ainsi que sur les grands salons professionnels. Chaque fournisseur est vérifié avant d'engager votre commande.",
       "Vous recevez des échantillons ou des photos réelles avant validation, un prix départ usine négocié, et une traçabilité complète de votre commande jusqu'à l'expédition.",
     ],
     features: [
-      "Recherche de fournisseurs certifiés 1688 / Alibaba / Taobao",
+      "Recherche de fournisseurs certifiés en Chine 🇨🇳",
       "Négociation commerciale et conditions de production",
       "Échantillons et photos avant validation",
       "Achat direct et sécurisé auprès de l'usine",
@@ -104,7 +104,7 @@ export const SERVICES: Service[] = [
       "En cas d'écart constaté, nous bloquons le paiement et engageons la discussion avec le fournisseur : correction, remplacement, ou renégociation du prix. Vous restez toujours décideur.",
     ],
     features: [
-      "Visite physique de l'usine en Chine",
+      "Visite physique de l'usine en Chine 🇨🇳",
       "Audit de conformité et vérification des licences",
       "Contrôle qualité complet avant expédition",
       "Rapport photo & vidéo sous 24 heures",
@@ -155,19 +155,19 @@ export const SERVICES: Service[] = [
     slug: "shipping",
     icon: Ship,
     title: "Shipping & Logistique",
-    short: "Fret maritime, aérien et dédouanement.",
+    short: "Fret maritime, aérien, vrac et dédouanement.",
     intro:
       "Nous coordonnons l'ensemble de vos expéditions internationales, du choix du mode de transport jusqu'à la livraison finale à votre entrepôt.",
     paragraphs: [
-      "Selon la nature de votre marchandise, vos volumes et vos délais, nous choisissons le mode de transport le plus adapté : fret maritime en groupage ou conteneur complet, fret aérien express, ou solution mixte.",
+      "Selon la nature de votre marchandise, vos volumes et vos délais, nous choisissons le mode de transport le plus adapté : fret maritime en LCL (groupage de colis) ou FCL (conteneur complet), fret aérien express, ou bulk carrier pour les vracs.",
       "Nous prenons en charge l'emballage renforcé, la consolidation de vos colis, la documentation d'export, le dédouanement en Chine et à l'arrivée, ainsi que la livraison finale jusqu'à votre porte.",
       "Un seul interlocuteur suit votre dossier de l'usine jusqu'à la remise. Vous recevez des points d'étape à chaque phase du transport et une traçabilité complète.",
     ],
     features: [
-      "Fret maritime : groupage et conteneur complet",
+      "Fret maritime : LCL (groupage) et FCL (conteneur complet)",
       "Fret aérien express",
-      "Dédouanement Chine et Afrique",
-      "Livraison finale à votre entrepôt",
+      "Bulk carrier (vrac)",
+      "Dédouanement et livraison finale à votre entrepôt",
     ],
     image:
       "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1400&q=85",
@@ -175,7 +175,7 @@ export const SERVICES: Service[] = [
       {
         title: "Choix du mode",
         description:
-          "Maritime ou aérien selon vos volumes, délais et budget.",
+          "Maritime, aérien ou vrac selon vos volumes, délais et budget.",
       },
       {
         title: "Emballage & consolidation",
@@ -224,7 +224,7 @@ export const SERVICES: Service[] = [
       "Un interprète professionnel peut vous accompagner tout au long du séjour : traduction, négociation, formalisation des engagements. Vous ne perdez aucune opportunité à cause d'une barrière linguistique.",
     ],
     features: [
-      "Assistance visa Chine",
+      "Assistance visa Chine 🇨🇳",
       "Réservation hôtel et transport",
       "Interprète professionnel francophone",
       "Accompagnement aux usines et marchés",

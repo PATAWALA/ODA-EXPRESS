@@ -42,35 +42,35 @@ export default function Hero() {
         <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-24 lg:py-28">
           {/* Colonne texte — 1re sur mobile, 1re sur desktop */}
           <div className="order-1">
-            {/* Titre serif deux tons + mots soulignés */}
+            {/* Eyebrow */}
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+              ODA SOURCES
+            </p>
+            <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-zinc-500 sm:text-[11.5px]">
+              Sourcing · Vérification · Contrôle qualité · Shipping
+            </p>
+
+            {/* Titre serif deux tons */}
             <h1
-              className="text-[36px] leading-[1.15] tracking-[-0.02em] text-navy-900 sm:text-[44px] lg:text-[54px]"
+              className="mt-6 text-[34px] leading-[1.15] tracking-[-0.02em] text-navy-900 sm:text-[42px] lg:text-[50px]"
               style={{
                 fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontWeight: 500,
               }}
             >
-              Vos achats en Chine,
-              <br />
-              <span className="underline decoration-express-600 decoration-[3px] underline-offset-[8px]">
-                vérifiés
-              </span>{" "}
-              et{" "}
-              <span className="underline decoration-express-600 decoration-[3px] underline-offset-[8px]">
-                livrés
-              </span>
+              Votre partenaire en Chine,
               <br />
               <span className="text-express-600">
-                jusqu&apos;à votre entrepôt.
+                du sourcing à l&apos;expédition.
               </span>
             </h1>
 
             {/* Sous-titre */}
-            <p className="mt-6 max-w-2xl text-[15.5px] leading-[1.7] text-zinc-600 sm:text-[17px]">
-              Nous accompagnons les commerçants, distributeurs, industriels et
-              investisseurs africains à chaque étape de leurs opérations
-              d&apos;import : recherche de fournisseurs, négociation, contrôle
-              qualité, fret international et livraison finale.
+            <p className="mt-6 max-w-2xl text-[15.5px] leading-[1.7] text-zinc-600 sm:text-[16.5px]">
+              Nous accompagnons entreprises, commerçants et investisseurs dans
+              leurs achats en Chine : recherche et vérification de
+              fournisseurs, négociation, contrôle qualité et organisation de
+              l&apos;expédition internationale jusqu&apos;à votre destination.
             </p>
 
             {/* CTA + micro-réassurance */}
@@ -104,11 +104,9 @@ export default function Hero() {
               </div>
 
               <p className="mt-5 flex flex-col items-center gap-1.5 text-[12.5px] text-zinc-500 sm:flex-row sm:justify-start sm:gap-0">
-                <span>Réponse sous 24 h</span>
-                <span className="hidden px-2 sm:inline">·</span>
-                <span>Sans engagement</span>
-                <span className="hidden px-2 sm:inline">·</span>
                 <span>Un seul interlocuteur</span>
+                <span className="hidden px-2 sm:inline">·</span>
+                <span>De la recherche du produit jusqu&apos;au shipping</span>
               </p>
             </div>
           </div>
