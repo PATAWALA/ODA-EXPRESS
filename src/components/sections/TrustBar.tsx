@@ -5,7 +5,7 @@ const POINTS = [
   {
     icon: Building2,
     title: "Présence locale",
-    description: "Hong Kong & Chine continentale",
+    description: "Présence permanente en Chine 🇨🇳",
   },
   {
     icon: ShieldCheck,
