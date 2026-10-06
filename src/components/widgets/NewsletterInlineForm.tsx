@@ -29,7 +29,7 @@ export default function NewsletterInlineForm() {
 
   if (state === "done") {
     return (
-      <div className="flex items-start gap-3 border border-emerald-200 bg-emerald-50 p-5">
+      <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
         <CheckCircle2
           className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600"
           strokeWidth={2}
@@ -58,12 +58,12 @@ export default function NewsletterInlineForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="votre@email.com"
-          className="w-full rounded border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+          className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700 focus:ring-4 focus:ring-navy-100"
         />
       </label>
 
       {error && (
-        <p className="border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
+        <p className="rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
           {error}
         </p>
       )}
@@ -71,7 +71,7 @@ export default function NewsletterInlineForm() {
       <button
         type="submit"
         disabled={state === "loading"}
-        className="group inline-flex w-full items-center justify-between gap-3 rounded bg-express-600 px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+        className="group inline-flex w-full items-center justify-between gap-3 rounded-2xl bg-gradient-to-br from-express-600 to-express-700 px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white shadow-sm transition hover:shadow-md disabled:opacity-60"
       >
         {state === "loading" ? "Inscription..." : "Je m'inscris"}
         <ArrowRight
