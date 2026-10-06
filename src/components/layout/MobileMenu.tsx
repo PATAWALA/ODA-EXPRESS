@@ -18,6 +18,7 @@ const LINKS: NavLink[] = [
   { href: "/produits", label: "Produits", subtitle: "Catalogue produits" },
   { href: "/realisations", label: "Réalisations", subtitle: "Galerie de projets" },
   { href: "/actualites", label: "Actualités", subtitle: "Guides & conseils" },
+  { href: "/newsletter", label: "Veille Import", subtitle: "Inscrivez-vous gratuitement" },
   { href: "/a-propos", label: "À propos", subtitle: "Qui nous sommes" },
 ];
 

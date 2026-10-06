@@ -50,7 +50,7 @@ export const SERVICES: Service[] = [
       "Achat direct et sécurisé auprès de l'usine",
     ],
     image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&q=85",
+      "global.jpeg",
     steps: [
       {
         title: "Cadrage du besoin",
@@ -110,7 +110,7 @@ export const SERVICES: Service[] = [
       "Rapport photo & vidéo sous 24 heures",
     ],
     image:
-      "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=1400&q=85",
+      "/ve.jpeg",
     steps: [
       {
         title: "Vérification de l'usine",
@@ -170,7 +170,7 @@ export const SERVICES: Service[] = [
       "Dédouanement et livraison finale à votre entrepôt",
     ],
     image:
-      "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1400&q=85",
+      "/lo.jpeg",
     steps: [
       {
         title: "Choix du mode",
@@ -290,7 +290,7 @@ export const SERVICES: Service[] = [
       "Acompte et solde encadrés",
     ],
     image:
-      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1400&q=85",
+      "/paiement2.jpg",
     steps: [
       {
         title: "Vérification du bénéficiaire",

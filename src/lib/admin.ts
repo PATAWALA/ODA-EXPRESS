@@ -9,3 +9,4 @@ export function getGreeting(): string {
   if (hour >= 5 && hour < 18) return "Bonjour";
   return "Bonsoir";
 }
+
