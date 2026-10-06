@@ -1,269 +1,143 @@
 "use client";
 
-import Image from "next/image";
-import {
-  ShoppingBag,
-  Menu,
-  X,
-  Search,
-  User,
-  Sparkles,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { useCart } from "@/context/CartContext";
-import { categories } from "@/data/products";
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, ArrowRight, Mail } from "lucide-react";
+import Logo from "@/components/Logo";
+import MobileMenu from "./MobileMenu";
+import { cn } from "@/lib/utils";
 
-export default function Navbar() {
-  const { count, openCart } = useCart();
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+const NAV = [
+  { label: "Accueil", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Produits", href: "/produits" },
+  { label: "Réalisations", href: "/realisations" },
+  { label: "Actualités", href: "/actualites" },
+  { label: "À propos", href: "/a-propos" },
+];
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+export default function Header() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (open || searchOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open, searchOpen]);
-
-  const scrollToCatalog = (cat?: string) => {
-    setOpen(false);
-    const el = document.getElementById("catalogue");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    if (cat) {
-      window.dispatchEvent(new CustomEvent("gm:setCategory", { detail: cat }));
-    }
-  };
+  function isActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  }
 
   return (
     <>
-      {/* ============ ANNONCE TOP BAR ============ */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-[60] bg-[#1A1A1A] text-[#EFECE6] transition-all duration-500 ${
-          scrolled ? "h-0 opacity-0" : "h-9 opacity-100"
-        } overflow-hidden`}
-      >
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-8 h-9 flex items-center justify-center gap-3 text-[10px] uppercase tracking-[0.3em]">
-          <Sparkles size={11} strokeWidth={1.5} className="text-[#A8896A]" />
-          <span className="text-[#EFECE6]/70">
-            Livraison offerte à Kinshasa dès 150 $
-          </span>
-          <span className="hidden md:inline text-[#A8896A]">·</span>
-          <span className="hidden md:inline text-[#EFECE6]/70">
-            Paiement sécurisé
-          </span>
-        </div>
-      </div>
-
-      {/* ============ HEADER ============ */}
-      <header
-        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "top-3 py-0" : "top-12 py-0"
-        }`}
-      >
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-8">
-          <div
-            className={`flex items-center justify-between gap-4 px-4 lg:px-6 h-16 rounded-full border transition-all duration-500 ${
-              scrolled
-                ? "bg-[#EFECE6]/85 backdrop-blur-xl border-[#1A1A1A]/10 shadow-[0_10px_40px_-20px_rgba(26,26,26,0.3)]"
-                : "bg-[#EFECE6]/60 backdrop-blur-md border-[#1A1A1A]/8"
-            }`}
+      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
+          {/* ========== MOBILE : hamburger + CTA ========== */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Ouvrir le menu"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900 transition hover:border-navy-900 hover:bg-navy-50 lg:hidden"
           >
-            {/* -------- GAUCHE : LOGO -------- */}
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-3 shrink-0"
-              aria-label="GM Boutique — Accueil"
+            <Menu className="h-4 w-4" strokeWidth={2} />
+          </button>
+
+          <div className="flex items-center gap-2 lg:hidden">
+            {/* Icône abonnement mobile */}
+            <Link
+              href="/newsletter"
+              aria-label="S'abonner à la veille"
+              title="S'abonner à la veille import"
+              className={cn(
+                "group relative flex h-10 w-10 items-center justify-center rounded-2xl border transition",
+                isActive("/newsletter")
+                  ? "border-navy-900 bg-gradient-to-br from-navy-700 to-navy-900 text-white shadow-md"
+                  : "border-zinc-200 bg-white text-navy-900 hover:border-navy-300 hover:bg-navy-50",
+              )}
             >
-              <div className="relative w-10 h-10 rounded-full overflow-hidden bg-[#E6E1D8] ring-1 ring-[#1A1A1A]/10">
-                <Image
-                  src="/logo.jpg"
-                  alt="GM Boutique & Sélection"
-                  fill
-                  priority
-                  sizes="40px"
-                  className="object-cover"
-                />
-              </div>
-              <span className="hidden sm:flex flex-col leading-none text-left">
-                <span className="font-serif text-[15px] italic text-[#1A1A1A] tracking-wide">
-                  GM Boutique
-                </span>
-                <span className="not-italic uppercase tracking-[0.22em] text-[9px] text-[#1A1A1A]/50 mt-1">
-                  & Sélection
-                </span>
-              </span>
-            </button>
+              <Mail className="h-4 w-4" strokeWidth={1.75} />
+              <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-express-600" />
+            </Link>
 
-            {/* -------- CENTRE : NAV DESKTOP -------- */}
-            <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => scrollToCatalog(cat)}
-                  className="group relative px-4 py-2 text-[11px] uppercase tracking-[0.18em] text-[#1A1A1A]/70 hover:text-[#1A1A1A] transition-colors"
+            {/* CTA principal mobile */}
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-br from-express-600 to-express-700 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white shadow-sm transition hover:shadow-md"
+            >
+              Se faire accompagner
+            </Link>
+          </div>
+
+          {/* ========== DESKTOP : logo + nav + actions ========== */}
+          <div className="hidden shrink-0 items-center lg:flex">
+            <Logo variant="navbar" width={170} priority />
+          </div>
+
+          <nav className="hidden items-center gap-7 lg:flex">
+            {NAV.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative text-[13px] font-semibold tracking-tight transition",
+                    active
+                      ? "text-navy-900"
+                      : "text-zinc-500 hover:text-navy-900",
+                  )}
                 >
-                  {cat}
-                  <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-px w-0 bg-[#1A1A1A] transition-all duration-300 group-hover:w-6" />
-                </button>
-              ))}
-            </nav>
+                  {item.label}
+                  {active && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-express-600" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
 
-            {/* -------- DROITE : ACTIONS -------- */}
-            <div className="flex items-center gap-1 shrink-0">
-              {/* Recherche */}
-              <button
-                onClick={() => setSearchOpen(true)}
-                aria-label="Recherche"
-                className="w-10 h-10 rounded-full flex items-center justify-center text-[#1A1A1A]/70 hover:text-[#1A1A1A] hover:bg-[#1A1A1A]/5 transition"
-              >
-                <Search size={16} strokeWidth={1.5} />
-              </button>
+          {/* Actions desktop */}
+          <div className="hidden items-center gap-2.5 lg:flex">
+            {/* Icône abonnement — style discret */}
+            <Link
+              href="/newsletter"
+              aria-label="S'abonner à la veille import"
+              title="S'abonner à la veille import"
+              className={cn(
+                "group relative flex h-10 w-10 items-center justify-center rounded-2xl border transition-all duration-300",
+                isActive("/newsletter")
+                  ? "border-navy-900 bg-gradient-to-br from-navy-700 to-navy-900 text-white shadow-md"
+                  : "border-zinc-200 bg-white text-navy-900 hover:border-navy-300 hover:bg-gradient-to-br hover:from-navy-50 hover:to-white hover:shadow-sm",
+              )}
+            >
+              <Mail
+                className="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
+                strokeWidth={1.75}
+              />
+              {/* Point rouge clignotant */}
+              <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-express-600" />
 
-              {/* Compte */}
-              <button
-                aria-label="Compte"
-                className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center text-[#1A1A1A]/70 hover:text-[#1A1A1A] hover:bg-[#1A1A1A]/5 transition"
-              >
-                <User size={16} strokeWidth={1.5} />
-              </button>
+              {/* Tooltip au survol */}
+              <span className="pointer-events-none absolute -bottom-11 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-2xl border border-navy-100 bg-white px-2.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy-900 opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 lg:block">
+                S&apos;abonner
+              </span>
+            </Link>
 
-              {/* Séparateur vertical */}
-              <span className="hidden sm:block w-px h-5 bg-[#1A1A1A]/15 mx-1" />
-
-              {/* Panier — icône seule avec badge */}
-              <button
-                onClick={openCart}
-                aria-label={`Panier — ${count} article(s)`}
-                className="relative w-10 h-10 rounded-full flex items-center justify-center text-[#1A1A1A] hover:bg-[#1A1A1A]/5 transition"
-              >
-                <ShoppingBag size={17} strokeWidth={1.5} />
-                {count > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#A8896A] text-[#EFECE6] text-[9px] font-medium tabular-nums flex items-center justify-center ring-2 ring-[#EFECE6]">
-                    {count}
-                  </span>
-                )}
-              </button>
-
-              {/* Menu mobile */}
-              <button
-                className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1A1A1A]/5 transition ml-1"
-                onClick={() => setOpen((v) => !v)}
-                aria-label="Menu"
-              >
-                {open ? (
-                  <X size={18} strokeWidth={1.5} />
-                ) : (
-                  <Menu size={18} strokeWidth={1.5} />
-                )}
-              </button>
-            </div>
+            {/* CTA principal */}
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-2 rounded-2xl bg-gradient-to-br from-express-600 to-express-700 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white shadow-md transition-all duration-300 hover:shadow-[0_12px_32px_-12px_rgba(191,8,8,0.5)]"
+            >
+              Se faire accompagner
+              <ArrowRight
+                className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+                strokeWidth={2.5}
+              />
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* ============ MENU MOBILE PLEIN ÉCRAN ============ */}
-      <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
-      >
-        <div
-          onClick={() => setOpen(false)}
-          className="absolute inset-0 bg-[#1A1A1A]/40 backdrop-blur-sm"
-        />
-        <div
-          className={`absolute top-0 left-0 right-0 bg-[#EFECE6] pt-32 pb-12 px-6 rounded-b-[32px] transition-transform duration-500 ${
-            open ? "translate-y-0" : "-translate-y-full"
-          }`}
-        >
-          <nav className="flex flex-col">
-            {categories.map((cat, i) => (
-              <button
-                key={cat}
-                onClick={() => scrollToCatalog(cat)}
-                className="group flex items-center justify-between py-5 border-b border-[#1A1A1A]/10 last:border-0 text-left"
-              >
-                <span className="font-serif text-[28px] italic text-[#1A1A1A]">
-                  {cat}
-                </span>
-                <span className="text-[10px] tabular-nums tracking-[0.3em] text-[#1A1A1A]/40">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </button>
-            ))}
-          </nav>
-
-          <div className="mt-10 flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-[#1A1A1A]/50">
-            <span>Kinshasa · RDC</span>
-            <span>+243 900 000 000</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ============ OVERLAY RECHERCHE ============ */}
-      <div
-        className={`fixed inset-0 z-[70] transition-opacity duration-500 ${
-          searchOpen
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
-      >
-        <div
-          onClick={() => setSearchOpen(false)}
-          className="absolute inset-0 bg-[#1A1A1A]/50 backdrop-blur-md"
-        />
-        <div
-          className={`absolute top-0 left-0 right-0 bg-[#EFECE6] pt-8 pb-8 px-6 lg:px-8 transition-transform duration-500 ${
-            searchOpen ? "translate-y-0" : "-translate-y-full"
-          }`}
-        >
-          <div className="max-w-[1600px] mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#1A1A1A]/60">
-                Rechercher
-              </span>
-              <button
-                onClick={() => setSearchOpen(false)}
-                aria-label="Fermer"
-                className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1A1A1A]/5 transition"
-              >
-                <X size={18} strokeWidth={1.5} />
-              </button>
-            </div>
-            <div className="flex items-center gap-4 border-b border-[#1A1A1A]/20 pb-4">
-              <Search size={20} strokeWidth={1.5} className="text-[#1A1A1A]/40" />
-              <input
-                autoFocus={searchOpen}
-                placeholder="Costume, robe, bouillie bio…"
-                className="flex-1 bg-transparent text-[22px] lg:text-[28px] font-serif italic text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 outline-none"
-              />
-            </div>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {["Costume", "Robe", "Montre", "Bouillie BIO", "Sac"].map(
-                (tag) => (
-                  <button
-                    key={tag}
-                    className="px-4 py-2 rounded-full border border-[#1A1A1A]/15 text-[11px] uppercase tracking-[0.15em] text-[#1A1A1A]/70 hover:bg-[#1A1A1A] hover:text-[#EFECE6] hover:border-[#1A1A1A] transition"
-                  >
-                    {tag}
-                  </button>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Menu mobile */}
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   );
 }
