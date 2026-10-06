@@ -41,18 +41,38 @@ export default function ProduitsPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="border-b border-zinc-200 bg-white">
-        <Container>
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
+        {/* Dégradé de fond */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-100/70 via-navy-50/30 to-white"
+        />
+
+        {/* Halo bleu en haut à droite */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-navy-200/40 via-express-100/30 to-transparent blur-3xl"
+        />
+
+        {/* Halo rouge en bas à gauche */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-express-100/40 via-navy-100/30 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20 lg:py-24">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+              <p className="inline-flex items-center rounded-2xl border border-navy-200 bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-express-600 shadow-sm backdrop-blur">
                 Catalogue
               </p>
               <h1 className="mt-6 text-[36px] leading-[1.1] tracking-[-0.02em] text-navy-900 sm:text-[44px] lg:text-[50px]">
                 Nos familles
                 <br />
-                de produits sourcés.
+                <span className="bg-gradient-to-r from-navy-900 via-navy-700 to-express-600 bg-clip-text text-transparent">
+                  de produits sourcés.
+                </span>
               </h1>
               <p className="mt-7 max-w-xl text-[15.5px] leading-[1.75] text-zinc-600">
                 Voici les principaux types de produits que nous sourçons et
@@ -60,21 +80,34 @@ export default function ProduitsPage() {
                 personnalisable selon vos besoins.
               </p>
             </div>
-            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.35)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=85"
                 alt="Catalogue produits"
                 className="h-full w-full object-cover"
               />
+              {/* Voile bleu subtil */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-navy-900/30 via-transparent to-transparent"
+              />
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Filtres + grille */}
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
+      {/* ============ FILTRES + GRILLE ============ */}
+      <section className="relative overflow-hidden bg-white py-16 sm:py-20">
+        {/* Dégradé de section */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-navy-50/30 to-white"
+        />
+
+        <Container className="relative">
+          {/* Filtres + recherche */}
           <div className="flex flex-col gap-6">
             <div className="relative mx-auto w-full max-w-md">
               <Search
@@ -86,7 +119,7 @@ export default function ProduitsPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Rechercher un produit ou une catégorie..."
-                className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-11 pr-4 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-11 pr-4 text-[13.5px] text-navy-900 shadow-sm outline-none transition placeholder:text-zinc-400 focus:border-navy-700 focus:ring-4 focus:ring-navy-100"
               />
             </div>
 
@@ -97,10 +130,10 @@ export default function ProduitsPage() {
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
                   className={cn(
-                    "rounded-2xl border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition",
+                    "rounded-2xl border px-4 py-2 text-[12px] font-bold uppercase tracking-[0.08em] transition-all duration-300",
                     activeCategory === cat.id
-                      ? "border-navy-900 bg-navy-900 text-white"
-                      : "border-zinc-200 bg-white text-zinc-600 hover:border-navy-300 hover:text-navy-900",
+                      ? "border-express-600 bg-gradient-to-br from-express-600 to-express-700 text-white shadow-md"
+                      : "border-zinc-200 bg-white text-zinc-600 hover:border-navy-300 hover:bg-navy-50/60 hover:text-navy-900",
                   )}
                 >
                   {cat.label}
@@ -109,13 +142,14 @@ export default function ProduitsPage() {
             </div>
           </div>
 
+          {/* Grille */}
           <div className="mt-14">
             {loading ? (
-              <p className="rounded-2xl border border-zinc-200 bg-white p-10 text-center text-[13.5px] text-zinc-500">
+              <p className="rounded-2xl border border-zinc-200 bg-white p-10 text-center text-[13.5px] text-zinc-500 shadow-sm">
                 Chargement...
               </p>
             ) : filtered.length === 0 ? (
-              <div className="rounded-2xl border border-zinc-200 bg-zinc-50/50 p-10 text-center">
+              <div className="rounded-2xl border border-navy-100 bg-gradient-to-br from-white via-navy-50/40 to-express-50/40 p-10 text-center shadow-sm">
                 <p className="text-[14px] font-semibold text-navy-900">
                   Aucun produit ne correspond à votre recherche.
                 </p>
@@ -133,12 +167,12 @@ export default function ProduitsPage() {
                 </ButtonLink>
               </div>
             ) : (
-              <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 shadow-[0_4px_24px_-12px_rgba(1,18,52,0.12)] sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((product) => (
                   <article
                     key={product.id}
                     id={product.slug}
-                    className="scroll-mt-24 bg-white"
+                    className="group scroll-mt-24 overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/40 transition-all duration-300 hover:to-express-50/50"
                   >
                     {product.image && (
                       <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
@@ -147,8 +181,13 @@ export default function ProduitsPage() {
                           src={product.image}
                           alt={product.title}
                           loading="lazy"
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
                         />
+
+                        {/* Voile bleu au survol */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy-950/60 via-navy-950/10 to-transparent opacity-60 transition group-hover:opacity-100" />
+
+                        {/* Badge catégorie */}
                         <div className="absolute left-3 top-3">
                           <span className="rounded-2xl border border-white/30 bg-navy-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur">
                             {product.category}
@@ -174,13 +213,13 @@ export default function ProduitsPage() {
                       )}
 
                       {product.items.length > 0 && (
-                        <ul className="mt-5 space-y-2 border-t border-zinc-200 pt-5">
+                        <ul className="mt-5 space-y-2 border-t border-zinc-200/80 pt-5">
                           {product.items.slice(0, 3).map((item) => (
                             <li
                               key={item}
                               className="flex gap-2.5 text-[12.5px] leading-relaxed text-zinc-600"
                             >
-                              <span className="mt-2 h-1 w-1 shrink-0 bg-express-600" />
+                              <span className="mt-2 h-1 w-1 shrink-0 bg-gradient-to-br from-express-500 to-express-700" />
                               {item}
                             </li>
                           ))}
@@ -192,11 +231,11 @@ export default function ProduitsPage() {
                           href="/contact"
                           variant="primary"
                           size="sm"
-                          className="group w-full"
+                          className="group/btn w-full"
                         >
                           Demander un devis
                           <ArrowRight
-                            className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+                            className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5"
                             strokeWidth={2.5}
                           />
                         </ButtonLink>
@@ -210,7 +249,7 @@ export default function ProduitsPage() {
         </Container>
       </section>
 
-      {/* CTA produit introuvable */}
+      {/* ============ CTA PRODUIT INTROUVABLE ============ */}
       <ProductRequestCTA />
     </>
   );
