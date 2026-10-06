@@ -73,17 +73,6 @@ export default function NewsletterPage() {
           className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-express-600/20 via-navy-500/10 to-transparent blur-3xl"
         />
 
-        {/* Grain très léger */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
-          }}
-        />
-
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
             {/* Logo — non cliquable */}
