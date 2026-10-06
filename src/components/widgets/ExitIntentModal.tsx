@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail, X, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Mail, X, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { saveLead } from "@/lib/leads";
 
 const STORAGE_KEY = "oda-exit-intent-shown";
@@ -79,26 +79,41 @@ export default function ExitIntentModal() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
+        className="relative w-full max-w-md overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-2xl"
       >
-        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+        {/* Halo bleu en haut à droite */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br from-navy-100/70 via-express-50/40 to-transparent blur-3xl"
+        />
+
+        {/* Halo rouge en bas à gauche */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-gradient-to-tr from-express-100/60 via-navy-50/30 to-transparent blur-3xl"
+        />
+
+        {/* En-tête avec dégradé subtil */}
+        <div className="relative flex items-center justify-between border-b border-navy-100/60 bg-gradient-to-b from-navy-50/40 to-white px-6 py-4">
+          <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+            <Sparkles className="h-3 w-3" strokeWidth={2} />
             Avant de partir
           </p>
+
           <button
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Fermer"
-            className="flex h-8 w-8 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
+            className="flex h-8 w-8 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-white hover:text-navy-900 hover:shadow-sm"
           >
             <X className="h-4 w-4" strokeWidth={1.75} />
           </button>
         </div>
 
-        <div className="p-8">
+        <div className="relative p-8">
           {state === "done" ? (
             <div className="text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-200 bg-emerald-50">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100/60 shadow-[0_8px_24px_-12px_rgba(5,150,105,0.4)]">
                 <CheckCircle2
                   className="h-6 w-6 text-emerald-700"
                   strokeWidth={1.75}
@@ -114,21 +129,23 @@ export default function ExitIntentModal() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="mt-6 inline-flex items-center justify-center rounded-2xl border border-navy-900 bg-white px-6 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50"
+                className="mt-6 inline-flex items-center justify-center rounded-2xl border border-navy-900 bg-white px-6 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-navy-50 hover:shadow-md"
               >
                 Fermer
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-navy-900">
-                <Mail className="h-5 w-5" strokeWidth={1.6} />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-700 to-navy-900 text-white shadow-md">
+                <Mail className="h-5 w-5" strokeWidth={1.75} />
               </div>
 
               <h2 className="mt-6 text-[22px] font-bold leading-tight tracking-tight text-navy-900 sm:text-[24px]">
                 Ne manquez aucune
                 <br />
-                opportunité d&apos;import.
+                <span className="bg-gradient-to-r from-navy-900 via-navy-700 to-express-600 bg-clip-text text-transparent">
+                  opportunité d&apos;import.
+                </span>
               </h2>
 
               <p className="mt-4 text-[13.5px] leading-relaxed text-zinc-600">
@@ -148,7 +165,7 @@ export default function ExitIntentModal() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="votre@email.com"
-                    className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                    className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 shadow-sm outline-none transition placeholder:text-zinc-400 focus:border-navy-700 focus:ring-4 focus:ring-navy-100"
                   />
                 </label>
               </div>
@@ -162,10 +179,13 @@ export default function ExitIntentModal() {
               <button
                 type="submit"
                 disabled={state === "loading"}
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-express-600 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+                className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-express-600 to-express-700 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white shadow-md transition-all duration-300 hover:shadow-[0_12px_32px_-12px_rgba(191,8,8,0.5)] disabled:opacity-60"
               >
                 {state === "loading" ? "Envoi..." : "Je m'inscris"}
-                <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+                  strokeWidth={2.5}
+                />
               </button>
 
               <p className="mt-4 text-center text-[11px] text-zinc-400">

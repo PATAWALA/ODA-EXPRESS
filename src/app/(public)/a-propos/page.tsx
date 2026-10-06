@@ -55,12 +55,25 @@ const VALUES = [
 export default function AProposPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="border-b border-zinc-200 bg-white">
-        <Container>
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-100/70 via-navy-50/30 to-white"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-navy-200/40 via-express-100/30 to-transparent blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-express-100/40 via-navy-100/30 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20 lg:py-24">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+              <p className="inline-flex items-center rounded-2xl border border-navy-200 bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-express-600 shadow-sm backdrop-blur">
                 À propos
               </p>
 
@@ -69,7 +82,7 @@ export default function AProposPage() {
                 <br />
                 sur le terrain,
                 <br />
-                <span className="text-express-600">
+                <span className="bg-gradient-to-r from-navy-900 via-navy-700 to-express-600 bg-clip-text text-transparent">
                   au cœur de la Chine.
                 </span>
               </h1>
@@ -78,7 +91,7 @@ export default function AProposPage() {
                 ODA SOURCES IMPORT & EXPORT CO., LIMITED est une société
                 spécialisée dans le sourcing, l&apos;import-export et
                 l&apos;accompagnement des opérations commerciales
-                internationales, avec une présence permanente en Chine 🇨🇳.
+                internationales, avec une présence permanente en Chine.
               </p>
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -97,43 +110,61 @@ export default function AProposPage() {
               </div>
             </div>
 
-            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.35)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/equipe-showroom.jpeg"
                 alt="Notre équipe en Chine"
                 className="h-full w-full object-cover"
               />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-navy-900/30 via-transparent to-transparent"
+              />
             </div>
           </div>
 
           {/* Bandeau stats */}
-          <div className="border-t border-zinc-200 py-10">
-            <dl className="grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-              {STATS.map((stat, index) => (
+          <div className="border-t border-navy-100/60 py-10">
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 shadow-[0_4px_24px_-12px_rgba(1,18,52,0.10)] sm:grid-cols-2 lg:grid-cols-4">
+              {STATS.map((stat) => (
                 <div
                   key={stat.label}
-                  className={
-                    "px-0 lg:px-8 " +
-                    (index > 0 ? "lg:border-l lg:border-zinc-200" : "")
-                  }
+                  className="group relative overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/60 p-6 transition-all duration-300 hover:to-express-50/60"
                 >
-                  <dt className="text-[26px] font-bold tracking-tight text-navy-900 sm:text-[30px]">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br from-navy-200/40 via-transparent to-transparent blur-xl opacity-60 transition-opacity duration-300 group-hover:from-express-200/50 group-hover:opacity-100"
+                  />
+                  <dt className="relative text-[26px] font-bold tracking-tight text-navy-900 sm:text-[30px]">
                     {stat.value}
                   </dt>
-                  <dd className="mt-1.5 text-[12.5px] leading-snug text-zinc-500">
+                  <dd className="relative mt-1.5 text-[12.5px] leading-snug text-zinc-500">
                     {stat.label}
                   </dd>
+                  <div
+                    aria-hidden
+                    className="relative mt-4 h-px w-8 bg-gradient-to-r from-express-600 to-transparent transition-all duration-300 group-hover:w-16"
+                  />
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Notre entreprise */}
-      <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
-        <Container>
+      {/* ============ NOTRE ENTREPRISE ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-navy-50/30 to-white"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-gradient-to-br from-navy-100/40 via-express-50/25 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
@@ -172,38 +203,51 @@ export default function AProposPage() {
               <img
                 src="/team/fondateur-showroom-auto.jpeg"
                 alt="Visite showroom automobile"
-                className="col-span-2 aspect-[16/10] w-full border border-zinc-200 object-cover"
+                className="col-span-2 aspect-[16/10] w-full rounded-2xl border border-zinc-200 object-cover shadow-[0_8px_28px_-12px_rgba(1,18,52,0.20)]"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/fondateur-voiture-blanche.jpeg"
                 alt="Livraison véhicule client"
-                className="aspect-[4/5] w-full border border-zinc-200 object-cover"
+                className="aspect-[4/5] w-full rounded-2xl border border-zinc-200 object-cover shadow-[0_8px_28px_-12px_rgba(1,18,52,0.20)]"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/fondateur-voiture-noire.jpeg"
                 alt="Livraison véhicule client"
-                className="aspect-[4/5] w-full border border-zinc-200 object-cover"
+                className="aspect-[4/5] w-full rounded-2xl border border-zinc-200 object-cover shadow-[0_8px_28px_-12px_rgba(1,18,52,0.20)]"
               />
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Fondateur */}
-      <section className="border-b border-zinc-200 bg-zinc-50/50 py-20 sm:py-24 lg:py-28">
-        <Container>
+      {/* ============ FONDATEUR ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-express-50/20 to-white"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-gradient-to-br from-express-100/40 via-navy-50/25 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="mx-auto max-w-5xl">
             <div className="grid gap-12 lg:grid-cols-[320px_1fr] lg:items-start lg:gap-16">
               {/* Photo fondateur */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-3">
-                <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100">
+              <div className="rounded-2xl border border-zinc-200 bg-gradient-to-br from-white via-white to-navy-50/50 p-3 shadow-[0_4px_24px_-12px_rgba(1,18,52,0.15)]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/team/fondateur-voiture-noire.jpeg"
                     alt="DA Olivier, fondateur"
                     className="h-full w-full object-cover"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-navy-900/25 via-transparent to-transparent"
                   />
                 </div>
                 <div className="px-3 py-5 text-center">
@@ -257,16 +301,29 @@ export default function AProposPage() {
         </Container>
       </section>
 
-      {/* Équipe */}
-      <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
-        <Container>
+      {/* ============ ÉQUIPE ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-navy-50/30 to-white"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-gradient-to-br from-navy-100/40 via-express-50/25 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.25)]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 shadow-[0_30px_70px_-25px_rgba(1,18,52,0.35)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/team/equipe-showroom.jpeg"
                 alt="Notre équipe en Chine"
                 className="h-full w-full object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-navy-900/25 via-transparent to-transparent"
               />
             </div>
 
@@ -296,13 +353,13 @@ export default function AProposPage() {
 
               <ul className="mt-8 space-y-3">
                 {[
-                  "Présence permanente en Chine 🇨🇳",
+                  "Présence permanente en Chine",
                   "Interlocuteurs francophones et sinophones",
                   "Accompagnement aux usines et salons professionnels",
                   "Un seul contact du début à la fin de votre projet",
                 ].map((point) => (
                   <li key={point} className="flex gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-express-600/30 bg-express-600/5">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-express-500/15 to-express-600/10">
                       <CheckCircle2
                         className="h-3 w-3 text-express-600"
                         strokeWidth={2.5}
@@ -319,18 +376,28 @@ export default function AProposPage() {
         </Container>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-            <article className="rounded-2xl border border-zinc-200 bg-white p-8 sm:p-10">
-              <span className="flex h-12 w-12 items-center justify-center border border-express-600 bg-express-600 text-white">
-                <Target className="h-5 w-5" strokeWidth={1.6} />
+      {/* ============ MISSION & VISION ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-express-50/20 to-white"
+        />
+
+        <Container className="relative">
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Mission */}
+            <article className="group relative overflow-hidden rounded-2xl border border-express-100 bg-gradient-to-br from-white via-express-50/30 to-express-100/50 p-8 shadow-[0_4px_24px_-12px_rgba(191,8,8,0.15)] transition-all duration-300 hover:shadow-[0_12px_40px_-16px_rgba(191,8,8,0.25)] sm:p-10">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-express-200/50 via-express-100/30 to-transparent blur-2xl"
+              />
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-express-600 to-express-700 text-white shadow-md">
+                <Target className="h-5 w-5" strokeWidth={1.75} />
               </span>
-              <h3 className="mt-6 text-[22px] font-bold tracking-tight text-navy-900">
+              <h3 className="relative mt-6 text-[22px] font-bold tracking-tight text-navy-900">
                 Notre mission
               </h3>
-              <p className="mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
+              <p className="relative mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
                 Simplifier et structurer les échanges commerciaux entre la
                 Chine et les marchés internationaux, en apportant à nos clients
                 une présence locale et un accompagnement à chaque étape de
@@ -341,14 +408,19 @@ export default function AProposPage() {
               </p>
             </article>
 
-            <article className="rounded-2xl border border-zinc-200 bg-white p-8 sm:p-10">
-              <span className="flex h-12 w-12 items-center justify-center border border-navy-900 bg-navy-900 text-white">
-                <Globe2 className="h-5 w-5" strokeWidth={1.6} />
+            {/* Vision */}
+            <article className="group relative overflow-hidden rounded-2xl border border-navy-100 bg-gradient-to-br from-white via-navy-50/30 to-navy-100/50 p-8 shadow-[0_4px_24px_-12px_rgba(1,18,52,0.15)] transition-all duration-300 hover:shadow-[0_12px_40px_-16px_rgba(1,18,52,0.25)] sm:p-10">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-navy-200/50 via-navy-100/30 to-transparent blur-2xl"
+              />
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-700 to-navy-900 text-white shadow-md">
+                <Globe2 className="h-5 w-5" strokeWidth={1.75} />
               </span>
-              <h3 className="mt-6 text-[22px] font-bold tracking-tight text-navy-900">
+              <h3 className="relative mt-6 text-[22px] font-bold tracking-tight text-navy-900">
                 Notre vision
               </h3>
-              <p className="mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
+              <p className="relative mt-5 text-[14.5px] leading-[1.75] text-zinc-600">
                 Faire de ODA SOURCES IMPORT & EXPORT un acteur reconnu des
                 échanges commerciaux entre la Chine, l&apos;Afrique et le reste
                 du monde. À travers notre présence en Chine, nous souhaitons
@@ -363,9 +435,18 @@ export default function AProposPage() {
         </Container>
       </section>
 
-      {/* Valeurs */}
-      <section className="border-b border-zinc-200 bg-zinc-50/50 py-20 sm:py-24 lg:py-28">
-        <Container>
+      {/* ============ VALEURS ============ */}
+      <section className="relative overflow-hidden border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-navy-50/40 to-white"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-navy-100/40 via-express-100/30 to-navy-100/40 blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
               Nos valeurs
@@ -375,27 +456,59 @@ export default function AProposPage() {
             </h2>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-6xl gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUES.map((value) => (
-              <div key={value.title} className="bg-white p-7">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-zinc-200 text-navy-900">
-                  <value.icon className="h-5 w-5" strokeWidth={1.6} />
-                </span>
-                <h3 className="mt-5 text-[15px] font-bold tracking-tight text-navy-900">
-                  {value.title}
-                </h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-zinc-600">
-                  {value.description}
-                </p>
-              </div>
-            ))}
+          <div className="mx-auto mt-14 max-w-6xl">
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 shadow-[0_4px_24px_-12px_rgba(1,18,52,0.12)] sm:grid-cols-2 lg:grid-cols-4">
+              {VALUES.map((value, index) => (
+                <div
+                  key={value.title}
+                  className="group relative overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/60 p-7 transition-all duration-300 hover:to-express-50/60"
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br from-navy-200/40 via-transparent to-transparent blur-2xl opacity-60 transition-opacity duration-300 group-hover:from-express-200/60 group-hover:opacity-100"
+                  />
+
+                  <span
+                    className={
+                      "relative flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-md transition-all duration-300 group-hover:scale-105 " +
+                      (index % 2 === 0
+                        ? "bg-gradient-to-br from-navy-700 to-navy-900 group-hover:shadow-[0_8px_20px_-8px_rgba(1,18,52,0.5)]"
+                        : "bg-gradient-to-br from-express-600 to-express-700 group-hover:shadow-[0_8px_20px_-8px_rgba(191,8,8,0.5)]")
+                    }
+                  >
+                    <value.icon className="h-5 w-5" strokeWidth={1.75} />
+                  </span>
+
+                  <h3 className="relative mt-5 text-[15px] font-bold tracking-tight text-navy-900">
+                    {value.title}
+                  </h3>
+                  <p className="relative mt-2.5 text-[13px] leading-relaxed text-zinc-600">
+                    {value.description}
+                  </p>
+
+                  <div
+                    aria-hidden
+                    className="relative mt-5 h-px w-8 bg-gradient-to-r from-express-600 to-transparent transition-all duration-300 group-hover:w-16"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* CTA final */}
-      <section className="bg-navy-950 py-20 sm:py-24">
-        <Container>
+      {/* ============ CTA FINAL ============ */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950 py-20 sm:py-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-express-600/30 via-navy-500/20 to-transparent blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-tr from-express-600/25 via-navy-500/15 to-transparent blur-3xl"
+        />
+
+        <Container className="relative">
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
@@ -409,14 +522,14 @@ export default function AProposPage() {
 
               <ul className="mt-8 space-y-4">
                 {[
-                  "Une présence physique permanente en Chine 🇨🇳",
+                  "Une présence physique permanente en Chine",
                   "Une vérification terrain de chaque fournisseur avant tout paiement",
                   "Une couverture complète : sourcing, contrôle, shipping, visa, paiement",
                   "Un seul interlocuteur francophone du début à la fin",
                   "Une connaissance approfondie du marché africain et de ses contraintes",
                 ].map((point) => (
                   <li key={point} className="flex gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-express-500/40 bg-express-600/10">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl border border-express-500/40 bg-express-600/10">
                       <CheckCircle2
                         className="h-3 w-3 text-express-400"
                         strokeWidth={2.5}
@@ -430,25 +543,30 @@ export default function AProposPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 sm:p-10">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur sm:p-10">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-express-500/20 via-navy-500/10 to-transparent blur-3xl"
+              />
+
+              <p className="relative text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
                 Prêt à démarrer ?
               </p>
-              <h3 className="mt-5 text-[24px] font-bold leading-tight tracking-tight text-white sm:text-[28px]">
+              <h3 className="relative mt-5 text-[24px] font-bold leading-tight tracking-tight text-white sm:text-[28px]">
                 Parlons de votre prochain
                 <br />
                 projet d&apos;import.
               </h3>
-              <p className="mt-5 text-[14px] leading-[1.75] text-navy-200">
+              <p className="relative mt-5 text-[14px] leading-[1.75] text-navy-200">
                 Nous répondons sous 24 heures ouvrées avec une solution claire
                 et un devis précis.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="relative mt-8 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href="/contact"
                   variant="white"
                   size="md"
-                  className="group"
+                  className="group shadow-lg"
                 >
                   Se faire accompagner
                   <ArrowRight
@@ -459,7 +577,7 @@ export default function AProposPage() {
 
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:border-white/40 hover:bg-white/10"
                 >
                   Voir nos services
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
