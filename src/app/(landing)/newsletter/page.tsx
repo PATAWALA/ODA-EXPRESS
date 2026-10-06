@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
   CheckCircle2,
   MessageCircle,
@@ -8,7 +7,6 @@ import {
   FileText,
   ShieldCheck,
   ArrowRight,
-  ExternalLink,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import NewsletterInlineForm from "@/components/widgets/NewsletterInlineForm";
@@ -193,19 +191,19 @@ export default function NewsletterPage() {
                   </p>
                   <p className="mt-1.5 text-[13.5px] leading-relaxed text-zinc-600">
                     Décrivez votre produit, votre volume ou votre besoin
-                    directement à Mr ODA sur WhatsApp.
+                    directement sur WhatsApp.
                   </p>
                 </div>
               </div>
 
               <a
-                href="https://wa.me/8619515660197?text=Bonjour%20Mr%20ODA%2C%20je%20souhaite%20discuter%20de%20mon%20projet%20d%27import."
+                href="https://wa.me/8619515660197?text=Bonjour%20ODA%20SOURCES%2C%20je%20souhaite%20discuter%20de%20mon%20projet%20d%27import."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group/btn relative mt-6 inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 px-6 py-4 text-[13px] font-bold uppercase tracking-[0.1em] text-white shadow-md transition-all duration-300 hover:shadow-[0_12px_32px_-12px_rgba(5,150,105,0.5)]"
               >
                 <MessageCircle className="h-4 w-4" strokeWidth={2} />
-                Écrire à Mr ODA sur WhatsApp
+                Écrire sur WhatsApp
                 <ArrowRight
                   className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5"
                   strokeWidth={2.5}
@@ -287,20 +285,10 @@ export default function NewsletterPage() {
               </a>
             </div>
 
-            {/* Bouton visiter le site */}
-            <div className="mt-8">
-              <Link
-                href="/"
-                className="group inline-flex items-center justify-center gap-2.5 rounded-2xl border border-navy-900 bg-navy-900 px-6 py-3.5 text-[12.5px] font-bold uppercase tracking-[0.1em] text-white shadow-md transition-all duration-300 hover:bg-navy-800 hover:shadow-lg"
-              >
-                <ExternalLink className="h-4 w-4" strokeWidth={1.75} />
-                Visiter le site
-                <ArrowRight
-                  className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
-                  strokeWidth={2.5}
-                />
-              </Link>
-            </div>
+            {/* Copyright */}
+            <p className="mt-8 text-[11.5px] text-zinc-400">
+              © {new Date().getFullYear()} ODA Sources · Tous droits réservés
+            </p>
           </div>
         </Container>
       </footer>
