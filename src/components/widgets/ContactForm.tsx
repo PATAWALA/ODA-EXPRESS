@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, MessageCircle } from "lucide-react";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { saveLead } from "@/lib/leads";
@@ -14,6 +14,8 @@ const SERVICES = [
   { value: "paiement-fournisseur", label: "Paiement Fournisseur" },
   { value: "autre", label: "Autre / Je ne sais pas encore" },
 ];
+
+const WHATSAPP_NUMBER = "8619515660197";
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -30,6 +32,27 @@ export default function ContactForm() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  function buildWhatsAppMessage(): string {
+    const serviceLabel =
+      SERVICES.find((s) => s.value === form.service)?.label ?? form.service;
+
+    const lines: (string | null)[] = [
+      "Bonjour Mr ODA,",
+      "",
+      "Nouvelle demande depuis odasources.com :",
+      "",
+      `Nom : ${form.name}`,
+      `Email : ${form.email}`,
+      form.phone.trim() ? `Téléphone : ${form.phone}` : null,
+      serviceLabel ? `Service : ${serviceLabel}` : null,
+      "",
+      "Projet :",
+      form.message,
+    ];
+
+    return lines.filter((l): l is string => l !== null).join("\n");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -42,6 +65,7 @@ export default function ContactForm() {
     setError(null);
     setState("loading");
 
+    // 1. Sauvegarder dans Supabase + envoyer l'email admin
     const result = await saveLead({
       email: form.email,
       name: form.name,
@@ -56,24 +80,52 @@ export default function ContactForm() {
       setState("idle");
       return;
     }
+
+    // 2. Ouvrir WhatsApp avec le message pré-rempli
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      buildWhatsAppMessage(),
+    )}`;
+    window.open(url, "_blank");
+
     setState("done");
   }
 
   if (state === "done") {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300 bg-white">
-          <CheckCircle2
-            className="h-6 w-6 text-emerald-700"
-            strokeWidth={1.75}
-          />
+      <div className="border border-emerald-200 bg-emerald-50 p-6 sm:p-8">
+        <div className="flex items-start gap-4">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-emerald-300 bg-white">
+            <CheckCircle2
+              className="h-6 w-6 text-emerald-700"
+              strokeWidth={1.75}
+            />
+          </span>
+          <div>
+            <p className="text-[16px] font-bold text-emerald-900">
+              Demande envoyée.
+            </p>
+            <p className="mt-1.5 text-[13.5px] leading-relaxed text-emerald-800">
+              Votre projet a bien été transmis à Mr ODA. Une fenêtre WhatsApp
+              s&apos;est ouverte — cliquez sur « Envoyer » pour finaliser votre
+              demande et recevoir une réponse immédiate.
+            </p>
+          </div>
         </div>
-        <p className="mt-5 text-[16px] font-bold text-emerald-900">
-          Message bien reçu.
-        </p>
-        <p className="mt-2 text-[13.5px] leading-relaxed text-emerald-800">
-          Merci {form.name.split(" ")[0]}, nous vous répondons sous 24 heures
-          ouvrées à l&apos;adresse {form.email}.
+
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+            buildWhatsAppMessage(),
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded bg-emerald-600 px-5 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
+        >
+          <MessageCircle className="h-4 w-4" strokeWidth={2} />
+          Rouvrir WhatsApp
+        </a>
+
+        <p className="mt-4 text-center text-[11.5px] text-emerald-700">
+          Réponse sous 24 heures ouvrées · Sans engagement
         </p>
       </div>
     );
@@ -82,7 +134,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-[0_1px_2px_rgba(1,18,52,0.04)] sm:p-8"
+      className="border border-zinc-200 bg-white p-6 shadow-[0_1px_2px_rgba(1,18,52,0.04)] sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
@@ -132,14 +184,15 @@ export default function ContactForm() {
       </div>
 
       {error && (
-        <p className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] font-medium text-amber-800">
+        <p className="mt-5 border border-amber-200 bg-amber-50 px-4 py-3 text-[12.5px] font-medium text-amber-800">
           {error}
         </p>
       )}
 
       <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[11px] leading-relaxed text-zinc-400">
-          Vos informations restent confidentielles et ne sont jamais partagées.
+          Après l&apos;envoi, WhatsApp s&apos;ouvre avec votre demande
+          pré-remplie pour une réponse immédiate.
         </p>
         <Button
           type="submit"
@@ -149,7 +202,7 @@ export default function ContactForm() {
           className="sm:min-w-[200px]"
         >
           <Send className="h-3.5 w-3.5" strokeWidth={2} />
-          {state === "loading" ? "Envoi..." : "Envoyer le message"}
+          {state === "loading" ? "Envoi..." : "Envoyer ma demande"}
         </Button>
       </div>
     </form>

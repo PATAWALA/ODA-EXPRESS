@@ -9,7 +9,7 @@ const NAV = [
   { label: "Produits", href: "/produits" },
   { label: "Réalisations", href: "/realisations" },
   { label: "Actualités", href: "/actualites" },
-  { label: "Veille Import", href: "/newsletter" },
+  { label: "S'abonner", href: "/newsletter" },
   { label: "À propos", href: "/a-propos" },
   { label: "Contact", href: "/contact" },
 ];
