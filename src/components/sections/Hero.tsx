@@ -33,26 +33,23 @@ export default function Hero() {
       className={`relative overflow-hidden bg-white ${fraunces.variable}`}
     >
       {/* ============ DÉCOR DE FOND ============ */}
-      {/* Dégradé principal vertical */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-100/70 via-navy-50/30 to-white"
       />
-      {/* Halo bleu en haut à droite */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-navy-200/40 via-express-100/30 to-transparent blur-3xl"
       />
-      {/* Halo rouge en bas à gauche */}
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-express-100/40 via-navy-100/30 to-transparent blur-3xl"
       />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-8 sm:px-12 lg:px-20 xl:px-28">
-        <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-20 lg:py-16">
+        <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-14">
           {/* Colonne texte — 1re sur mobile, 1re sur desktop */}
-          <div className="order-1">
+          <div className="order-1 flex flex-col justify-center">
             {/* Eyebrow */}
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
               ODA SOURCES
@@ -124,7 +121,7 @@ export default function Hero() {
 
           {/* Colonne image — 2e sur mobile, 2e sur desktop */}
           <div className="relative order-2">
-            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
+            <div className="relative h-full min-h-[320px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
               {IMAGES.map((src, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
