@@ -54,7 +54,7 @@ export default function AboutSection() {
               ODA SOURCES IMPORT & EXPORT CO., LIMITED est une société
               spécialisée dans le sourcing, l&apos;import-export et
               l&apos;accompagnement des opérations commerciales internationales,
-              avec une présence à Hong Kong et en Chine continentale.
+              avec une présence permanente en Chine 🇨🇳.
             </p>
 
             <p className="mt-4 max-w-xl text-[15px] leading-[1.75] text-zinc-600">
