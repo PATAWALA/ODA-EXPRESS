@@ -108,7 +108,6 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      {/* Filtres + export */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           {(["all", "new", "contacted", "closed"] as const).map((f) => (
@@ -145,7 +144,6 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
         </button>
       </div>
 
-      {/* Liste */}
       <div className="rounded-2xl border border-zinc-200 bg-white">
         {filtered.length === 0 ? (
           <p className="p-10 text-center text-[13.5px] text-zinc-500">
@@ -158,7 +156,6 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
                 key={project.id}
                 className="flex flex-wrap items-center gap-4 p-4 sm:p-5"
               >
-                {/* Miniature image */}
                 {project.images && project.images.length > 0 && (
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -230,7 +227,6 @@ export default function ProjectsTable({ projects }: { projects: Project[] }) {
         )}
       </div>
 
-      {/* Modal détail */}
       {selected && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/85 px-4 backdrop-blur-sm"

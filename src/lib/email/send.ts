@@ -64,7 +64,6 @@ export async function sendAdminNotification(params: {
   phone?: string;
   source: string;
   message?: string;
-  /** URLs publiques des images du projet (optionnel) */
   images?: string[];
 }): Promise<{ ok: boolean; error?: string }> {
   const sourceLabel = SOURCE_LABELS[params.source] ?? params.source;
@@ -85,7 +84,6 @@ export async function sendAdminNotification(params: {
       images.length > 0 ? `${images.length} image(s)` : "—",
     );
     images.forEach((url, i) => console.log(`    #${i + 1} :`, url));
-    console.log("  Bouton : Se connecter au back-office → /admin/login");
     console.log("===============================================\n");
     return { ok: true };
   }

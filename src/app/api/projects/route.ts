@@ -62,7 +62,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Envoi des emails en arrière-plan (ne bloque pas la réponse)
     sendProjectConfirmationToClient({
       email,
       name,

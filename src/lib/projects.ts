@@ -32,9 +32,6 @@ export async function saveProject(
   }
 }
 
-/**
- * Upload une image vers Supabase Storage (bucket "media", dossier "projects").
- */
 export async function uploadProjectImage(
   file: File,
 ): Promise<{ ok: boolean; url?: string; error?: string }> {

@@ -5,13 +5,12 @@ import {
   Send,
   CheckCircle2,
   MessageCircle,
-  Upload,
   X,
   ImagePlus,
 } from "lucide-react";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { saveLead, uploadLeadImage } from "@/lib/leads";
+import { saveProject, uploadProjectImage } from "@/lib/projects";
 
 const SERVICES = [
   { value: "sourcing", label: "Global Sourcing & Achat" },
@@ -52,8 +51,6 @@ export default function ContactForm() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  /* ---------- Gestion des images ---------- */
-
   function onFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
     if (files.length === 0) return;
@@ -66,21 +63,25 @@ export default function ContactForm() {
 
     const toAdd = files.slice(0, remaining);
 
-    // Validation
     for (const file of toAdd) {
       if (file.size > MAX_SIZE_MB * 1024 * 1024) {
         setError(`${file.name} dépasse ${MAX_SIZE_MB} Mo.`);
         return;
       }
-      if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
-        setError(`${file.name} n'est pas un format accepté (JPG, PNG, WebP, GIF).`);
+      if (
+        !["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
+          file.type,
+        )
+      ) {
+        setError(
+          `${file.name} n'est pas un format accepté (JPG, PNG, WebP, GIF).`,
+        );
         return;
       }
     }
 
     setError(null);
 
-    // Créer les entrées avec preview + upload immédiat
     const newImages: UploadedImage[] = toAdd.map((file) => ({
       file,
       previewUrl: URL.createObjectURL(file),
@@ -91,9 +92,8 @@ export default function ContactForm() {
 
     setImages((prev) => [...prev, ...newImages]);
 
-    // Uploader chaque image
     newImages.forEach(async (img) => {
-      const result = await uploadLeadImage(img.file);
+      const result = await uploadProjectImage(img.file);
       setImages((prev) =>
         prev.map((item) =>
           item.previewUrl === img.previewUrl
@@ -108,7 +108,6 @@ export default function ContactForm() {
       );
     });
 
-    // Reset input pour pouvoir réuploader le même fichier
     if (inputRef.current) inputRef.current.value = "";
   }
 
@@ -119,8 +118,6 @@ export default function ContactForm() {
       return prev.filter((i) => i.previewUrl !== previewUrl);
     });
   }
-
-  /* ---------- WhatsApp ---------- */
 
   function buildWhatsAppMessage(imageUrls: string[] = []): string {
     const serviceLabel =
@@ -142,9 +139,7 @@ export default function ContactForm() {
 
     if (imageUrls.length > 0) {
       lines.push("");
-      lines.push(
-        `Photos du projet (${imageUrls.length}) :`,
-      );
+      lines.push(`Photos du projet (${imageUrls.length}) :`);
       imageUrls.forEach((url, i) => {
         lines.push(`${i + 1}. ${url}`);
       });
@@ -152,8 +147,6 @@ export default function ContactForm() {
 
     return lines.filter((l): l is string => l !== null).join("\n");
   }
-
-  /* ---------- Submit ---------- */
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -164,7 +157,6 @@ export default function ContactForm() {
     if (!form.message.trim())
       return setError("Merci de décrire brièvement votre projet.");
 
-    // Vérifier que toutes les images sont bien uploadées
     const stillUploading = images.some((i) => i.uploading);
     if (stillUploading) {
       setError("Veuillez patienter pendant l'upload des images.");
@@ -173,7 +165,9 @@ export default function ContactForm() {
 
     const failedUploads = images.filter((i) => !i.uploadedUrl);
     if (failedUploads.length > 0) {
-      setError("Certaines images n'ont pas pu être envoyées. Réessayez ou retirez-les.");
+      setError(
+        "Certaines images n'ont pas pu être envoyées. Réessayez ou retirez-les.",
+      );
       return;
     }
 
@@ -184,13 +178,12 @@ export default function ContactForm() {
       .map((i) => i.uploadedUrl)
       .filter((u): u is string => u !== null);
 
-    const result = await saveLead({
-      email: form.email,
+    const result = await saveProject({
       name: form.name,
+      email: form.email,
       phone: form.phone,
+      service: form.service,
       message: form.message,
-      source: "contact",
-      metadata: { service: form.service },
       images: imageUrls,
     });
 
@@ -209,8 +202,6 @@ export default function ContactForm() {
 
     setState("done");
   }
-
-  /* ---------- Écran de succès ---------- */
 
   if (state === "done") {
     return (
@@ -258,8 +249,6 @@ export default function ContactForm() {
       </div>
     );
   }
-
-  /* ---------- Formulaire ---------- */
 
   return (
     <form
@@ -312,7 +301,6 @@ export default function ContactForm() {
           />
         </div>
 
-        {/* ---------- Section images ---------- */}
         <div className="sm:col-span-2">
           <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
             Photos du produit{" "}
@@ -327,7 +315,6 @@ export default function ContactForm() {
             max par image).
           </p>
 
-          {/* Grille des images uploadées */}
           {images.length > 0 && (
             <div className="mb-3 grid grid-cols-3 gap-3">
               {images.map((img) => (
@@ -342,7 +329,6 @@ export default function ContactForm() {
                     className="h-full w-full object-cover"
                   />
 
-                  {/* Overlay pendant l'upload */}
                   {img.uploading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-navy-950/50">
                       <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-white">
@@ -351,7 +337,6 @@ export default function ContactForm() {
                     </div>
                   )}
 
-                  {/* Overlay si erreur */}
                   {img.error && (
                     <div className="absolute inset-0 flex items-center justify-center bg-red-950/60 p-2">
                       <span className="text-center text-[10px] font-bold leading-tight text-white">
@@ -360,7 +345,6 @@ export default function ContactForm() {
                     </div>
                   )}
 
-                  {/* Bouton retirer */}
                   <button
                     type="button"
                     onClick={() => removeImage(img.previewUrl)}
@@ -370,7 +354,6 @@ export default function ContactForm() {
                     <X className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </button>
 
-                  {/* Indicateur de succès */}
                   {!img.uploading && !img.error && (
                     <div className="absolute bottom-1.5 left-1.5 flex h-5 w-5 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
                       <CheckCircle2 className="h-3 w-3" strokeWidth={3} />
@@ -381,7 +364,6 @@ export default function ContactForm() {
             </div>
           )}
 
-          {/* Bouton d'ajout */}
           {images.length < MAX_IMAGES && (
             <button
               type="button"
