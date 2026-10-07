@@ -64,8 +64,11 @@ export async function sendAdminNotification(params: {
   phone?: string;
   source: string;
   message?: string;
+  /** URLs publiques des images du projet (optionnel) */
+  images?: string[];
 }): Promise<{ ok: boolean; error?: string }> {
   const sourceLabel = SOURCE_LABELS[params.source] ?? params.source;
+  const images = params.images ?? [];
 
   if (TEST_MODE) {
     console.log("\n========== [TEST MODE] EMAIL À L'ADMIN ==========");
@@ -77,6 +80,11 @@ export async function sendAdminNotification(params: {
     console.log("  Tél    :", params.phone ?? "—");
     console.log("  Source :", sourceLabel);
     console.log("  Message:", params.message ?? "—");
+    console.log(
+      "  Images :",
+      images.length > 0 ? `${images.length} image(s)` : "—",
+    );
+    images.forEach((url, i) => console.log(`    #${i + 1} :`, url));
     console.log("  Bouton : Se connecter au back-office → /admin/login");
     console.log("===============================================\n");
     return { ok: true };
@@ -93,6 +101,7 @@ export async function sendAdminNotification(params: {
       phone: params.phone ?? null,
       source: sourceLabel,
       message: params.message ?? null,
+      images,
     }),
   });
 

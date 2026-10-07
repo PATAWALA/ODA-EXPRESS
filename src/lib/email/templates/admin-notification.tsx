@@ -8,6 +8,8 @@ interface Props {
   phone: string | null;
   source: string;
   message: string | null;
+  /** URLs publiques des images du projet (optionnel) */
+  images?: string[];
 }
 
 export function AdminNotificationEmail({
@@ -16,6 +18,7 @@ export function AdminNotificationEmail({
   phone,
   source,
   message,
+  images = [],
 }: Props) {
   return (
     <EmailLayout
@@ -179,6 +182,75 @@ export function AdminNotificationEmail({
           >
             {message}
           </div>
+        </>
+      )}
+
+      {images.length > 0 && (
+        <>
+          <p
+            style={{
+              margin: "0 0 8px",
+              fontSize: "13px",
+              fontWeight: 700,
+              color: "#01215B",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+            }}
+          >
+            Photos du projet ({images.length})
+          </p>
+          <table
+            role="presentation"
+            width="100%"
+            cellPadding={0}
+            cellSpacing={0}
+            style={{ margin: "0 0 28px" }}
+          >
+            <tbody>
+              {images.map((url, index) => (
+                <tr key={url}>
+                  <td style={{ padding: "0 0 16px 0" }}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: "block", textDecoration: "none" }}
+                    >
+                      <img
+                        src={url}
+                        alt={`Photo projet ${index + 1}`}
+                        width="496"
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          maxWidth: "496px",
+                          height: "auto",
+                          borderRadius: "16px",
+                          border: "1px solid #E4E4E7",
+                        }}
+                      />
+                    </a>
+                    <p
+                      style={{
+                        margin: "6px 0 0",
+                        fontSize: "12px",
+                        color: "#71717A",
+                      }}
+                    >
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#01215B", textDecoration: "none" }}
+                      >
+                        Ouvrir l&apos;image en grand ↗
+                      </a>
+                    </p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </>
       )}
 
