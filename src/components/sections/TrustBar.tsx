@@ -38,7 +38,7 @@ const POINTS = [
 
 export default function TrustBar() {
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden">
       {/* Halo décoratif central */}
       <div
         aria-hidden
@@ -46,7 +46,7 @@ export default function TrustBar() {
       />
 
       <Container className="relative">
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 pb-0 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
           {POINTS.map((point) => (
             <div
               key={point.title}
