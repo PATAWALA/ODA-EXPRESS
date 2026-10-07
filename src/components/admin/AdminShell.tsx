@@ -9,6 +9,7 @@ import {
   Package,
   Image as ImageIcon,
   Users,
+  FolderKanban,
   LogOut,
   ExternalLink,
   ChevronRight,
@@ -55,7 +56,10 @@ const SECTIONS: NavSection[] = [
   },
   {
     title: "Commercial",
-    items: [{ label: "Demandes", href: "/admin/leads", icon: Users }],
+    items: [
+      { label: "Projets", href: "/admin/projects", icon: FolderKanban },
+      { label: "Demandes", href: "/admin/leads", icon: Users },
+    ],
   },
   {
     title: "Configuration",
@@ -70,7 +74,7 @@ const MOBILE_NAV: NavItem[] = [
   { label: "Accueil", href: "/admin", icon: LayoutDashboard, exact: true },
   { label: "Actus", href: "/admin/articles", icon: Newspaper },
   { label: "Produits", href: "/admin/produits", icon: Package },
-  { label: "Galerie", href: "/admin/realisations", icon: ImageIcon },
+  { label: "Projets", href: "/admin/projects", icon: FolderKanban },
   { label: "Demandes", href: "/admin/leads", icon: Users },
 ];
 
@@ -107,6 +111,7 @@ function getBreadcrumb(pathname: string): BreadcrumbItem[] {
       parts.push({ label: "Éditer" });
     return parts;
   }
+  if (pathname.startsWith("/admin/projects")) return [{ label: "Projets" }];
   if (pathname.startsWith("/admin/leads")) return [{ label: "Demandes" }];
   if (pathname.startsWith("/admin/parametres"))
     return [{ label: "Paramètres" }];
