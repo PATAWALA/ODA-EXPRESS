@@ -6,6 +6,7 @@ import {
   Package,
   Image as ImageIcon,
   Users,
+  FolderKanban,
   Plus,
   ExternalLink,
   Circle,
@@ -22,21 +23,21 @@ export default async function AdminDashboard() {
     articles,
     products,
     realisations,
-    demandes,
-    nouvellesDemandes,
+    projects,
+    nouveauxProjets,
     recentesDemandes,
   ] = await Promise.all([
     supabase.from("articles").select("id", { count: "exact", head: true }),
     supabase.from("products").select("id", { count: "exact", head: true }),
     supabase.from("realisations").select("id", { count: "exact", head: true }),
-    supabase.from("leads").select("id", { count: "exact", head: true }),
+    supabase.from("projects").select("id", { count: "exact", head: true }),
     supabase
-      .from("leads")
+      .from("projects")
       .select("id", { count: "exact", head: true })
       .eq("status", "new"),
     supabase
-      .from("leads")
-      .select("id, name, email, phone, source, status, created_at")
+      .from("projects")
+      .select("id, name, email, phone, service, status, created_at")
       .order("created_at", { ascending: false })
       .limit(6),
   ]);
@@ -45,8 +46,8 @@ export default async function AdminDashboard() {
     articles: articles.count ?? 0,
     products: products.count ?? 0,
     realisations: realisations.count ?? 0,
-    demandes: demandes.count ?? 0,
-    nouvelles: nouvellesDemandes.count ?? 0,
+    projects: projects.count ?? 0,
+    nouveaux: nouveauxProjets.count ?? 0,
   };
 
   const greeting = getGreeting();
@@ -70,12 +71,17 @@ export default async function AdminDashboard() {
     return date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
   }
 
-  function sourceLabel(source: string): string {
-    if (source === "contact") return "Formulaire";
-    if (source === "newsletter") return "Newsletter";
-    if (source === "exit-intent") return "Pop-up";
-    if (source === "project") return "Projet";
-    return source;
+  function serviceLabel(service: string | null): string {
+    if (!service) return "Non précisé";
+    const labels: Record<string, string> = {
+      sourcing: "Sourcing",
+      "controle-qualite": "Contrôle qualité",
+      shipping: "Shipping",
+      "visa-hotel": "Visa & Hôtel",
+      "paiement-fournisseur": "Paiement",
+      autre: "Autre",
+    };
+    return labels[service] ?? service;
   }
 
   function statusIcon(status: string) {
@@ -123,15 +129,15 @@ export default async function AdminDashboard() {
       hint: "Projets dans la galerie",
     },
     {
-      label: "Demandes",
-      href: "/admin/leads",
+      label: "Projets",
+      href: "/admin/projects",
       newHref: null,
-      icon: Users,
-      count: counts.demandes,
-      hint: "Messages reçus du site",
+      icon: FolderKanban,
+      count: counts.projects,
+      hint: "Demandes de projet reçues",
       badge:
-        counts.nouvelles > 0
-          ? `${counts.nouvelles} nouvelle${counts.nouvelles > 1 ? "s" : ""}`
+        counts.nouveaux > 0
+          ? `${counts.nouveaux} nouveau${counts.nouveaux > 1 ? "x" : ""}`
           : null,
     },
   ];
@@ -167,22 +173,22 @@ export default async function AdminDashboard() {
       </div>
 
       {/* ============ BANDEAU ALERTE ============ */}
-      {counts.nouvelles > 0 && (
+      {counts.nouveaux > 0 && (
         <Link
-          href="/admin/leads"
+          href="/admin/projects"
           className="group mb-8 flex items-center justify-between gap-6 rounded-2xl border-l-2 border-express-600 bg-express-600/[0.04] px-6 py-5 transition hover:bg-express-600/[0.08]"
         >
           <div className="flex items-center gap-4">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-express-600 text-white">
-              <Users className="h-4 w-4" strokeWidth={2} />
+              <FolderKanban className="h-4 w-4" strokeWidth={2} />
             </span>
             <div>
               <p className="text-[14px] font-bold text-navy-900">
-                {counts.nouvelles} nouvelle{counts.nouvelles > 1 ? "s" : ""}{" "}
-                demande{counts.nouvelles > 1 ? "s" : ""} à traiter
+                {counts.nouveaux} nouveau{counts.nouveaux > 1 ? "x" : ""}{" "}
+                projet{counts.nouveaux > 1 ? "s" : ""} à traiter
               </p>
               <p className="mt-0.5 text-[12.5px] text-zinc-600">
-                Des personnes attendent une réponse de votre part.
+                Des clients attendent une réponse de votre part.
               </p>
             </div>
           </div>
@@ -246,19 +252,19 @@ export default async function AdminDashboard() {
 
       {/* ============ ACTIVITÉ + RACCOURCIS ============ */}
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
-        {/* Demandes récentes */}
+        {/* Projets récents */}
         <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-5">
             <div>
               <p className="text-[14px] font-bold tracking-tight text-navy-900">
-                Dernières demandes
+                Derniers projets reçus
               </p>
               <p className="mt-0.5 text-[11.5px] text-zinc-500">
-                Les 6 derniers messages reçus
+                Les 6 dernières demandes complètes
               </p>
             </div>
             <Link
-              href="/admin/leads"
+              href="/admin/projects"
               className="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-400 transition hover:gap-2.5 hover:text-express-600"
             >
               Tout voir
@@ -268,50 +274,51 @@ export default async function AdminDashboard() {
 
           {!recentesDemandes.data || recentesDemandes.data.length === 0 ? (
             <div className="px-6 py-16 text-center">
-              <Users
+              <FolderKanban
                 className="mx-auto h-6 w-6 text-zinc-300"
                 strokeWidth={1.5}
               />
               <p className="mt-4 text-[13px] font-semibold text-navy-900">
-                Aucune demande pour l&apos;instant
+                Aucun projet pour l&apos;instant
               </p>
               <p className="mt-1.5 text-[12px] text-zinc-500">
-                Les messages reçus via le site apparaîtront ici.
+                Les demandes reçues via le formulaire de contact apparaîtront
+                ici.
               </p>
             </div>
           ) : (
             <ul className="divide-y divide-zinc-100">
-              {recentesDemandes.data.map((demande) => (
+              {recentesDemandes.data.map((projet) => (
                 <li
-                  key={demande.id}
+                  key={projet.id}
                   className="flex items-center gap-4 px-6 py-4 transition hover:bg-zinc-50/60"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-zinc-100 text-[12px] font-bold uppercase text-navy-900">
-                    {(demande.name ?? demande.email).charAt(0).toUpperCase()}
+                    {projet.name.charAt(0).toUpperCase()}
                   </span>
 
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[13px] font-bold text-navy-900">
-                      {demande.name ?? demande.email}
+                      {projet.name}
                     </p>
                     <p className="mt-0.5 truncate text-[11.5px] text-zinc-500">
-                      {demande.email}
+                      {projet.email}
                     </p>
                   </div>
 
                   <span className="hidden shrink-0 rounded-2xl border border-zinc-200 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-zinc-500 md:block">
-                    {sourceLabel(demande.source)}
+                    {serviceLabel(projet.service)}
                   </span>
 
                   <div className="hidden shrink-0 items-center gap-1.5 md:flex">
-                    {statusIcon(demande.status)}
+                    {statusIcon(projet.status)}
                     <span className="text-[11px] font-semibold text-zinc-600">
-                      {statusLabel(demande.status)}
+                      {statusLabel(projet.status)}
                     </span>
                   </div>
 
                   <span className="shrink-0 text-[11px] text-zinc-400">
-                    {formatRelative(demande.created_at)}
+                    {formatRelative(projet.created_at)}
                   </span>
                 </li>
               ))}
@@ -344,13 +351,12 @@ export default async function AdminDashboard() {
               href="/admin/realisations/nouveau"
             />
             <QuickAction
-              label="Consulter les demandes"
-              href="/admin/leads"
+              label="Consulter les projets"
+              href="/admin/projects"
             />
             <QuickAction
-              label="Voir le site public"
-              href="/"
-              external
+              label="Voir les emails collectés"
+              href="/admin/leads"
               isLast
             />
           </div>
@@ -383,7 +389,7 @@ function QuickAction({
     >
       <span>{label}</span>
       <ArrowUpRight
-        className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:express-600"
+        className="h-3.5 w-3.5 shrink-0 text-zinc-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         strokeWidth={2}
       />
     </Link>
