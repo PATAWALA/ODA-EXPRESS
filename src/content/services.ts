@@ -50,7 +50,7 @@ export const SERVICES: Service[] = [
       "Achat direct et sécurisé auprès de l'usine",
     ],
     image:
-      "global.jpeg",
+      "/v.jpeg",
     steps: [
       {
         title: "Cadrage du besoin",
@@ -110,7 +110,7 @@ export const SERVICES: Service[] = [
       "Rapport photo & vidéo sous 24 heures",
     ],
     image:
-      "/ve.jpeg",
+      "/global.jpeg",
     steps: [
       {
         title: "Vérification de l'usine",
