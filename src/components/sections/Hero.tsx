@@ -44,7 +44,7 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-8 sm:px-12 lg:px-20 xl:px-28">
-        <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-14">
+        <div className="grid gap-10 py-14 sm:py-16 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-20">
           {/* Colonne texte */}
           <div className="order-1 flex flex-col justify-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
@@ -69,13 +69,28 @@ export default function Hero() {
             </h1>
 
             <p className="mt-5 max-w-2xl text-[15px] leading-[1.65] text-zinc-600 sm:text-[16px]">
-              Nous accompagnons entreprises, commerçants et investisseurs dans
-              leurs achats en Chine : recherche et vérification de
-              fournisseurs, négociation, contrôle qualité et organisation de
-              l&apos;expédition internationale jusqu&apos;à votre destination.
+              Nous accompagnons{" "}
+              <span className="font-semibold text-navy-900">entreprises</span>,{" "}
+              <span className="font-semibold text-navy-900">commerçants</span>{" "}
+              et{" "}
+              <span className="font-semibold text-navy-900">investisseurs</span>{" "}
+              dans leurs achats en Chine :{" "}
+              <span className="font-semibold text-navy-900">
+                recherche et vérification de fournisseurs
+              </span>
+              ,{" "}
+              <span className="font-semibold text-navy-900">négociation</span>,{" "}
+              <span className="font-semibold text-navy-900">
+                contrôle qualité
+              </span>{" "}
+              et{" "}
+              <span className="font-semibold text-navy-900">
+                organisation de l&apos;expédition internationale
+              </span>{" "}
+              jusqu&apos;à votre destination.
             </p>
 
-            <div className="mt-7">
+            <div className="mt-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <ButtonLink
                   href="/contact"
@@ -103,18 +118,12 @@ export default function Hero() {
                   />
                 </ButtonLink>
               </div>
-
-              <p className="mt-4 flex flex-col items-center gap-1.5 text-[12.5px] text-zinc-500 sm:flex-row sm:justify-start sm:gap-0">
-                <span>Un seul interlocuteur</span>
-                <span className="hidden px-2 sm:inline">·</span>
-                <span>De la recherche du produit jusqu&apos;au shipping</span>
-              </p>
             </div>
           </div>
 
           {/* Colonne image */}
           <div className="relative order-2">
-            <div className="relative h-full min-h-[320px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
+            <div className="relative h-full min-h-[380px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
               {IMAGES.map((src, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
