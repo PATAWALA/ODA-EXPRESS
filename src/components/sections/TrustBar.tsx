@@ -5,7 +5,7 @@ const POINTS = [
   {
     icon: Building2,
     title: "Présence locale",
-    description: "Équipe permanente à Guangzhou, en Chine.",
+    description: "Équipe permanente en Chine 🇨🇳.",
     gradient: "from-navy-700 to-navy-900",
     hover: "group-hover:from-navy-600 group-hover:to-navy-800",
     halo: "from-navy-200/50",
@@ -38,13 +38,7 @@ const POINTS = [
 
 export default function TrustBar() {
   return (
-    <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
-      {/* Dégradé de fond subtil */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-navy-50/30 to-white"
-      />
-
+    <section className="relative overflow-hidden bg-white">
       {/* Halo décoratif central */}
       <div
         aria-hidden
@@ -52,7 +46,7 @@ export default function TrustBar() {
       />
 
       <Container className="relative">
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 pb-0 sm:grid-cols-2 lg:grid-cols-4">
           {POINTS.map((point) => (
             <div
               key={point.title}
