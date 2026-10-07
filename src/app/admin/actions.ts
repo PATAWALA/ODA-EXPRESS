@@ -383,3 +383,19 @@ export async function uploadImageAction(formData: FormData) {
     url: urlData.publicUrl,
   };
 }
+/* ---------- PROJETS ---------- */
+
+export async function updateProjectStatusAction(id: string, status: string) {
+  const supabase = await createClient();
+  await supabase
+    .from("projects")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", id);
+  revalidatePath("/admin/projects");
+}
+
+export async function deleteProjectAction(id: string) {
+  const supabase = await createClient();
+  await supabase.from("projects").delete().eq("id", id);
+  revalidatePath("/admin/projects");
+}

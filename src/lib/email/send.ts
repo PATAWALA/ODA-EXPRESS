@@ -175,3 +175,90 @@ export async function sendNewArticleEmail(params: {
 
   return { ok: !lastError, sent: totalSent, error: lastError };
 }
+
+/* -------------------------------------------------------------------------- */
+/*  4. Confirmation de projet au client                                        */
+/* -------------------------------------------------------------------------- */
+
+export async function sendProjectConfirmationToClient(params: {
+  email: string;
+  name: string;
+  service: string | null;
+  message: string;
+  images: string[];
+}): Promise<{ ok: boolean; error?: string }> {
+  const firstName = params.name.split(" ")[0];
+
+  if (TEST_MODE) {
+    console.log("\n===== [TEST MODE] CONFIRMATION PROJET CLIENT =====");
+    console.log("À       :", params.email);
+    console.log("Prénom  :", firstName);
+    console.log("Service :", params.service ?? "—");
+    console.log("Images  :", params.images.length);
+    console.log("==================================================\n");
+    return { ok: true };
+  }
+
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to: [params.email],
+    replyTo: ADMIN_EMAIL,
+    subject: "Nous avons bien reçu votre projet — ODA Sources",
+    react: WelcomeEmail({
+      firstName,
+      sourceLabel: "votre demande de projet",
+    }),
+  });
+
+  if (error) {
+    console.error("[sendProjectConfirmationToClient]", error);
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  5. Notification de projet à l'admin                                        */
+/* -------------------------------------------------------------------------- */
+
+export async function sendProjectNotificationToAdmin(params: {
+  name: string;
+  email: string;
+  phone: string | null;
+  service: string | null;
+  message: string;
+  images: string[];
+  projectId: string;
+}): Promise<{ ok: boolean; error?: string }> {
+  if (TEST_MODE) {
+    console.log("\n===== [TEST MODE] PROJET ADMIN =====");
+    console.log("Nom     :", params.name);
+    console.log("Email   :", params.email);
+    console.log("Service :", params.service ?? "—");
+    console.log("Images  :", params.images.length);
+    console.log("Projet  :", params.projectId);
+    console.log("====================================\n");
+    return { ok: true };
+  }
+
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to: [ADMIN_EMAIL],
+    replyTo: params.email,
+    subject: `Nouveau projet — ${params.name}`,
+    react: AdminNotificationEmail({
+      name: params.name,
+      email: params.email,
+      phone: params.phone,
+      source: params.service ?? "Projet",
+      message: params.message,
+      images: params.images,
+    }),
+  });
+
+  if (error) {
+    console.error("[sendProjectNotificationToAdmin]", error);
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}
