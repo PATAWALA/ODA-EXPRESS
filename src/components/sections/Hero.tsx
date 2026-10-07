@@ -13,9 +13,9 @@ const fraunces = Fraunces({
 });
 
 const IMAGES = [
-  "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1600&q=85",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1600&q=85",
-  "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=85",
+  "/team/fondateur-voiture-noire.jpeg",
+  "/team/equipe-showroom.jpeg",
+  "/team/fondateur-voiture-blanche.jpeg",
 ];
 
 export default function Hero() {
