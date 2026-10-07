@@ -38,7 +38,7 @@ const POINTS = [
 
 export default function TrustBar() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-navy-50/20 to-white">
       {/* Halo décoratif central */}
       <div
         aria-hidden
@@ -52,7 +52,6 @@ export default function TrustBar() {
               key={point.title}
               className="group relative overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/60 p-6 transition-all duration-300 hover:to-navy-100/70 sm:p-7"
             >
-              {/* Halo interne au survol */}
               <div
                 aria-hidden
                 className={
@@ -61,7 +60,6 @@ export default function TrustBar() {
                 }
               />
 
-              {/* Icône avec dégradé */}
               <span
                 className={
                   "relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-md transition-all duration-300 group-hover:scale-105 " +
@@ -73,7 +71,6 @@ export default function TrustBar() {
                 <point.icon className="h-5 w-5" strokeWidth={1.6} />
               </span>
 
-              {/* Texte */}
               <p className="relative mt-5 text-[14px] font-bold tracking-tight text-navy-900">
                 {point.title}
               </p>
@@ -81,7 +78,6 @@ export default function TrustBar() {
                 {point.description}
               </p>
 
-              {/* Trait de fin */}
               <div
                 aria-hidden
                 className="relative mt-5 h-px w-8 bg-gradient-to-r from-express-600 to-transparent transition-all duration-300 group-hover:w-16"
