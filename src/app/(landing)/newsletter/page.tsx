@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   CheckCircle2,
   MessageCircle,
@@ -7,6 +8,7 @@ import {
   FileText,
   ShieldCheck,
   ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import NewsletterInlineForm from "@/components/widgets/NewsletterInlineForm";
@@ -59,13 +61,10 @@ export default function NewsletterPage() {
     <main className="relative min-h-screen overflow-hidden bg-white">
       {/* ============ BLOC HAUT — FOND NAVY PROFOND ============ */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950 pt-14 pb-24 sm:pt-16 sm:pb-28">
-        {/* Halo bleu en haut à droite */}
         <div
           aria-hidden
           className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-express-600/25 via-navy-500/15 to-transparent blur-3xl"
         />
-
-        {/* Halo rouge en bas à gauche */}
         <div
           aria-hidden
           className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-express-600/20 via-navy-500/10 to-transparent blur-3xl"
@@ -73,7 +72,6 @@ export default function NewsletterPage() {
 
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
-            {/* Logo — non cliquable */}
             <div className="flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -83,7 +81,6 @@ export default function NewsletterPage() {
               />
             </div>
 
-            {/* Chiffre géant */}
             <div className="mt-12">
               <p className="text-[80px] font-bold leading-none tracking-tight text-white sm:text-[110px]">
                 +500
@@ -93,7 +90,6 @@ export default function NewsletterPage() {
               </p>
             </div>
 
-            {/* Titre */}
             <h1 className="mx-auto mt-8 max-w-lg text-[22px] font-bold leading-[1.25] tracking-tight text-white sm:text-[26px]">
               Reçoivent chaque mois notre veille import.
             </h1>
@@ -110,16 +106,13 @@ export default function NewsletterPage() {
       <section className="relative -mt-16 pb-16 sm:-mt-20 sm:pb-20">
         <Container>
           <div className="mx-auto max-w-xl">
-            {/* Carte formulaire avec halo */}
             <div className="relative">
-              {/* Halo bleu derrière la carte */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-br from-navy-100/60 via-express-50/40 to-navy-50/60 blur-2xl"
               />
 
               <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-[0_20px_60px_-20px_rgba(1,18,52,0.25)] sm:p-8">
-                {/* Badges de réassurance */}
                 <div className="mb-6 flex flex-wrap items-center justify-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.1em] text-emerald-700">
                     <CheckCircle2 className="h-3 w-3" strokeWidth={2.5} />
@@ -134,10 +127,8 @@ export default function NewsletterPage() {
                   </span>
                 </div>
 
-                {/* Formulaire */}
                 <NewsletterInlineForm />
 
-                {/* Preuve sociale */}
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-3 border-t border-zinc-100 pt-6">
                   <div className="flex -space-x-2.5">
                     {AVATARS.map((avatar) => (
@@ -165,7 +156,6 @@ export default function NewsletterPage() {
       <section className="pb-16 sm:pb-20">
         <Container>
           <div className="mx-auto max-w-xl">
-            {/* Séparateur */}
             <div className="mb-10 flex items-center gap-4">
               <span className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
               <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-zinc-400">
@@ -174,7 +164,6 @@ export default function NewsletterPage() {
               <span className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
             </div>
 
-            {/* Carte WhatsApp */}
             <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-white via-white to-emerald-50/50 p-6 shadow-[0_4px_24px_-12px_rgba(5,150,105,0.15)] transition-all duration-300 hover:shadow-[0_12px_40px_-16px_rgba(5,150,105,0.25)] sm:p-8">
               <div
                 aria-hidden
@@ -258,7 +247,6 @@ export default function NewsletterPage() {
       <footer className="border-t border-zinc-200 bg-white pb-10 pt-10">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            {/* Nom */}
             <p className="text-[13px] font-bold tracking-tight text-navy-900">
               ODA SOURCES IMPORT & EXPORT CO., LIMITED
             </p>
@@ -285,8 +273,22 @@ export default function NewsletterPage() {
               </a>
             </div>
 
+            {/* Retour à l'accueil */}
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/"
+                className="group inline-flex items-center gap-2 text-[12.5px] font-semibold text-navy-700 transition hover:text-express-600"
+              >
+                <ArrowLeft
+                  className="h-3.5 w-3.5 transition group-hover:-translate-x-0.5"
+                  strokeWidth={2.5}
+                />
+                Retour à l&apos;accueil
+              </Link>
+            </div>
+
             {/* Copyright */}
-            <p className="mt-8 text-[11.5px] text-zinc-400">
+            <p className="mt-6 text-[11.5px] text-zinc-400">
               © {new Date().getFullYear()} ODA Sources · Tous droits réservés
             </p>
           </div>
