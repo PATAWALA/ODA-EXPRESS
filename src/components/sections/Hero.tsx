@@ -44,10 +44,9 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-8 sm:px-12 lg:px-20 xl:px-28">
-        <div className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-24">
-          {/* Colonne texte — 1re sur mobile, 1re sur desktop */}
+        <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-14">
+          {/* Colonne texte */}
           <div className="order-1 flex flex-col justify-center">
-            {/* Eyebrow */}
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
               ODA SOURCES
             </p>
@@ -55,9 +54,8 @@ export default function Hero() {
               Sourcing · Vérification · Contrôle qualité · Shipping
             </p>
 
-            {/* Titre serif deux tons */}
             <h1
-              className="mt-6 text-[34px] leading-[1.15] tracking-[-0.02em] text-navy-900 sm:text-[42px] lg:text-[50px]"
+              className="mt-5 text-[32px] leading-[1.12] tracking-[-0.02em] text-navy-900 sm:text-[40px] lg:text-[46px]"
               style={{
                 fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontWeight: 500,
@@ -70,16 +68,14 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Sous-titre */}
-            <p className="mt-6 max-w-2xl text-[15.5px] leading-[1.7] text-zinc-600 sm:text-[16.5px]">
+            <p className="mt-5 max-w-2xl text-[15px] leading-[1.65] text-zinc-600 sm:text-[16px]">
               Nous accompagnons entreprises, commerçants et investisseurs dans
               leurs achats en Chine : recherche et vérification de
               fournisseurs, négociation, contrôle qualité et organisation de
               l&apos;expédition internationale jusqu&apos;à votre destination.
             </p>
 
-            {/* CTA + micro-réassurance */}
-            <div className="mt-8">
+            <div className="mt-7">
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <ButtonLink
                   href="/contact"
@@ -108,7 +104,7 @@ export default function Hero() {
                 </ButtonLink>
               </div>
 
-              <p className="mt-5 flex flex-col items-center gap-1.5 text-[12.5px] text-zinc-500 sm:flex-row sm:justify-start sm:gap-0">
+              <p className="mt-4 flex flex-col items-center gap-1.5 text-[12.5px] text-zinc-500 sm:flex-row sm:justify-start sm:gap-0">
                 <span>Un seul interlocuteur</span>
                 <span className="hidden px-2 sm:inline">·</span>
                 <span>De la recherche du produit jusqu&apos;au shipping</span>
@@ -116,9 +112,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Colonne image — 2e sur mobile, 2e sur desktop */}
+          {/* Colonne image */}
           <div className="relative order-2">
-            <div className="relative h-full min-h-[400px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
+            <div className="relative h-full min-h-[320px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
               {IMAGES.map((src, index) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
