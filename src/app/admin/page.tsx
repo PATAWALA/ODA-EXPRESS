@@ -7,6 +7,7 @@ import {
   Image as ImageIcon,
   Users,
   FolderKanban,
+  Mail,
   Plus,
   ExternalLink,
   Circle,
@@ -25,6 +26,8 @@ export default async function AdminDashboard() {
     realisations,
     projects,
     nouveauxProjets,
+    leads,
+    nouveauxLeads,
     recentesDemandes,
   ] = await Promise.all([
     supabase.from("articles").select("id", { count: "exact", head: true }),
@@ -33,6 +36,11 @@ export default async function AdminDashboard() {
     supabase.from("projects").select("id", { count: "exact", head: true }),
     supabase
       .from("projects")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "new"),
+    supabase.from("leads").select("id", { count: "exact", head: true }),
+    supabase
+      .from("leads")
       .select("id", { count: "exact", head: true })
       .eq("status", "new"),
     supabase
@@ -47,7 +55,9 @@ export default async function AdminDashboard() {
     products: products.count ?? 0,
     realisations: realisations.count ?? 0,
     projects: projects.count ?? 0,
-    nouveaux: nouveauxProjets.count ?? 0,
+    nouveauxProjets: nouveauxProjets.count ?? 0,
+    leads: leads.count ?? 0,
+    nouveauxLeads: nouveauxLeads.count ?? 0,
   };
 
   const greeting = getGreeting();
@@ -136,8 +146,8 @@ export default async function AdminDashboard() {
       count: counts.projects,
       hint: "Demandes de projet reçues",
       badge:
-        counts.nouveaux > 0
-          ? `${counts.nouveaux} nouveau${counts.nouveaux > 1 ? "x" : ""}`
+        counts.nouveauxProjets > 0
+          ? `${counts.nouveauxProjets} nouveau${counts.nouveauxProjets > 1 ? "x" : ""}`
           : null,
     },
   ];
@@ -173,7 +183,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* ============ BANDEAU ALERTE ============ */}
-      {counts.nouveaux > 0 && (
+      {counts.nouveauxProjets > 0 && (
         <Link
           href="/admin/projects"
           className="group mb-8 flex items-center justify-between gap-6 rounded-2xl border-l-2 border-express-600 bg-express-600/[0.04] px-6 py-5 transition hover:bg-express-600/[0.08]"
@@ -184,8 +194,9 @@ export default async function AdminDashboard() {
             </span>
             <div>
               <p className="text-[14px] font-bold text-navy-900">
-                {counts.nouveaux} nouveau{counts.nouveaux > 1 ? "x" : ""}{" "}
-                projet{counts.nouveaux > 1 ? "s" : ""} à traiter
+                {counts.nouveauxProjets} nouveau
+                {counts.nouveauxProjets > 1 ? "x" : ""} projet
+                {counts.nouveauxProjets > 1 ? "s" : ""} à traiter
               </p>
               <p className="mt-0.5 text-[12.5px] text-zinc-600">
                 Des clients attendent une réponse de votre part.
@@ -199,7 +210,7 @@ export default async function AdminDashboard() {
         </Link>
       )}
 
-      {/* ============ MODULES ============ */}
+      {/* ============ MODULES PRINCIPAUX ============ */}
       <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
         {modules.map((mod) => (
           <div key={mod.href} className="group relative flex flex-col bg-white">
@@ -249,6 +260,43 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      {/* ============ BANDEAU EMAILS COLLECTÉS ============ */}
+      <Link
+        href="/admin/leads"
+        className="group mt-4 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-zinc-200 bg-white px-6 py-5 transition hover:border-navy-300 hover:bg-zinc-50/60"
+      >
+        <div className="flex items-center gap-4">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-navy-200 bg-navy-50 text-navy-700">
+            <Mail className="h-4 w-4" strokeWidth={1.75} />
+          </span>
+          <div>
+            <p className="text-[14px] font-bold text-navy-900">
+              Emails collectés
+            </p>
+            <p className="mt-0.5 text-[12.5px] text-zinc-500">
+              Newsletter, pop-up exit-intent — pour vos campagnes marketing
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="text-right">
+            <p className="text-[20px] font-bold leading-none text-navy-900">
+              {counts.leads}
+            </p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-zinc-500">
+              {counts.nouveauxLeads > 0
+                ? `${counts.nouveauxLeads} nouveau${counts.nouveauxLeads > 1 ? "x" : ""}`
+                : "au total"}
+            </p>
+          </div>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 text-zinc-400 transition group-hover:translate-x-1 group-hover:text-navy-900"
+            strokeWidth={2.5}
+          />
+        </div>
+      </Link>
 
       {/* ============ ACTIVITÉ + RACCOURCIS ============ */}
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
