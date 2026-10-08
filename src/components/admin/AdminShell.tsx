@@ -68,12 +68,6 @@ const SECTIONS: NavSection[] = [
       { label: "Newsletter", href: "/admin/newsletter", icon: Mail },
     ],
   },
-  {
-    title: "Configuration",
-    items: [
-      { label: "Paramètres", href: "/admin/parametres", icon: Settings },
-    ],
-  },
 ];
 
 // Onglets mobile (bottom nav)
