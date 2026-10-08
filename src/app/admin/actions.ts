@@ -4,7 +4,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendNewArticleEmail } from "@/lib/email/send";
+import {
+  sendNewArticleEmail,
+  sendRecommendationEmail,
+  sendMonthlyDigest,
+} from "@/lib/email/send";
 
 /* ---------- AUTH ---------- */
 
@@ -398,4 +402,85 @@ export async function deleteProjectAction(id: string) {
   const supabase = await createClient();
   await supabase.from("projects").delete().eq("id", id);
   revalidatePath("/admin/projects");
+}
+
+/* ---------- NEWSLETTER : VEILLE MENSUELLE ---------- */
+
+export async function sendMonthlyDigestAction(formData: FormData) {
+  const month = String(formData.get("month") ?? "").trim();
+  const productTitle = String(formData.get("product_title") ?? "").trim();
+  const productDescription = String(
+    formData.get("product_description") ?? "",
+  ).trim();
+  const productImageUrl = String(
+    formData.get("product_image_url") ?? "",
+  ).trim();
+  const freightUpdate = String(formData.get("freight_update") ?? "").trim();
+  const tip = String(formData.get("tip") ?? "").trim();
+
+  if (!month || !productTitle || !productDescription || !freightUpdate || !tip) {
+    return { error: "Tous les champs obligatoires doivent être remplis." };
+  }
+
+  const supabase = createAdminClient();
+  const { data: leads } = await supabase
+    .from("leads")
+    .select("email")
+    .not("email", "is", null);
+
+  if (!leads || leads.length === 0) {
+    return { error: "Aucun contact à qui envoyer la veille." };
+  }
+
+  const result = await sendMonthlyDigest({
+    recipients: leads.map((l) => l.email),
+    month,
+    productHighlight: {
+      title: productTitle,
+      description: productDescription,
+      imageUrl: productImageUrl || undefined,
+    },
+    freightUpdate,
+    tip,
+  });
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de l'envoi." };
+  }
+
+  revalidatePath("/admin/newsletter");
+  return {
+    success: `Veille envoyée à ${result.sent} contact${
+      result.sent > 1 ? "s" : ""
+    }.`,
+  };
+}
+
+/* ---------- NEWSLETTER : RECOMMANDATION ---------- */
+
+export async function sendRecommendationEmailAction() {
+  const supabase = createAdminClient();
+  const { data: leads } = await supabase
+    .from("leads")
+    .select("email")
+    .not("email", "is", null);
+
+  if (!leads || leads.length === 0) {
+    return { error: "Aucun contact à qui envoyer l'email." };
+  }
+
+  const result = await sendRecommendationEmail({
+    recipients: leads.map((l) => l.email),
+  });
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de l'envoi." };
+  }
+
+  revalidatePath("/admin/newsletter");
+  return {
+    success: `Email de recommandation envoyé à ${result.sent} contact${
+      result.sent > 1 ? "s" : ""
+    }.`,
+  };
 }

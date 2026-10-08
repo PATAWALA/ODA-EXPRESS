@@ -2,6 +2,8 @@ import { getResend, FROM_EMAIL, FROM_NAME, ADMIN_EMAIL } from "./resend";
 import { WelcomeEmail } from "./templates/welcome";
 import { AdminNotificationEmail } from "./templates/admin-notification";
 import { NewArticleEmail } from "./templates/new-article";
+import { RecommendationEmail } from "./templates/recommendation";
+import { MonthlyDigestEmail } from "./templates/monthly-digest";
 
 const FROM = `${FROM_NAME} <${FROM_EMAIL}>`;
 
@@ -259,4 +261,117 @@ export async function sendProjectNotificationToAdmin(params: {
     return { ok: false, error: error.message };
   }
   return { ok: true };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  7. Email de recommandation — "Partagez à un proche"                        */
+/* -------------------------------------------------------------------------- */
+
+export async function sendRecommendationEmail(params: {
+  recipients: string[];
+}): Promise<{ ok: boolean; sent: number; error?: string }> {
+  if (params.recipients.length === 0) {
+    return { ok: true, sent: 0 };
+  }
+
+  const uniqueRecipients = Array.from(
+    new Set(params.recipients.filter((e) => e && e.includes("@"))),
+  );
+
+  if (TEST_MODE) {
+    console.log("\n===== [TEST MODE] EMAIL RECOMMANDATION =====");
+    console.log("Destinataires :", uniqueRecipients.length, "emails");
+    console.log("===========================================\n");
+    return { ok: true, sent: uniqueRecipients.length };
+  }
+
+  const batches: string[][] = [];
+  for (let i = 0; i < uniqueRecipients.length; i += 50) {
+    batches.push(uniqueRecipients.slice(i, i + 50));
+  }
+
+  let totalSent = 0;
+  let lastError: string | undefined;
+
+  for (const batch of batches) {
+    const { error } = await getResend().emails.send({
+      from: FROM,
+      to: batch,
+      subject: "Vous connaissez quelqu'un qui importe de Chine ?",
+      react: RecommendationEmail({}),
+    });
+
+    if (error) {
+      console.error("[sendRecommendationEmail] Erreur batch :", error);
+      lastError = error.message;
+    } else {
+      totalSent += batch.length;
+    }
+  }
+
+  return { ok: !lastError, sent: totalSent, error: lastError };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  8. Veille import mensuelle                                                 */
+/* -------------------------------------------------------------------------- */
+
+export async function sendMonthlyDigest(params: {
+  recipients: string[];
+  month: string;
+  productHighlight: {
+    title: string;
+    description: string;
+    imageUrl?: string;
+  };
+  freightUpdate: string;
+  tip: string;
+}): Promise<{ ok: boolean; sent: number; error?: string }> {
+  if (params.recipients.length === 0) {
+    return { ok: true, sent: 0 };
+  }
+
+  const uniqueRecipients = Array.from(
+    new Set(params.recipients.filter((e) => e && e.includes("@"))),
+  );
+
+  if (TEST_MODE) {
+    console.log("\n===== [TEST MODE] VEILLE MENSUELLE =====");
+    console.log("Mois          :", params.month);
+    console.log("Destinataires :", uniqueRecipients.length, "emails");
+    console.log("Produit       :", params.productHighlight.title);
+    console.log("========================================\n");
+    return { ok: true, sent: uniqueRecipients.length };
+  }
+
+  const batches: string[][] = [];
+  for (let i = 0; i < uniqueRecipients.length; i += 50) {
+    batches.push(uniqueRecipients.slice(i, i + 50));
+  }
+
+  let totalSent = 0;
+  let lastError: string | undefined;
+
+  for (const batch of batches) {
+    const { error } = await getResend().emails.send({
+      from: FROM,
+      to: batch,
+      subject: `📦 Veille import ${params.month} — Nouveautés & conseils`,
+      react: MonthlyDigestEmail({
+        month: params.month,
+        productHighlight: params.productHighlight,
+        freightUpdate: params.freightUpdate,
+        tip: params.tip,
+      }),
+    });
+
+    if (error) {
+      console.error("[sendMonthlyDigest] Erreur batch :", error);
+      lastError = error.message;
+    } else {
+      totalSent += batch.length;
+    }
+  }
+
+  return { ok: !lastError, sent: totalSent, error: lastError };
 }

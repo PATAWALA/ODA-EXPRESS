@@ -12,14 +12,15 @@ export default async function AdminLeadsPage() {
     <div>
       <div className="mb-8">
         <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
-          Prospects
+          Marketing
         </p>
         <h1 className="mt-2 text-[24px] font-bold tracking-tight text-navy-900">
-          Toutes les demandes reçues
+          Emails collectés
         </h1>
-        <p className="mt-2 text-[13px] text-zinc-600">
-          Messages collectés via le site : formulaire de contact, newsletter,
-          pop-up.
+        <p className="mt-2 max-w-2xl text-[13px] text-zinc-600">
+          Contacts collectés pour vos campagnes marketing : newsletter et
+          pop-up exit-intent. Les demandes de projet sont dans la section{" "}
+          <span className="font-semibold text-navy-900">Projets</span>.
         </p>
       </div>
 
