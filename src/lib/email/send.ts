@@ -278,6 +278,12 @@ export async function sendRecommendationEmail(params: {
     new Set(params.recipients.filter((e) => e && e.includes("@"))),
   );
 
+  console.log(
+    "[sendRecommendationEmail] Début envoi à",
+    uniqueRecipients.length,
+    "contacts",
+  );
+
   if (TEST_MODE) {
     console.log("\n===== [TEST MODE] EMAIL RECOMMANDATION =====");
     console.log("Destinataires :", uniqueRecipients.length, "emails");
@@ -285,29 +291,58 @@ export async function sendRecommendationEmail(params: {
     return { ok: true, sent: uniqueRecipients.length };
   }
 
+  // ⚠️ SÉCURITÉ : limiter à 100 destinataires par envoi (2 batches de 50)
+  // pour éviter les timeouts si la liste devient trop grande
+  const limitedRecipients = uniqueRecipients.slice(0, 100);
+
   const batches: string[][] = [];
-  for (let i = 0; i < uniqueRecipients.length; i += 50) {
-    batches.push(uniqueRecipients.slice(i, i + 50));
+  for (let i = 0; i < limitedRecipients.length; i += 50) {
+    batches.push(limitedRecipients.slice(i, i + 50));
   }
+
+  console.log("[sendRecommendationEmail]", batches.length, "batch(es) à envoyer");
 
   let totalSent = 0;
   let lastError: string | undefined;
 
-  for (const batch of batches) {
-    const { error } = await getResend().emails.send({
-      from: FROM,
-      to: batch,
-      subject: "Vous connaissez quelqu'un qui importe de Chine ?",
-      react: RecommendationEmail({}),
-    });
+  for (let i = 0; i < batches.length; i++) {
+    const batch = batches[i];
+    console.log(
+      `[sendRecommendationEmail] Envoi batch ${i + 1}/${batches.length} (${batch.length} emails)...`,
+    );
 
-    if (error) {
-      console.error("[sendRecommendationEmail] Erreur batch :", error);
-      lastError = error.message;
-    } else {
-      totalSent += batch.length;
+    try {
+      const { error } = await getResend().emails.send({
+        from: FROM,
+        to: batch,
+        subject: "Vous connaissez quelqu'un qui importe de Chine ?",
+        react: RecommendationEmail({}),
+      });
+
+      if (error) {
+        console.error(
+          `[sendRecommendationEmail] Erreur batch ${i + 1} :`,
+          error,
+        );
+        lastError = error.message;
+      } else {
+        console.log(
+          `[sendRecommendationEmail] Batch ${i + 1} OK (${batch.length} envoyés)`,
+        );
+        totalSent += batch.length;
+      }
+    } catch (err) {
+      console.error(`[sendRecommendationEmail] Exception batch ${i + 1} :`, err);
+      lastError = err instanceof Error ? err.message : "Erreur inconnue";
     }
   }
+
+  console.log(
+    "[sendRecommendationEmail] Terminé. Total envoyé :",
+    totalSent,
+    "/",
+    limitedRecipients.length,
+  );
 
   return { ok: !lastError, sent: totalSent, error: lastError };
 }
