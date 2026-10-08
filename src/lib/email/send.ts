@@ -1,5 +1,6 @@
 import { getResend, FROM_EMAIL, FROM_NAME, ADMIN_EMAIL } from "./resend";
 import { WelcomeEmail } from "./templates/welcome";
+import { NewsletterWelcomeEmail } from "./templates/newsletter-welcome";
 import { AdminNotificationEmail } from "./templates/admin-notification";
 import { NewArticleEmail } from "./templates/new-article";
 import { RecommendationEmail } from "./templates/recommendation";
@@ -27,16 +28,32 @@ export async function sendWelcomeEmail(params: {
   name?: string;
   source: string;
 }): Promise<{ ok: boolean; error?: string }> {
-  const firstName = params.name?.split(" ")[0] ?? "cher client";
+  const firstName = params.name?.split(" ")[0];
   const sourceLabel = SOURCE_LABELS[params.source] ?? "notre site";
+
+  // Détection du type d'inscription
+  const isNewsletterSignup =
+    params.source === "newsletter" || params.source === "exit-intent";
+
+  // Choisir le bon template
+  const emailTemplate = isNewsletterSignup
+    ? NewsletterWelcomeEmail({ firstName })
+    : WelcomeEmail({ firstName: firstName ?? "cher client", sourceLabel });
+
+  const subject = isNewsletterSignup
+    ? "Bienvenue dans la veille import ODA Sources 🌍"
+    : "Nous avons bien reçu votre demande — ODA Sources";
 
   if (TEST_MODE) {
     console.log("\n========== [TEST MODE] EMAIL AU PROSPECT ==========");
     console.log("À       :", params.email);
-    console.log("Sujet   :", "Nous avons bien reçu votre demande — ODA Sources");
-    console.log("Contenu : WelcomeEmail");
-    console.log("  Bonjour", firstName);
-    console.log("  Source :", sourceLabel);
+    console.log(
+      "Type    :",
+      isNewsletterSignup ? "Bienvenue newsletter" : "Confirmation demande",
+    );
+    console.log("Sujet   :", subject);
+    console.log("Prénom  :", firstName ?? "—");
+    console.log("Source  :", sourceLabel);
     console.log("===================================================\n");
     return { ok: true };
   }
@@ -45,8 +62,8 @@ export async function sendWelcomeEmail(params: {
     from: FROM,
     to: [params.email],
     replyTo: ADMIN_EMAIL,
-    subject: "Nous avons bien reçu votre demande — ODA Sources",
-    react: WelcomeEmail({ firstName, sourceLabel }),
+    subject,
+    react: emailTemplate,
   });
 
   if (error) {
@@ -291,8 +308,7 @@ export async function sendRecommendationEmail(params: {
     return { ok: true, sent: uniqueRecipients.length };
   }
 
-  // ⚠️ SÉCURITÉ : limiter à 100 destinataires par envoi (2 batches de 50)
-  // pour éviter les timeouts si la liste devient trop grande
+  // ⚠️ SÉCURITÉ : limiter à 100 destinataires par envoi
   const limitedRecipients = uniqueRecipients.slice(0, 100);
 
   const batches: string[][] = [];
