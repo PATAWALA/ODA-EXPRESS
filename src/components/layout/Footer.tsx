@@ -159,14 +159,17 @@ export default function Footer() {
 
         {/* Barre légale */}
         <div className="flex flex-col gap-4 border-t border-white/10 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <Link
-            href="/admin"
-            className="text-[11.5px] text-navy-300 transition hover:text-white"
-            title="Espace administrateur"
-          >
+          <p className="text-[11.5px] text-navy-300">
             © {new Date().getFullYear()} ODA SOURCES IMPORT & EXPORT CO.,
-            LIMITED. Tous droits réservés.
-          </Link>
+            LIMITED.{" "}
+            <Link
+              href="/admin"
+              className="transition hover:text-white"
+              title="Espace administrateur"
+            >
+              Tous droits réservés.
+            </Link>
+          </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11.5px] text-navy-300">
             <Link href="/mentions-legales" className="transition hover:text-white">
               Mentions légales
