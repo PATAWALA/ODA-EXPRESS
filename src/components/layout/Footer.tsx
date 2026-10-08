@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin, PhoneCall, Clock, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import Logo from "@/components/Logo";
 
 const NAV = [
   { label: "Accueil", href: "/" },
@@ -160,10 +159,14 @@ export default function Footer() {
 
         {/* Barre légale */}
         <div className="flex flex-col gap-4 border-t border-white/10 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[11.5px] text-navy-300">
+          <Link
+            href="/admin"
+            className="text-[11.5px] text-navy-300 transition hover:text-white"
+            title="Espace administrateur"
+          >
             © {new Date().getFullYear()} ODA SOURCES IMPORT & EXPORT CO.,
             LIMITED. Tous droits réservés.
-          </p>
+          </Link>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11.5px] text-navy-300">
             <Link href="/mentions-legales" className="transition hover:text-white">
               Mentions légales
