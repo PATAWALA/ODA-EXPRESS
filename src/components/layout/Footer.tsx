@@ -165,7 +165,6 @@ export default function Footer() {
             <Link
               href="/admin"
               className="transition hover:text-white"
-              title="Espace administrateur"
             >
               Tous droits réservés.
             </Link>
