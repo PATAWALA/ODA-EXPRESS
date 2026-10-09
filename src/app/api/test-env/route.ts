@@ -6,5 +6,7 @@ export async function GET() {
     resendKeyStart: process.env.RESEND_API_KEY?.slice(0, 6) ?? "absent",
     fromEmail: process.env.RESEND_FROM_EMAIL ?? "absent",
     adminEmail: process.env.ADMIN_EMAIL ?? "absent",
+    nodeEnv: process.env.NODE_ENV,
+    cwd: process.cwd(),
   });
 }
