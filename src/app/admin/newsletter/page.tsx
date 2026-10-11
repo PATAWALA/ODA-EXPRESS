@@ -1,4 +1,5 @@
-import { Mail, Users, Share2 } from "lucide-react";
+import { Mail, Users, Share2, Calendar } from "lucide-react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import NewsletterActions from "@/components/admin/NewsletterActions";
 import VeilleForm from "@/components/admin/VeilleForm";
@@ -81,13 +82,52 @@ export default async function AdminNewsletterPage() {
         </div>
       </div>
 
-      {/* Recommandation (envoi direct) */}
+      {/* Programmation automatique */}
+      <div className="mt-8 rounded-2xl border border-navy-100 bg-gradient-to-br from-white via-white to-navy-50/50 p-6">
+        <div className="flex flex-wrap items-start gap-4">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-700 to-navy-900 text-white shadow-md">
+            <Calendar className="h-5 w-5" strokeWidth={1.75} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-[15px] font-bold text-navy-900">
+                Programmation automatique
+              </p>
+              <span className="rounded-2xl bg-emerald-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-700">
+                Recommandé
+              </span>
+            </div>
+            <p className="mt-1 text-[13px] leading-relaxed text-zinc-600">
+              Composez vos veilles à l&apos;avance et choisissez la date
+              d&apos;envoi. Le système les enverra tout seul le jour choisi —
+              sans que vous ayez à cliquer. La recommandation part
+              automatiquement le 15 de chaque mois.
+            </p>
+            <Link
+              href="/admin/newsletter/programmer"
+              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
+            >
+              <Calendar className="h-3.5 w-3.5" strokeWidth={2} />
+              Programmer une veille
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Envoi manuel — Recommandation */}
       <div className="mt-8">
+        <div className="mb-3 flex items-center gap-3">
+          <span className="h-px flex-1 bg-zinc-200" />
+          <span className="text-[10.5px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+            Envoi manuel exceptionnel
+          </span>
+          <span className="h-px flex-1 bg-zinc-200" />
+        </div>
         <NewsletterActions />
       </div>
 
-      {/* Veille mensuelle (formulaire) */}
-      <div className="mt-8">
+      {/* Envoi manuel — Veille */}
+      <div className="mt-6">
         <VeilleForm />
       </div>
 

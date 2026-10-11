@@ -484,3 +484,48 @@ export async function sendRecommendationEmailAction() {
     }.`,
   };
 }
+
+/* ---------- NEWSLETTER : VEILLE PROGRAMMÉE ---------- */
+
+export async function createVeilleAction(formData: FormData) {
+  const scheduledFor = String(formData.get("scheduled_for") ?? "").trim();
+  const monthLabel = String(formData.get("month_label") ?? "").trim();
+  const productTitle = String(formData.get("product_title") ?? "").trim();
+  const productDescription = String(
+    formData.get("product_description") ?? "",
+  ).trim();
+  const productImageUrl = String(
+    formData.get("product_image_url") ?? "",
+  ).trim();
+  const freightUpdate = String(formData.get("freight_update") ?? "").trim();
+  const tip = String(formData.get("tip") ?? "").trim();
+
+  if (!scheduledFor || !monthLabel || !productTitle || !productDescription || !freightUpdate || !tip) {
+    return { error: "Tous les champs obligatoires doivent être remplis." };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("newsletter_veilles").insert({
+    scheduled_for: new Date(scheduledFor).toISOString(),
+    month_label: monthLabel,
+    product_title: productTitle,
+    product_description: productDescription,
+    product_image_url: productImageUrl || null,
+    freight_update: freightUpdate,
+    tip,
+    status: "pending",
+  });
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/admin/newsletter/programmer");
+  return {
+    success: `Veille programmée pour le ${new Date(scheduledFor).toLocaleDateString("fr-FR")}.`,
+  };
+}
+
+export async function deleteVeilleAction(id: string) {
+  const supabase = await createClient();
+  await supabase.from("newsletter_veilles").delete().eq("id", id);
+  revalidatePath("/admin/newsletter/programmer");
+}

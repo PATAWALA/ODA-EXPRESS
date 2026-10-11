@@ -228,6 +228,51 @@ export type Database = {
         };
         Relationships: [];
       };
+      newsletter_veilles: {
+        Row: {
+          id: string;
+          scheduled_for: string;
+          month_label: string;
+          product_title: string;
+          product_description: string;
+          product_image_url: string | null;
+          freight_update: string;
+          tip: string;
+          status: string;
+          sent_at: string | null;
+          recipients_count: number | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          scheduled_for: string;
+          month_label: string;
+          product_title: string;
+          product_description: string;
+          product_image_url?: string | null;
+          freight_update: string;
+          tip: string;
+          status?: string;
+          sent_at?: string | null;
+          recipients_count?: number | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          scheduled_for?: string;
+          month_label?: string;
+          product_title?: string;
+          product_description?: string;
+          product_image_url?: string | null;
+          freight_update?: string;
+          tip?: string;
+          status?: string;
+          sent_at?: string | null;
+          recipients_count?: number | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -259,3 +304,10 @@ export type LeadUpdate = Database["public"]["Tables"]["leads"]["Update"];
 export type Project = Database["public"]["Tables"]["projects"]["Row"];
 export type ProjectInsert = Database["public"]["Tables"]["projects"]["Insert"];
 export type ProjectUpdate = Database["public"]["Tables"]["projects"]["Update"];
+
+export type NewsletterVeille =
+  Database["public"]["Tables"]["newsletter_veilles"]["Row"];
+export type NewsletterVeilleInsert =
+  Database["public"]["Tables"]["newsletter_veilles"]["Insert"];
+export type NewsletterVeilleUpdate =
+  Database["public"]["Tables"]["newsletter_veilles"]["Update"];
