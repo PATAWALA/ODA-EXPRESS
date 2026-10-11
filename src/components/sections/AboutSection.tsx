@@ -10,7 +10,7 @@ const STATS = [
 
 export default function AboutSection() {
   return (
-    <section className="border-b border-zinc-200 bg-white py-20 sm:py-24 lg:py-28">
+    <section className="bg-white py-20 sm:py-24 lg:py-28">
       <Container>
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
           {/* Image équipe */}
@@ -53,17 +53,16 @@ export default function AboutSection() {
             <p className="mt-7 max-w-xl text-[15px] leading-[1.75] text-zinc-600">
               ODA SOURCES IMPORT & EXPORT CO., LIMITED est une société
               spécialisée dans le sourcing, l&apos;import-export et
-              l&apos;accompagnement des opérations commerciales internationales,
-              avec une présence permanente en Chine 🇨🇳.
+              l&apos;accompagnement des opérations commerciales
+              internationales, avec une présence permanente en Chine 🇨🇳.
             </p>
 
             <p className="mt-4 max-w-xl text-[15px] leading-[1.75] text-zinc-600">
-              Nous accompagnons les commerçants, distributeurs, industriels et
-              investisseurs africains dans leurs approvisionnements en Chine,
-              avec transparence, rigueur et maîtrise des risques.
+              Nous accompagnons les commerçants, distributeurs, industriels
+              et investisseurs africains dans leurs approvisionnements en
+              Chine, avec transparence, rigueur et maîtrise des risques.
             </p>
 
-            {/* Chiffres clés */}
             <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-zinc-200 pt-8">
               {STATS.map((stat) => (
                 <div key={stat.label}>

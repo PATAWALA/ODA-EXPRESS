@@ -1,104 +1,98 @@
 "use client";
 
-import { ArrowRight, Check } from "lucide-react";
 import { useState } from "react";
+import { Mail, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Container } from "@/components/ui/Container";
+import SectionDivider from "@/components/ui/SectionDivider";
+import { saveLead } from "@/lib/leads";
 
-export default function Newsletter() {
+export default function NewsletterSection() {
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [state, setState] = useState<"idle" | "loading" | "done">("idle");
+  const [error, setError] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email) return;
-    setSent(true);
-    setEmail("");
-    setTimeout(() => setSent(false), 4000);
-  };
+    if (!email.trim() || !email.includes("@")) {
+      setError("Merci de saisir un email valide.");
+      return;
+    }
+    setError(null);
+    setState("loading");
+
+    const result = await saveLead({ email, source: "newsletter" });
+    if (!result.ok) {
+      setError(result.error ?? "Une erreur est survenue.");
+      setState("idle");
+      return;
+    }
+    setState("done");
+  }
 
   return (
-    <section className="py-20 lg:py-28">
-      <div className="max-w-[1600px] mx-auto px-4 lg:px-8">
-        <div className="relative rounded-[32px] lg:rounded-[40px] border border-[#1A1A1A]/10 bg-[#1A1A1A] text-[#EFECE6] p-10 lg:p-20 overflow-hidden">
-          {/* Décor flou caramel */}
-          <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-[#A8896A]/25 blur-3xl" />
-          <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-[#A8896A]/10 blur-3xl" />
-
-          <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Colonne texte */}
-            <div className="lg:col-span-6">
-              <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-[#EFECE6]/50 mb-5">
-                <span className="w-8 h-px bg-[#EFECE6]/30" />
-                Newsletter
-              </div>
-              <h2 className="font-serif text-[36px] lg:text-[52px] leading-[1] font-light tracking-[-0.02em]">
-                Rejoignez le{" "}
-                <span className="italic text-[#A8896A]">cercle.</span>
-              </h2>
-              <p className="mt-5 text-[13.5px] leading-relaxed text-[#EFECE6]/60 max-w-md">
-                Recevez en avant-première nos nouvelles pièces, éditions
-                limitées et offres exclusives. Pas de spam — promis.
-              </p>
+    <>
+      <section className="bg-zinc-50/60 py-20 sm:py-24">
+        <Container>
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-navy-900">
+              <Mail className="h-5 w-5" strokeWidth={1.6} />
             </div>
 
-            {/* Colonne formulaire */}
-            <div className="lg:col-span-6">
+            <h2 className="mt-6 text-[24px] font-bold tracking-tight text-navy-900 sm:text-[28px]">
+              Restez informé des opportunités d&apos;import
+            </h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-zinc-600">
+              Recevez nos guides, nouveautés produits et conseils logistiques
+              Chine — Afrique, une fois par mois.
+            </p>
+
+            {state === "done" ? (
+              <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4">
+                <CheckCircle2
+                  className="h-5 w-5 text-emerald-700"
+                  strokeWidth={2}
+                />
+                <p className="text-[13.5px] font-semibold text-emerald-800">
+                  Merci, vous êtes bien inscrit.
+                </p>
+              </div>
+            ) : (
               <form
-                onSubmit={submit}
-                className="flex items-center gap-3 p-2 pl-6 rounded-full border border-[#EFECE6]/20 bg-[#EFECE6]/5 backdrop-blur-sm focus-within:border-[#EFECE6]/40 transition-colors"
+                onSubmit={handleSubmit}
+                className="mx-auto mt-8 flex max-w-lg flex-col gap-3 sm:flex-row"
               >
                 <input
                   type="email"
-                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="votre@email.com"
-                  className="flex-1 bg-transparent py-3.5 text-[13px] text-[#EFECE6] placeholder:text-[#EFECE6]/40 outline-none min-w-0"
+                  className="flex-1 rounded-2xl border border-zinc-200 bg-white px-5 py-3.5 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+                  required
                 />
-
-                {/* Groupe : label + bouton icône */}
-                <div className="flex items-center gap-3 shrink-0">
-                  {/* Texte d'accompagnement (desktop) */}
-                  <span
-                    className={`hidden md:block text-[10px] uppercase tracking-[0.28em] transition-all duration-500 ${
-                      sent
-                        ? "text-[#A8896A] opacity-100"
-                        : "text-[#EFECE6]/40 opacity-100"
-                    }`}
-                  >
-                    {sent ? "Merci !" : "S'inscrire"}
-                  </span>
-
-                  {/* Bouton icône seule */}
-                  <button
-                    type="submit"
-                    aria-label={sent ? "Inscrit" : "S'inscrire"}
-                    className="group relative w-12 h-12 rounded-full bg-[#EFECE6] text-[#1A1A1A] flex items-center justify-center hover:bg-[#A8896A] hover:text-[#EFECE6] transition-colors duration-300"
-                  >
-                    {/* Anneau pulsé au hover */}
-                    <span className="absolute inset-0 rounded-full ring-1 ring-[#EFECE6]/0 group-hover:ring-[#A8896A]/60 group-hover:ring-offset-2 group-hover:ring-offset-[#1A1A1A] transition-all duration-500" />
-
-                    {/* Icône */}
-                    {sent ? (
-                      <Check size={16} strokeWidth={2} />
-                    ) : (
-                      <ArrowRight
-                        size={16}
-                        strokeWidth={2}
-                        className="transition-transform duration-300 group-hover:translate-x-0.5"
-                      />
-                    )}
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={state === "loading"}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-express-600 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+                >
+                  {state === "loading" ? "Envoi..." : "M'inscrire"}
+                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </button>
               </form>
+            )}
 
-              <p className="mt-4 text-[10px] uppercase tracking-[0.2em] text-[#EFECE6]/40">
-                En vous inscrivant, vous acceptez notre politique de
-                confidentialité.
-              </p>
-            </div>
+            {error && (
+              <p className="mt-3 text-[12.5px] text-amber-700">{error}</p>
+            )}
+
+            <p className="mt-4 text-[11.5px] text-zinc-500">
+              Vos données sont confidentielles. Désinscription en un clic.
+            </p>
           </div>
-        </div>
-      </div>
-    </section>
+        </Container>
+      </section>
+
+      {/* ✅ SVG curve : vers FinalCTA (navy-950) */}
+      <SectionDivider variant="curve" bg="zinc-50" color="navy-950" />
+    </>
   );
 }
