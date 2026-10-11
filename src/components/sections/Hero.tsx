@@ -65,7 +65,7 @@ export default function Hero() {
       />
 
       {/* ============ CONTENU ============ */}
-      <div className="relative mx-auto w-full max-w-[1440px] px-8 pb-20 sm:px-12 sm:pb-24 lg:px-20 lg:pb-32 xl:px-28">
+      <div className="relative mx-auto w-full max-w-[1440px] px-8 pb-8 sm:px-12 sm:pb-10 lg:px-20 lg:pb-12 xl:px-28">
         <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-stretch lg:gap-20 lg:py-16">
           {/* Colonne texte */}
           <div className="order-1 flex flex-col justify-center">

@@ -1,5 +1,14 @@
 type Variant = "wave" | "arc" | "zigzag" | "tilt" | "curve";
-type Color = "white" | "zinc-50" | "navy-900" | "navy-950" | "navy-50";
+type Color =
+  | "white"
+  | "zinc-50"
+  | "zinc-100"
+  | "navy-50"
+  | "navy-100"
+  | "navy-200"
+  | "navy-300"
+  | "navy-900"
+  | "navy-950";
 
 interface Props {
   variant?: Variant;
@@ -17,29 +26,33 @@ interface Props {
 const FILL: Record<Color, string> = {
   white: "fill-white",
   "zinc-50": "fill-zinc-50",
+  "zinc-100": "fill-zinc-100",
+  "navy-50": "fill-[#eef3fb]",
+  "navy-100": "fill-[#dde6f4]",
+  "navy-200": "fill-[#b8cae8]",
+  "navy-300": "fill-[#8ba6d6]",
   "navy-900": "fill-navy-900",
   "navy-950": "fill-navy-950",
-  "navy-50": "fill-[#eef3fb]",
 };
 
 const BG: Record<Color, string> = {
   white: "bg-white",
   "zinc-50": "bg-zinc-50",
+  "zinc-100": "bg-zinc-100",
+  "navy-50": "bg-[#eef3fb]",
+  "navy-100": "bg-[#dde6f4]",
+  "navy-200": "bg-[#b8cae8]",
+  "navy-300": "bg-[#8ba6d6]",
   "navy-900": "bg-navy-900",
   "navy-950": "bg-navy-950",
-  "navy-50": "bg-[#eef3fb]",
 };
 
 const PATHS: Record<Variant, string> = {
-  // Vague douce
   wave: "M0,100 L0,60 C240,20 480,20 720,60 C960,100 1200,100 1440,60 L1440,100 Z",
-  // Dôme bombé
   arc: "M0,100 L0,30 Q720,180 1440,30 L1440,100 Z",
-  // Zigzag anguleux
-  zigzag: "M0,100 L0,50 L240,90 L480,50 L720,90 L960,50 L1200,90 L1440,50 L1440,100 Z",
-  // Diagonale
+  zigzag:
+    "M0,100 L0,50 L240,90 L480,50 L720,90 L960,50 L1200,90 L1440,50 L1440,100 Z",
   tilt: "M0,100 L0,90 L1440,30 L1440,100 Z",
-  // Courbe en S
   curve: "M0,100 L0,40 C480,120 960,-40 1440,40 L1440,100 Z",
 };
 
