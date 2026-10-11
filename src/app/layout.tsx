@@ -34,8 +34,10 @@ export const metadata: Metadata = {
     "contrôle qualité usine",
     "shipping Chine Afrique",
     "ODA Sources",
+    "ODA Sources Import Export",
     "logistique internationale",
     "paiement fournisseur Chine",
+    "fret maritime Chine Afrique",
   ],
   alternates: { canonical: "/" },
   icons: {
@@ -111,31 +113,99 @@ export default function RootLayout({
       <head>
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#01215B" />
+
+        {/* ============ SCHEMA.ORG ENRICHI ============ */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
               name: "ODA SOURCES IMPORT & EXPORT CO., LIMITED",
-              alternateName: "ODA Sources",
-              url: SITE_URL,
-              logo: `${SITE_URL}/brand/logo/logo-full-960.png`,
-              description: SITE_DESCRIPTION,
-              areaServed: ["Afrique", "Chine"],
-              knowsLanguage: ["fr", "en", "zh"],
-              address: [
-                { "@type": "PostalAddress", addressCountry: "CN" },
+              legalName: "ODA SOURCES IMPORT & EXPORT CO., LIMITED",
+              alternateName: [
+                "ODA Sources",
+                "ODA Sources Import Export",
+                "ODA Sources Chine Afrique",
               ],
+              url: SITE_URL,
+              logo: {
+                "@type": "ImageObject",
+                url: `${SITE_URL}/brand/logo/logo-full-1920.png`,
+                width: 1920,
+                height: 336,
+              },
+              image: `${SITE_URL}/og/og-image.png`,
+              description: SITE_DESCRIPTION,
+              foundingDate: "2023",
+              founder: {
+                "@type": "Person",
+                name: "DA Olivier",
+                jobTitle: "Fondateur",
+                nationality: "Burkina Faso",
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "CN",
+              },
+              areaServed: [
+                { "@type": "Country", name: "Chine" },
+                { "@type": "Country", name: "Bénin" },
+                { "@type": "Country", name: "Burkina Faso" },
+                { "@type": "Country", name: "Mali" },
+                { "@type": "Country", name: "Côte d'Ivoire" },
+                { "@type": "Country", name: "Sénégal" },
+                { "@type": "Country", name: "Niger" },
+                { "@type": "Country", name: "Togo" },
+              ],
+              knowsLanguage: ["fr", "en", "zh"],
               contactPoint: [
                 {
                   "@type": "ContactPoint",
                   contactType: "customer service",
                   telephone: "+86-195-1566-0197",
-                  email: "odaxpress10@gmail.com",
+                  email: "contact@odasources.com",
                   availableLanguage: ["fr", "en", "zh"],
+                  areaServed: ["CN", "BJ", "BF", "ML", "CI", "SN"],
                 },
               ],
+              knowsAbout: [
+                "Import Chine Afrique",
+                "Sourcing Chine",
+                "Contrôle qualité usine",
+                "Fret maritime Chine Afrique",
+                "Export camions et engins",
+                "Paiement fournisseur Chine",
+                "Global Sourcing",
+                "Vérification et contrôle qualité",
+                "Shipping et logistique internationale",
+              ],
+              slogan: "Votre partenaire en Chine, du sourcing à l'expédition",
+              sameAs: [
+                // Ajoute ici tes profils sociaux plus tard
+                // "https://www.tiktok.com/@oda.sources",
+                // "https://www.facebook.com/odasources",
+              ],
+            }),
+          }}
+        />
+
+        {/* ============ SCHEMA.ORG WEBSITE ============ */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: SITE_URL,
+              name: SITE_NAME,
+              description: SITE_DESCRIPTION,
+              publisher: {
+                "@id": `${SITE_URL}/#organization`,
+              },
+              inLanguage: "fr-FR",
             }),
           }}
         />
