@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import {
   Search,
   Plus,
@@ -19,6 +18,7 @@ import {
 import PartnerCard from "./PartnerCard";
 import PartnerModal from "./PartnerModal";
 import SectorsManager from "./SectorsManager";
+import PartnerQRModal from "./PartnerQRModal";
 import ConfirmDialog from "./ConfirmDialog";
 import { deletePartnerAction } from "@/app/admin/actions";
 import type {
@@ -56,6 +56,7 @@ export default function PartnersManager({
   const [editingPartner, setEditingPartner] =
     useState<PartnerWithSector | null>(null);
   const [sectorsOpen, setSectorsOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
   const [deletingPartner, setDeletingPartner] =
     useState<PartnerWithSector | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -188,13 +189,14 @@ export default function PartnersManager({
           <span className="text-zinc-400">({sectors.length})</span>
         </button>
 
-        <Link
-          href="/admin/partners/qr"
-          className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300"
+        <button
+          type="button"
+          onClick={() => setQrOpen(true)}
+          className="inline-flex items-center gap-2 rounded-2xl border border-express-200 bg-express-50/60 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-express-700 transition hover:border-express-300 hover:bg-express-50"
         >
           <QrCode className="h-3.5 w-3.5" strokeWidth={2} />
           QR public
-        </Link>
+        </button>
 
         <button
           type="button"
@@ -278,6 +280,8 @@ export default function PartnersManager({
         onChanged={handleSaved}
       />
 
+      <PartnerQRModal open={qrOpen} onClose={() => setQrOpen(false)} />
+
       <ConfirmDialog
         open={!!deletingPartner}
         onClose={() => !deleting && setDeletingPartner(null)}
@@ -320,7 +324,6 @@ function StatCard({
 
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white p-5 transition hover:border-navy-200 hover:shadow-sm">
-      {/* Ligne du haut : icône + valeur */}
       <div className="flex items-center justify-between gap-3">
         <span
           className={
@@ -335,12 +338,10 @@ function StatCard({
         </p>
       </div>
 
-      {/* Titre */}
       <p className="mt-4 text-[13.5px] font-bold tracking-tight text-navy-900">
         {title}
       </p>
 
-      {/* Description */}
       <p className="mt-1.5 text-[11.5px] leading-relaxed text-zinc-500">
         {description}
       </p>
