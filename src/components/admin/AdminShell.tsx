@@ -11,6 +11,7 @@ import {
   Users,
   FolderKanban,
   Mail,
+  Handshake,
   LogOut,
   ExternalLink,
   ChevronRight,
@@ -68,6 +69,16 @@ const SECTIONS: NavSection[] = [
       { label: "Newsletter", href: "/admin/newsletter", icon: Mail },
     ],
   },
+  {
+    title: "Réseau",
+    items: [
+      {
+        label: "Partenaires",
+        href: "/admin/partners",
+        icon: Handshake,
+      },
+    ],
+  },
 ];
 
 // Onglets mobile (bottom nav)
@@ -75,8 +86,8 @@ const MOBILE_NAV: NavItem[] = [
   { label: "Accueil", href: "/admin", icon: LayoutDashboard, exact: true },
   { label: "Actus", href: "/admin/articles", icon: Newspaper },
   { label: "Projets", href: "/admin/projects", icon: FolderKanban },
+  { label: "Partenaires", href: "/admin/partners", icon: Handshake },
   { label: "Emails", href: "/admin/leads", icon: Users },
-  { label: "Newsletter", href: "/admin/newsletter", icon: Mail },
 ];
 
 const STORAGE_KEY = "oda-admin-sidebar-collapsed";
@@ -117,6 +128,8 @@ function getBreadcrumb(pathname: string): BreadcrumbItem[] {
     return [{ label: "Emails collectés" }];
   if (pathname.startsWith("/admin/newsletter"))
     return [{ label: "Newsletter" }];
+  if (pathname.startsWith("/admin/partners"))
+    return [{ label: "Partenaires" }];
   if (pathname.startsWith("/admin/parametres"))
     return [{ label: "Paramètres" }];
   return [{ label: "Admin" }];

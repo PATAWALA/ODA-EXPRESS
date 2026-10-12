@@ -9,6 +9,16 @@ import {
   sendRecommendationEmail,
   sendMonthlyDigest,
 } from "@/lib/email/send";
+import {
+  createPartner,
+  updatePartner,
+  deletePartner,
+} from "@/lib/data/partners";
+import {
+  createPartnerSector,
+  updatePartnerSector,
+  deletePartnerSector,
+} from "@/lib/data/partner-sectors";
 
 /* ---------- AUTH ---------- */
 
@@ -528,4 +538,206 @@ export async function deleteVeilleAction(id: string) {
   const supabase = await createClient();
   await supabase.from("newsletter_veilles").delete().eq("id", id);
   revalidatePath("/admin/newsletter/programmer");
+}
+
+/* -------------------------------------------------------------------------- */
+/*  PARTENAIRES & RÉSEAU                                                       */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Crée ou met à jour un partenaire.
+ * Si `id` est fourni → update. Sinon → insert.
+ */
+export async function savePartnerAction(
+  id: string | null,
+  formData: FormData,
+) {
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) {
+    return { error: "Le nom du partenaire est obligatoire." };
+  }
+
+  const sectorId = String(formData.get("sector_id") ?? "").trim() || null;
+  const whatsapp = String(formData.get("whatsapp") ?? "").trim() || null;
+  const phone = String(formData.get("phone") ?? "").trim() || null;
+  const email = String(formData.get("email") ?? "").trim() || null;
+  const country = String(formData.get("country") ?? "").trim() || null;
+  const city = String(formData.get("city") ?? "").trim() || null;
+  const description = String(formData.get("description") ?? "").trim() || null;
+  const logoUrl = String(formData.get("logo_url") ?? "").trim() || null;
+  const website = String(formData.get("website") ?? "").trim() || null;
+
+  const payload = {
+    name,
+    sector_id: sectorId,
+    whatsapp,
+    phone,
+    email,
+    country,
+    city,
+    description,
+    logo_url: logoUrl,
+    website,
+  };
+
+  let result;
+  if (id) {
+    result = await updatePartner(id, payload);
+  } else {
+    result = await createPartner(payload);
+  }
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de l'enregistrement." };
+  }
+
+  revalidatePath("/admin/partners");
+  revalidatePath("/admin/partners/" + (id ?? "nouveau"));
+
+  return {
+    success: id
+      ? `Le partenaire « ${name} » a été mis à jour.`
+      : `Le partenaire « ${name} » a été créé.`,
+  };
+}
+
+/**
+ * Supprime un partenaire.
+ */
+export async function deletePartnerAction(id: string) {
+  const result = await deletePartner(id);
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de la suppression." };
+  }
+  revalidatePath("/admin/partners");
+  return { success: "Partenaire supprimé." };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  SECTEURS DE PARTENAIRES                                                    */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Crée un nouveau secteur.
+ */
+export async function createPartnerSectorAction(formData: FormData) {
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) {
+    return { error: "Le nom du secteur est obligatoire." };
+  }
+
+  const description =
+    String(formData.get("description") ?? "").trim() || null;
+
+  const result = await createPartnerSector({ name, description });
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de la création." };
+  }
+
+  revalidatePath("/admin/partners");
+  revalidatePath("/admin/partners/secteurs");
+
+  return {
+    success: `Le secteur « ${name} » a été créé.`,
+    sector: result.data,
+  };
+}
+
+/**
+ * Met à jour un secteur existant.
+ */
+export async function updatePartnerSectorAction(
+  id: string,
+  formData: FormData,
+) {
+  const name = String(formData.get("name") ?? "").trim();
+  if (!name) {
+    return { error: "Le nom du secteur est obligatoire." };
+  }
+
+  const description =
+    String(formData.get("description") ?? "").trim() || null;
+
+  const result = await updatePartnerSector(id, { name, description });
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de la mise à jour." };
+  }
+
+  revalidatePath("/admin/partners");
+  revalidatePath("/admin/partners/secteurs");
+
+  return { success: `Le secteur « ${name} » a été mis à jour.` };
+}
+
+/**
+ * Supprime un secteur.
+ * ⚠️ Les partenaires associés ne sont pas supprimés, ils perdent juste leur secteur.
+ */
+export async function deletePartnerSectorAction(id: string) {
+  const result = await deletePartnerSector(id);
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de la suppression." };
+  }
+
+  revalidatePath("/admin/partners");
+  revalidatePath("/admin/partners/secteurs");
+
+  return { success: "Secteur supprimé." };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  UPLOAD LOGO PARTENAIRE                                                     */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Upload une image de logo pour un partenaire.
+ * Réutilise le bucket "media" avec le dossier "partners".
+ */
+export async function uploadPartnerLogoAction(formData: FormData) {
+  const file = formData.get("file") as File | null;
+
+  if (!file) {
+    return { error: "Aucun fichier reçu." };
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    return { error: "Le fichier dépasse 5 Mo." };
+  }
+
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
+  if (!allowed.includes(file.type)) {
+    return {
+      error: "Format non supporté (JPG, PNG, WebP, SVG uniquement).",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const fileName = `partners/${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 9)}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from("media")
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: file.type,
+    });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  const { data: urlData } = supabase.storage
+    .from("media")
+    .getPublicUrl(fileName);
+
+  return {
+    success: "Logo uploadé.",
+    url: urlData.publicUrl,
+  };
 }

@@ -273,6 +273,83 @@ export type Database = {
         };
         Relationships: [];
       };
+      partner_sectors: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      partners: {
+        Row: {
+          id: string;
+          name: string;
+          sector_id: string | null;
+          whatsapp: string | null;
+          phone: string | null;
+          email: string | null;
+          country: string | null;
+          city: string | null;
+          description: string | null;
+          logo_url: string | null;
+          website: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          sector_id?: string | null;
+          whatsapp?: string | null;
+          phone?: string | null;
+          email?: string | null;
+          country?: string | null;
+          city?: string | null;
+          description?: string | null;
+          logo_url?: string | null;
+          website?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          sector_id?: string | null;
+          whatsapp?: string | null;
+          phone?: string | null;
+          email?: string | null;
+          country?: string | null;
+          city?: string | null;
+          description?: string | null;
+          logo_url?: string | null;
+          website?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "partners_sector_id_fkey";
+            columns: ["sector_id"];
+            isOneToOne: false;
+            referencedRelation: "partner_sectors";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -311,3 +388,20 @@ export type NewsletterVeilleInsert =
   Database["public"]["Tables"]["newsletter_veilles"]["Insert"];
 export type NewsletterVeilleUpdate =
   Database["public"]["Tables"]["newsletter_veilles"]["Update"];
+
+export type Partner = Database["public"]["Tables"]["partners"]["Row"];
+export type PartnerInsert = Database["public"]["Tables"]["partners"]["Insert"];
+export type PartnerUpdate = Database["public"]["Tables"]["partners"]["Update"];
+
+export type PartnerSector =
+  Database["public"]["Tables"]["partner_sectors"]["Row"];
+export type PartnerSectorInsert =
+  Database["public"]["Tables"]["partner_sectors"]["Insert"];
+export type PartnerSectorUpdate =
+  Database["public"]["Tables"]["partner_sectors"]["Update"];
+
+/* ---------- Types composites (avec jointure) ---------- */
+
+export type PartnerWithSector = Partner & {
+  sector: PartnerSector | null;
+};
