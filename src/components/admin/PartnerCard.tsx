@@ -7,6 +7,7 @@ import {
   Globe2,
   MapPin,
   ImageIcon,
+  ArrowRight,
 } from "lucide-react";
 import type { PartnerWithSector } from "@/lib/supabase/types";
 
@@ -106,21 +107,32 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
           </p>
         )}
 
-        {/* Badges produits + WhatsApp */}
-        <div className="flex items-center gap-2 pt-1">
-          {productsCount > 0 && (
-            <span className="inline-flex items-center gap-1 rounded-2xl border border-zinc-200 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-500">
-              <ImageIcon className="h-2.5 w-2.5" strokeWidth={2} />
-              {productsCount} photo{productsCount > 1 ? "s" : ""}
-            </span>
-          )}
+        {/* Badges + CTA "Voir détails" */}
+        <div className="flex items-center justify-between gap-2 pt-1">
+          <div className="flex items-center gap-2">
+            {productsCount > 0 && (
+              <span className="inline-flex items-center gap-1 rounded-2xl border border-zinc-200 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-500">
+                <ImageIcon className="h-2.5 w-2.5" strokeWidth={2} />
+                {productsCount}
+              </span>
+            )}
 
-          {whatsapp && (
-            <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 transition group-hover:text-emerald-700">
-              <MessageCircle className="h-3 w-3" strokeWidth={2.5} />
-              WhatsApp
-            </span>
-          )}
+            {whatsapp && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+                <MessageCircle className="h-3 w-3" strokeWidth={2.5} />
+                WhatsApp
+              </span>
+            )}
+          </div>
+
+          {/* Indicateur "Voir détails" */}
+          <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy-700 transition group-hover:text-express-600">
+            Détails
+            <ArrowRight
+              className="h-3 w-3 transition group-hover:translate-x-0.5"
+              strokeWidth={2.5}
+            />
+          </span>
         </div>
       </div>
     </Link>
