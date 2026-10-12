@@ -7,14 +7,24 @@ export async function POST(request: Request) {
 
     const name = String(body.name ?? "").trim();
     const sectorId = String(body.sector_id ?? "").trim() || null;
+    const contactName =
+      String(body.contact_name ?? "").trim() || null;
     const whatsapp = String(body.whatsapp ?? "").trim() || null;
     const email = String(body.email ?? "").trim() || null;
     const country = String(body.country ?? "").trim() || null;
     const city = String(body.city ?? "").trim() || null;
-    const description = String(body.description ?? "").trim() || null;
+    const description =
+      String(body.description ?? "").trim() || null;
     const website = String(body.website ?? "").trim() || null;
 
-    // Honeypot anti-spam : si rempli, c'est un bot
+    // Images produits (déjà uploadées par le client)
+    const productImages: string[] = Array.isArray(body.product_images)
+      ? body.product_images.filter(
+          (u: unknown) => typeof u === "string" && u.length > 0,
+        )
+      : [];
+
+    // Honeypot anti-spam
     const honeypot = String(body._hp ?? "").trim();
     if (honeypot) {
       return NextResponse.json({ ok: true });
@@ -29,26 +39,49 @@ export async function POST(request: Request) {
 
     const supabase = createAdminClient();
 
-    const { error } = await supabase.from("partners").insert({
-      name,
-      sector_id: sectorId,
-      whatsapp,
-      email,
-      country,
-      city,
-      description,
-      website,
-    });
+    // 1. Créer le partenaire
+    const { data: partner, error: partnerError } = await supabase
+      .from("partners")
+      .insert({
+        name,
+        sector_id: sectorId,
+        contact_name: contactName,
+        whatsapp,
+        email,
+        country,
+        city,
+        description,
+        website,
+      })
+      .select("id")
+      .single();
 
-    if (error) {
-      console.error("[api/partners/register]", error);
+    if (partnerError || !partner) {
+      console.error("[api/partners/register]", partnerError);
       return NextResponse.json(
         { ok: false, error: "Erreur lors de l'enregistrement." },
         { status: 400 },
       );
     }
 
-    return NextResponse.json({ ok: true });
+    // 2. Ajouter les produits s'il y en a
+    if (productImages.length > 0) {
+      const products = productImages.map((url) => ({
+        partner_id: partner.id,
+        image_url: url,
+      }));
+
+      const { error: productsError } = await supabase
+        .from("partner_products")
+        .insert(products);
+
+      if (productsError) {
+        console.error("[api/partners/register] products", productsError);
+        // On ne bloque pas — le partenaire est créé
+      }
+    }
+
+    return NextResponse.json({ ok: true, partnerId: partner.id });
   } catch (err) {
     console.error("[api/partners/register] Erreur :", err);
     return NextResponse.json(

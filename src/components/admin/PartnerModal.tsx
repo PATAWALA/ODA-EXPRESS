@@ -127,7 +127,7 @@ export default function PartnerModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-navy-950/60 px-4 py-8 backdrop-blur-sm sm:items-center"
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-navy-950/60 px-3 py-4 backdrop-blur-sm sm:items-center sm:px-4 sm:py-8"
       onClick={() => !state.loading && onClose()}
     >
       <div
@@ -135,16 +135,16 @@ export default function PartnerModal({
         className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
       >
         {/* En-tête */}
-        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 sm:px-6 sm:py-4">
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-navy-900 text-white">
               <Building2 className="h-4 w-4" strokeWidth={1.75} />
             </span>
             <div>
-              <p className="text-[15px] font-bold tracking-tight text-navy-900">
+              <p className="text-[14px] font-bold tracking-tight text-navy-900 sm:text-[15px]">
                 {isEdit ? "Modifier le partenaire" : "Nouveau partenaire"}
               </p>
-              <p className="mt-0.5 text-[11.5px] text-zinc-500">
+              <p className="mt-0.5 text-[11px] text-zinc-500 sm:text-[11.5px]">
                 Seul le nom est obligatoire
               </p>
             </div>
@@ -164,7 +164,7 @@ export default function PartnerModal({
         <form
           ref={formRef}
           action={handleSubmit}
-          className="max-h-[calc(100vh-180px)] space-y-5 overflow-y-auto p-6"
+          className="max-h-[calc(100vh-160px)] space-y-5 overflow-y-auto p-4 sm:max-h-none sm:p-6"
         >
           <Input
             label="Nom du partenaire *"
@@ -236,8 +236,26 @@ export default function PartnerModal({
                 </option>
               ))}
             </select>
+
+            {sectors.length === 0 && !showNewSector && (
+              <p className="mt-2 text-[11.5px] text-zinc-500">
+                Aucun secteur pour l&apos;instant. Cliquez sur{" "}
+                <strong className="text-express-600">Nouveau secteur</strong>{" "}
+                pour en créer un.
+              </p>
+            )}
           </div>
 
+          {/* Nom du contact */}
+          <Input
+            label="Nom du contact"
+            name="contact_name"
+            defaultValue={partner?.contact_name ?? ""}
+            placeholder="Ex. M. Zhang Wei"
+            hint="Interlocuteur principal chez ce partenaire"
+          />
+
+          {/* WhatsApp + Téléphone */}
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
               label="WhatsApp"
@@ -254,6 +272,7 @@ export default function PartnerModal({
             />
           </div>
 
+          {/* Email + Site web */}
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
               label="Email"
@@ -270,6 +289,7 @@ export default function PartnerModal({
             />
           </div>
 
+          {/* Pays + Ville */}
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
               label="Pays"
@@ -285,6 +305,7 @@ export default function PartnerModal({
             />
           </div>
 
+          {/* Description */}
           <Textarea
             label="Description / Notes"
             name="description"
@@ -293,6 +314,7 @@ export default function PartnerModal({
             placeholder="Informations utiles pour retrouver ce partenaire rapidement..."
           />
 
+          {/* Logo */}
           <PartnerLogoUploader
             name="logo_url"
             label="Logo (optionnel)"
@@ -311,12 +333,12 @@ export default function PartnerModal({
         </form>
 
         {/* Pied */}
-        <div className="flex items-center justify-end gap-3 border-t border-zinc-200 bg-zinc-50/60 px-6 py-4">
+        <div className="flex items-center justify-end gap-3 border-t border-zinc-200 bg-zinc-50/60 px-4 py-3 sm:px-6 sm:py-4">
           <button
             type="button"
             onClick={onClose}
             disabled={state.loading}
-            className="inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white px-4 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:bg-zinc-50 disabled:opacity-60 sm:px-5 sm:text-[12px]"
           >
             Annuler
           </button>
@@ -324,7 +346,7 @@ export default function PartnerModal({
             type="button"
             onClick={triggerSubmit}
             disabled={state.loading}
-            className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-2xl bg-express-600 px-4 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700 disabled:opacity-60 sm:px-5 sm:text-[12px]"
           >
             <Save className="h-3.5 w-3.5" strokeWidth={2} />
             {state.loading

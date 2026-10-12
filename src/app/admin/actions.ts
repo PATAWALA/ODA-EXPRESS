@@ -10,15 +10,19 @@ import {
   sendMonthlyDigest,
 } from "@/lib/email/send";
 import {
+  createPartnerSector,
+  updatePartnerSector,
+  deletePartnerSector,
+} from "@/lib/data/partner-sectors";
+import {
   createPartner,
   updatePartner,
   deletePartner,
 } from "@/lib/data/partners";
 import {
-  createPartnerSector,
-  updatePartnerSector,
-  deletePartnerSector,
-} from "@/lib/data/partner-sectors";
+  createPartnerProduct,
+  deletePartnerProduct,
+} from "@/lib/data/partner-products";
 
 /* ---------- AUTH ---------- */
 
@@ -740,4 +744,101 @@ export async function uploadPartnerLogoAction(formData: FormData) {
     success: "Logo uploadé.",
     url: urlData.publicUrl,
   };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  UPLOAD PRODUIT PARTENAIRE                                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Upload une image de produit partenaire.
+ * Réutilise le bucket "media" avec le dossier "partner-products".
+ */
+export async function uploadPartnerProductImageAction(formData: FormData) {
+  const file = formData.get("file") as File | null;
+
+  if (!file) {
+    return { error: "Aucun fichier reçu." };
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    return { error: "Le fichier dépasse 5 Mo." };
+  }
+
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  if (!allowed.includes(file.type)) {
+    return { error: "Format non supporté (JPG, PNG, WebP uniquement)." };
+  }
+
+  const supabase = await createClient();
+
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const fileName = `partner-products/${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 9)}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from("media")
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: file.type,
+    });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  const { data: urlData } = supabase.storage
+    .from("media")
+    .getPublicUrl(fileName);
+
+  return {
+    success: "Produit uploadé.",
+    url: urlData.publicUrl,
+  };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  AJOUTER / SUPPRIMER PRODUIT PARTENAIRE                                     */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Ajoute une image produit à un partenaire.
+ */
+export async function addPartnerProductAction(
+  partnerId: string,
+  imageUrl: string,
+  title?: string,
+) {
+  const result = await createPartnerProduct({
+    partner_id: partnerId,
+    image_url: imageUrl,
+    title: title ?? null,
+  });
+
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de l'ajout." };
+  }
+
+  revalidatePath(`/admin/partners/${partnerId}`);
+  revalidatePath("/admin/partners");
+  return { success: "Produit ajouté." };
+}
+
+/**
+ * Supprime une image produit.
+ */
+export async function deletePartnerProductAction(
+  productId: string,
+  partnerId: string,
+) {
+  const result = await deletePartnerProduct(productId);
+  if (!result.ok) {
+    return { error: result.error ?? "Erreur lors de la suppression." };
+  }
+
+  revalidatePath(`/admin/partners/${partnerId}`);
+  revalidatePath("/admin/partners");
+  return { success: "Produit supprimé." };
 }

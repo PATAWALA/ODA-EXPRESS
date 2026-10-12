@@ -299,6 +299,7 @@ export type Database = {
           id: string;
           name: string;
           sector_id: string | null;
+          contact_name: string | null;
           whatsapp: string | null;
           phone: string | null;
           email: string | null;
@@ -314,6 +315,7 @@ export type Database = {
           id?: string;
           name: string;
           sector_id?: string | null;
+          contact_name?: string | null;
           whatsapp?: string | null;
           phone?: string | null;
           email?: string | null;
@@ -329,6 +331,7 @@ export type Database = {
           id?: string;
           name?: string;
           sector_id?: string | null;
+          contact_name?: string | null;
           whatsapp?: string | null;
           phone?: string | null;
           email?: string | null;
@@ -346,6 +349,38 @@ export type Database = {
             columns: ["sector_id"];
             isOneToOne: false;
             referencedRelation: "partner_sectors";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      partner_products: {
+        Row: {
+          id: string;
+          partner_id: string;
+          image_url: string;
+          title: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          partner_id: string;
+          image_url: string;
+          title?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          partner_id?: string;
+          image_url?: string;
+          title?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "partner_products_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
             referencedColumns: ["id"];
           },
         ];
@@ -400,8 +435,20 @@ export type PartnerSectorInsert =
 export type PartnerSectorUpdate =
   Database["public"]["Tables"]["partner_sectors"]["Update"];
 
-/* ---------- Types composites (avec jointure) ---------- */
+export type PartnerProduct =
+  Database["public"]["Tables"]["partner_products"]["Row"];
+export type PartnerProductInsert =
+  Database["public"]["Tables"]["partner_products"]["Insert"];
+export type PartnerProductUpdate =
+  Database["public"]["Tables"]["partner_products"]["Update"];
+
+/* ---------- Types composites ---------- */
 
 export type PartnerWithSector = Partner & {
   sector: PartnerSector | null;
+};
+
+export type PartnerWithRelations = Partner & {
+  sector: PartnerSector | null;
+  products: PartnerProduct[];
 };

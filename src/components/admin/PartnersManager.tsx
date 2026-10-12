@@ -14,6 +14,7 @@ import {
   MessageCircle,
   Sparkles,
   QrCode,
+  Download,
 } from "lucide-react";
 import PartnerCard from "./PartnerCard";
 import PartnerModal from "./PartnerModal";
@@ -98,11 +99,6 @@ export default function PartnersManager({
     setModalOpen(true);
   }
 
-  function openEdit(partner: PartnerWithSector) {
-    setEditingPartner(partner);
-    setModalOpen(true);
-  }
-
   function handleSaved() {
     router.refresh();
   }
@@ -120,9 +116,66 @@ export default function PartnersManager({
     router.refresh();
   }
 
+  /* ------- Export CSV ------- */
+  function exportCSV() {
+    if (filtered.length === 0) {
+      alert("Aucun partenaire à exporter.");
+      return;
+    }
+
+    const headers = [
+      "Nom",
+      "Contact",
+      "Secteur",
+      "WhatsApp",
+      "Téléphone",
+      "Email",
+      "Pays",
+      "Ville",
+      "Site web",
+      "Description",
+      "Date de création",
+    ];
+
+    const rows = filtered.map((p) => [
+      p.name,
+      p.contact_name ?? "",
+      p.sector?.name ?? "",
+      p.whatsapp ?? "",
+      p.phone ?? "",
+      p.email ?? "",
+      p.country ?? "",
+      p.city ?? "",
+      p.website ?? "",
+      (p.description ?? "").replace(/\n/g, " ").replace(/\r/g, ""),
+      new Date(p.created_at).toLocaleDateString("fr-FR"),
+    ]);
+
+    const csv = [headers, ...rows]
+      .map((row) =>
+        row
+          .map((c) => `"${String(c).replace(/"/g, '""')}"`)
+          .join(","),
+      )
+      .join("\n");
+
+    // BOM pour Excel (accents corrects)
+    const blob = new Blob(["\uFEFF" + csv], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `partenaires-oda-sources-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div>
-            {/* Stats */}
+      {/* Stats */}
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={<Users className="h-5 w-5" strokeWidth={1.75} />}
@@ -191,6 +244,15 @@ export default function PartnersManager({
 
         <button
           type="button"
+          onClick={exportCSV}
+          className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300"
+        >
+          <Download className="h-3.5 w-3.5" strokeWidth={2} />
+          Export CSV
+        </button>
+
+        <button
+          type="button"
           onClick={() => setQrOpen(true)}
           className="inline-flex items-center gap-2 rounded-2xl border border-express-200 bg-express-50/60 px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-express-700 transition hover:border-express-300 hover:bg-express-50"
         >
@@ -254,12 +316,7 @@ export default function PartnersManager({
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((p) => (
-            <PartnerCard
-              key={p.id}
-              partner={p}
-              onEdit={openEdit}
-              onDelete={setDeletingPartner}
-            />
+            <PartnerCard key={p.id} partner={p} />
           ))}
         </div>
       )}

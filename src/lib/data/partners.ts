@@ -4,6 +4,7 @@ import type {
   PartnerInsert,
   PartnerUpdate,
   PartnerWithSector,
+  PartnerWithRelations,
 } from "@/lib/supabase/types";
 
 /* -------------------------------------------------------------------------- */
@@ -191,4 +192,35 @@ export async function deletePartner(
   }
 
   return { ok: true };
+}
+
+  /* -------------------------------------------------------------------------- */
+/*  LECTURE DÉTAILLÉE (avec produits)                                          */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Récupère un partenaire avec son secteur ET ses produits.
+ */
+export async function getPartnerWithRelations(
+  id: string,
+): Promise<PartnerWithRelations | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("partners")
+    .select(
+      `
+      *,
+      sector:partner_sectors(*),
+      products:partner_products(*)
+    `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("[getPartnerWithRelations]", error);
+    return null;
+  }
+
+  return data as PartnerWithRelations;
 }
