@@ -122,34 +122,34 @@ export default function PartnersManager({
 
   return (
     <div>
-      {/* Stats */}
+            {/* Stats */}
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={<Users className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.total}
           title="Partenaires"
-          description="Nombre total de contacts dans votre annuaire"
+          description="Contacts dans votre réseau"
           color="navy"
         />
         <StatCard
           icon={<LayoutGrid className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.sectors}
           title="Secteurs"
-          description="Domaines d'activité disponibles pour classer vos contacts"
+          description="Domaines disponibles"
           color="express"
         />
         <StatCard
           icon={<MessageCircle className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.withWhatsApp}
-          title="Joignables sur WhatsApp"
-          description="Partenaires avec un numéro WhatsApp renseigné"
+          title="Sur WhatsApp"
+          description="Joignables directement"
           color="emerald"
         />
         <StatCard
           icon={<Sparkles className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.addedThisMonth}
-          title="Nouveaux ce mois-ci"
-          description="Contacts ajoutés depuis le 1er du mois en cours"
+          title="Ce mois-ci"
+          description="Nouveaux ajouts"
           color="navy"
         />
       </div>
