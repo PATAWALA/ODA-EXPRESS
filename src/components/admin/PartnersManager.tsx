@@ -120,33 +120,34 @@ export default function PartnersManager({
   return (
     <div>
       {/* Stats */}
-      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {/* Stats */}
+      <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          icon={<Users className="h-4 w-4" strokeWidth={1.75} />}
-          label="Partenaires"
-          description="Contacts enregistrés"
+          icon={<Users className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.total}
+          title="Partenaires"
+          description="Nombre total de contacts dans votre annuaire"
           color="navy"
         />
         <StatCard
-          icon={<LayoutGrid className="h-4 w-4" strokeWidth={1.75} />}
-          label="Secteurs"
-          description="Domaines d'activité"
+          icon={<LayoutGrid className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.sectors}
+          title="Secteurs"
+          description="Domaines d'activité disponibles pour classer vos contacts"
           color="express"
         />
         <StatCard
-          icon={<MessageCircle className="h-4 w-4" strokeWidth={1.75} />}
-          label="Joignables"
-          description="Avec numéro WhatsApp"
+          icon={<MessageCircle className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.withWhatsApp}
+          title="Joignables sur WhatsApp"
+          description="Partenaires avec un numéro WhatsApp renseigné"
           color="emerald"
         />
         <StatCard
-          icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-          label="Nouveaux"
-          description="Ajoutés ce mois-ci"
+          icon={<Sparkles className="h-5 w-5" strokeWidth={1.75} />}
           value={stats.addedThisMonth}
+          title="Nouveaux ce mois-ci"
+          description="Contacts ajoutés depuis le 1er du mois en cours"
           color="navy"
         />
       </div>
@@ -288,18 +289,17 @@ export default function PartnersManager({
 }
 
 /* ---------- Sous-composants ---------- */
-
 function StatCard({
   icon,
-  label,
-  description,
   value,
+  title,
+  description,
   color,
 }: {
   icon: React.ReactNode;
-  label: string;
-  description: string;
   value: number;
+  title: string;
+  description: string;
   color: "navy" | "express" | "emerald";
 }) {
   const colorClasses = {
@@ -309,24 +309,29 @@ function StatCard({
   };
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-4 transition hover:border-navy-200">
-      <div className="flex items-start justify-between gap-2">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-5 transition hover:border-navy-200 hover:shadow-sm">
+      {/* Ligne du haut : icône + valeur */}
+      <div className="flex items-center justify-between gap-3">
         <span
           className={
-            "flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl " +
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl " +
             colorClasses[color]
           }
         >
           {icon}
         </span>
-        <p className="text-[24px] font-bold leading-none tracking-tight text-navy-900">
+        <p className="text-[32px] font-bold leading-none tracking-tight text-navy-900">
           {value}
         </p>
       </div>
-      <p className="mt-3 text-[12.5px] font-bold tracking-tight text-navy-900">
-        {label}
+
+      {/* Titre */}
+      <p className="mt-4 text-[13.5px] font-bold tracking-tight text-navy-900">
+        {title}
       </p>
-      <p className="mt-0.5 text-[11px] leading-snug text-zinc-500">
+
+      {/* Description */}
+      <p className="mt-1.5 text-[11.5px] leading-relaxed text-zinc-500">
         {description}
       </p>
     </div>
