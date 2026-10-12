@@ -1,11 +1,10 @@
-import { Mail, Users, Share2, Calendar } from "lucide-react";
+import { Mail, Users, Share2, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import NewsletterActions from "@/components/admin/NewsletterActions";
-import VeilleForm from "@/components/admin/VeilleForm";
 
 export default async function AdminNewsletterPage() {
   const supabase = await createClient();
+
   const { count: totalLeads } = await supabase
     .from("leads")
     .select("id", { count: "exact", head: true });
@@ -15,6 +14,18 @@ export default async function AdminNewsletterPage() {
     .select("email, source, created_at")
     .order("created_at", { ascending: false })
     .limit(10);
+
+  const { data: veilles } = await supabase
+    .from("newsletter_veilles")
+    .select("*")
+    .order("scheduled_for", { ascending: true });
+
+  // Séparer les veilles à venir et passées
+  const now = new Date().toISOString();
+  const veillesAVenir = (veilles ?? []).filter(
+    (v) => v.status === "pending" && v.scheduled_for >= now,
+  );
+  const veillesEnvoyees = (veilles ?? []).filter((v) => v.status === "sent");
 
   return (
     <div>
@@ -26,8 +37,10 @@ export default async function AdminNewsletterPage() {
           Newsletter
         </h1>
         <p className="mt-2 max-w-2xl text-[13px] text-zinc-600">
-          Envoyez vos campagnes email à tous vos contacts inscrits. Deux types
-          d&apos;emails, un par mois chacun.
+          Envoi <strong className="text-navy-900">100% automatique</strong>.
+          Programmez vos veilles à l&apos;avance, le système envoie tout seul à
+          la date prévue. La recommandation part automatiquement le 15 de
+          chaque mois.
         </p>
       </div>
 
@@ -56,10 +69,10 @@ export default async function AdminNewsletterPage() {
             </span>
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
-                Veille import
+                Veilles programmées
               </p>
-              <p className="mt-1 text-[14px] font-semibold text-navy-900">
-                1× / mois
+              <p className="mt-1 text-[28px] font-bold leading-none text-navy-900">
+                {veillesAVenir.length}
               </p>
             </div>
           </div>
@@ -75,7 +88,7 @@ export default async function AdminNewsletterPage() {
                 Recommandation
               </p>
               <p className="mt-1 text-[14px] font-semibold text-navy-900">
-                1× / mois
+                Auto le 15
               </p>
             </div>
           </div>
@@ -94,14 +107,13 @@ export default async function AdminNewsletterPage() {
                 Programmation automatique
               </p>
               <span className="rounded-2xl bg-emerald-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-700">
-                Recommandé
+                Actif
               </span>
             </div>
             <p className="mt-1 text-[13px] leading-relaxed text-zinc-600">
               Composez vos veilles à l&apos;avance et choisissez la date
               d&apos;envoi. Le système les enverra tout seul le jour choisi —
-              sans que vous ayez à cliquer. La recommandation part
-              automatiquement le 15 de chaque mois.
+              sans intervention manuelle.
             </p>
             <Link
               href="/admin/newsletter/programmer"
@@ -114,22 +126,111 @@ export default async function AdminNewsletterPage() {
         </div>
       </div>
 
-      {/* Envoi manuel — Recommandation */}
-      <div className="mt-8">
-        <div className="mb-3 flex items-center gap-3">
-          <span className="h-px flex-1 bg-zinc-200" />
-          <span className="text-[10.5px] font-bold uppercase tracking-[0.22em] text-zinc-400">
-            Envoi manuel exceptionnel
-          </span>
-          <span className="h-px flex-1 bg-zinc-200" />
+      {/* Veilles à venir */}
+      <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+        <div className="border-b border-zinc-200 px-6 py-5">
+          <p className="text-[14px] font-bold tracking-tight text-navy-900">
+            Veilles à venir
+          </p>
+          <p className="mt-0.5 text-[11.5px] text-zinc-500">
+            {veillesAVenir.length} veille
+            {veillesAVenir.length > 1 ? "s" : ""} en file d&apos;attente
+          </p>
         </div>
-        <NewsletterActions />
+
+        {veillesAVenir.length === 0 ? (
+          <div className="px-6 py-12 text-center">
+            <Clock
+              className="mx-auto h-6 w-6 text-zinc-300"
+              strokeWidth={1.5}
+            />
+            <p className="mt-4 text-[13px] font-semibold text-navy-900">
+              Aucune veille programmée
+            </p>
+            <p className="mt-1.5 text-[12px] text-zinc-500">
+              Programmez votre prochaine veille pour garder le contact avec vos
+              abonnés.
+            </p>
+            <Link
+              href="/admin/newsletter/programmer"
+              className="mt-4 inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-express-600 transition hover:text-express-700"
+            >
+              Programmer maintenant
+              <ArrowRight className="h-3 w-3" strokeWidth={2.5} />
+            </Link>
+          </div>
+        ) : (
+          <ul className="divide-y divide-zinc-100">
+            {veillesAVenir.map((veille) => (
+              <li
+                key={veille.id}
+                className="flex items-center gap-4 px-6 py-4"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-navy-50 text-navy-700">
+                  <Mail className="h-4 w-4" strokeWidth={1.75} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13.5px] font-bold text-navy-900">
+                    {veille.month_label}
+                  </p>
+                  <p className="mt-0.5 text-[11.5px] text-zinc-500">
+                    Envoi prévu :{" "}
+                    {new Date(veille.scheduled_for).toLocaleDateString(
+                      "fr-FR",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      },
+                    )}
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-2xl bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-amber-700">
+                  En attente
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      {/* Envoi manuel — Veille */}
-      <div className="mt-6">
-        <VeilleForm />
-      </div>
+      {/* Historique des veilles envoyées */}
+      {veillesEnvoyees.length > 0 && (
+        <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+          <div className="border-b border-zinc-200 px-6 py-5">
+            <p className="text-[14px] font-bold tracking-tight text-navy-900">
+              Historique
+            </p>
+            <p className="mt-0.5 text-[11.5px] text-zinc-500">
+              {veillesEnvoyees.length} veille
+              {veillesEnvoyees.length > 1 ? "s" : ""} envoyée
+              {veillesEnvoyees.length > 1 ? "s" : ""}
+            </p>
+          </div>
+          <ul className="divide-y divide-zinc-100">
+            {veillesEnvoyees.slice(0, 5).map((veille) => (
+              <li key={veille.id} className="flex items-center gap-4 px-6 py-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                  <Mail className="h-3.5 w-3.5" strokeWidth={2} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[12.5px] font-semibold text-navy-900">
+                    {veille.month_label}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-zinc-500">
+                    Envoyée à {veille.recipients_count ?? 0} contacts
+                  </p>
+                </div>
+                <span className="shrink-0 text-[11px] text-zinc-400">
+                  {veille.sent_at
+                    ? new Date(veille.sent_at).toLocaleDateString("fr-FR")
+                    : "—"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Derniers inscrits */}
       <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
