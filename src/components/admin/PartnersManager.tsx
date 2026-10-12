@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Search,
   Plus,
@@ -13,6 +14,7 @@ import {
   LayoutGrid,
   MessageCircle,
   Sparkles,
+  QrCode,
 } from "lucide-react";
 import PartnerCard from "./PartnerCard";
 import PartnerModal from "./PartnerModal";
@@ -120,7 +122,6 @@ export default function PartnersManager({
   return (
     <div>
       {/* Stats */}
-            {/* Stats */}
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={<Users className="h-5 w-5" strokeWidth={1.75} />}
@@ -186,6 +187,14 @@ export default function PartnersManager({
           Secteurs
           <span className="text-zinc-400">({sectors.length})</span>
         </button>
+
+        <Link
+          href="/admin/partners/qr"
+          className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300"
+        >
+          <QrCode className="h-3.5 w-3.5" strokeWidth={2} />
+          QR public
+        </Link>
 
         <button
           type="button"
@@ -289,6 +298,7 @@ export default function PartnersManager({
 }
 
 /* ---------- Sous-composants ---------- */
+
 function StatCard({
   icon,
   value,
