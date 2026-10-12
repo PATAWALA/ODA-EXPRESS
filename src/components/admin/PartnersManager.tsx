@@ -123,25 +123,29 @@ export default function PartnersManager({
       <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatCard
           icon={<Users className="h-4 w-4" strokeWidth={1.75} />}
-          label="Total"
+          label="Partenaires"
+          description="Contacts enregistrés"
           value={stats.total}
           color="navy"
         />
         <StatCard
           icon={<LayoutGrid className="h-4 w-4" strokeWidth={1.75} />}
           label="Secteurs"
+          description="Domaines d'activité"
           value={stats.sectors}
           color="express"
         />
         <StatCard
           icon={<MessageCircle className="h-4 w-4" strokeWidth={1.75} />}
-          label="Sur WhatsApp"
+          label="Joignables"
+          description="Avec numéro WhatsApp"
           value={stats.withWhatsApp}
           color="emerald"
         />
         <StatCard
           icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-          label="Ce mois"
+          label="Nouveaux"
+          description="Ajoutés ce mois-ci"
           value={stats.addedThisMonth}
           color="navy"
         />
@@ -288,11 +292,13 @@ export default function PartnersManager({
 function StatCard({
   icon,
   label,
+  description,
   value,
   color,
 }: {
   icon: React.ReactNode;
   label: string;
+  description: string;
   value: number;
   color: "navy" | "express" | "emerald";
 }) {
@@ -303,23 +309,26 @@ function StatCard({
   };
 
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4">
-      <span
-        className={
-          "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl " +
-          colorClasses[color]
-        }
-      >
-        {icon}
-      </span>
-      <div className="min-w-0">
-        <p className="text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-500">
-          {label}
-        </p>
-        <p className="mt-0.5 text-[22px] font-bold leading-none text-navy-900">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-4 transition hover:border-navy-200">
+      <div className="flex items-start justify-between gap-2">
+        <span
+          className={
+            "flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl " +
+            colorClasses[color]
+          }
+        >
+          {icon}
+        </span>
+        <p className="text-[24px] font-bold leading-none tracking-tight text-navy-900">
           {value}
         </p>
       </div>
+      <p className="mt-3 text-[12.5px] font-bold tracking-tight text-navy-900">
+        {label}
+      </p>
+      <p className="mt-0.5 text-[11px] leading-snug text-zinc-500">
+        {description}
+      </p>
     </div>
   );
 }
