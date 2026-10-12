@@ -47,10 +47,6 @@ export default function PartnerQRModal({
     setTimeout(() => setCopied(false), 2000);
   }
 
-  /**
-   * Télécharge l'image du QR en la récupérant via fetch,
-   * puis en la transformant en blob pour forcer le download.
-   */
   async function downloadQR() {
     try {
       setDownloading(true);
@@ -66,7 +62,6 @@ export default function PartnerQRModal({
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Erreur téléchargement QR :", err);
-      // Fallback : ouvrir dans un nouvel onglet
       window.open(qrUrl, "_blank");
     } finally {
       setDownloading(false);
@@ -77,7 +72,7 @@ export default function PartnerQRModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-navy-950/80 px-4 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-navy-950/80 px-3 py-4 backdrop-blur-sm sm:items-center sm:px-4 sm:py-8"
       onClick={onClose}
     >
       <div
@@ -85,16 +80,16 @@ export default function PartnerQRModal({
         className="relative w-full max-w-md overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-2xl"
       >
         {/* En-tête */}
-        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-express-600 to-express-700 text-white">
+        <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-express-600 to-express-700 text-white">
               <QrCode className="h-4 w-4" strokeWidth={1.75} />
             </span>
-            <div>
-              <p className="text-[15px] font-bold tracking-tight text-navy-900">
+            <div className="min-w-0">
+              <p className="truncate text-[14px] font-bold tracking-tight text-navy-900 sm:text-[15px]">
                 QR d&apos;inscription
               </p>
-              <p className="mt-0.5 text-[11.5px] text-zinc-500">
+              <p className="mt-0.5 truncate text-[11px] text-zinc-500 sm:text-[11.5px]">
                 À partager avec vos partenaires
               </p>
             </div>
@@ -102,7 +97,7 @@ export default function PartnerQRModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-zinc-100 hover:text-navy-900"
             aria-label="Fermer"
           >
             <X className="h-4 w-4" strokeWidth={1.75} />
@@ -110,31 +105,31 @@ export default function PartnerQRModal({
         </div>
 
         {/* Contenu */}
-        <div className="p-6">
+        <div className="max-h-[calc(100vh-160px)] overflow-y-auto p-4 sm:max-h-none sm:p-6">
           {/* QR */}
-          <div className="mx-auto inline-block w-full rounded-2xl border-2 border-navy-900 bg-white p-4">
+          <div className="mx-auto w-full max-w-[280px] rounded-2xl border-2 border-navy-900 bg-white p-3 sm:p-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={qrUrl}
               alt="QR code d'inscription partenaire"
-              className="mx-auto block h-auto w-full max-w-[280px]"
+              className="block h-auto w-full"
             />
           </div>
 
-          <p className="mt-4 text-center text-[12.5px] font-semibold text-navy-900">
+          <p className="mt-4 text-center text-[12px] font-semibold text-navy-900 sm:text-[12.5px]">
             Scanner pour s&apos;inscrire
           </p>
-          <p className="mt-1 text-center text-[11px] text-zinc-500">
+          <p className="mt-1 text-center text-[10.5px] text-zinc-500 sm:text-[11px]">
             Fonctionne avec tous les smartphones · Aucun login requis
           </p>
 
           {/* Lien direct */}
-          <div className="mt-5">
-            <p className="mb-2 text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-500">
+          <div className="mt-4 sm:mt-5">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-500 sm:text-[10.5px]">
               Ou partager le lien direct
             </p>
             <div className="flex items-center gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 px-3 py-2">
-              <code className="min-w-0 flex-1 truncate text-[11px] font-mono text-navy-900">
+              <code className="min-w-0 flex-1 truncate text-[10.5px] font-mono text-navy-900 sm:text-[11px]">
                 {publicUrl}
               </code>
               <button
@@ -156,7 +151,7 @@ export default function PartnerQRModal({
           </div>
 
           {/* Actions */}
-          <div className="mt-5 flex gap-2">
+          <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row">
             <button
               type="button"
               onClick={downloadQR}
@@ -201,7 +196,7 @@ export default function PartnerQRModal({
             href={publicUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex w-full items-center justify-center gap-2 text-[11.5px] font-semibold text-navy-700 transition hover:text-express-600"
+            className="mt-3 inline-flex w-full items-center justify-center gap-2 text-[11px] font-semibold text-navy-700 transition hover:text-express-600 sm:text-[11.5px]"
           >
             <ExternalLink className="h-3 w-3" strokeWidth={2} />
             Tester le formulaire public
