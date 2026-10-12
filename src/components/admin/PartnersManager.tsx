@@ -9,6 +9,10 @@ import {
   X,
   Building2,
   Tag,
+  Users,
+  LayoutGrid,
+  MessageCircle,
+  Sparkles,
 } from "lucide-react";
 import PartnerCard from "./PartnerCard";
 import PartnerModal from "./PartnerModal";
@@ -24,14 +28,23 @@ interface SectorWithCount extends PartnerSector {
   partners_count: number;
 }
 
+interface Stats {
+  total: number;
+  sectors: number;
+  withWhatsApp: number;
+  addedThisMonth: number;
+}
+
 interface PartnersManagerProps {
   partners: PartnerWithSector[];
   sectors: SectorWithCount[];
+  stats: Stats;
 }
 
 export default function PartnersManager({
   partners,
   sectors,
+  stats,
 }: PartnersManagerProps) {
   const router = useRouter();
 
@@ -49,14 +62,12 @@ export default function PartnersManager({
   const filtered = useMemo(() => {
     let result = partners;
 
-    // Filtre par secteur
     if (activeSectorId === "none") {
       result = result.filter((p) => !p.sector_id);
     } else if (activeSectorId !== "all") {
       result = result.filter((p) => p.sector_id === activeSectorId);
     }
 
-    // Recherche
     const q = search.trim().toLowerCase();
     if (q) {
       result = result.filter((p) => {
@@ -74,7 +85,6 @@ export default function PartnersManager({
     return result;
   }, [partners, activeSectorId, search]);
 
-  /* ------- Compteur "sans secteur" ------- */
   const withoutSector = useMemo(
     () => partners.filter((p) => !p.sector_id).length,
     [partners],
@@ -109,9 +119,36 @@ export default function PartnersManager({
 
   return (
     <div>
+      {/* Stats */}
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatCard
+          icon={<Users className="h-4 w-4" strokeWidth={1.75} />}
+          label="Total"
+          value={stats.total}
+          color="navy"
+        />
+        <StatCard
+          icon={<LayoutGrid className="h-4 w-4" strokeWidth={1.75} />}
+          label="Secteurs"
+          value={stats.sectors}
+          color="express"
+        />
+        <StatCard
+          icon={<MessageCircle className="h-4 w-4" strokeWidth={1.75} />}
+          label="Sur WhatsApp"
+          value={stats.withWhatsApp}
+          color="emerald"
+        />
+        <StatCard
+          icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+          label="Ce mois"
+          value={stats.addedThisMonth}
+          color="navy"
+        />
+      </div>
+
       {/* Barre d'actions */}
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        {/* Recherche */}
         <div className="relative min-w-[220px] flex-1">
           <Search
             className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-400"
@@ -135,7 +172,6 @@ export default function PartnersManager({
           )}
         </div>
 
-        {/* Gérer les secteurs */}
         <button
           type="button"
           onClick={() => setSectorsOpen(true)}
@@ -146,7 +182,6 @@ export default function PartnersManager({
           <span className="text-zinc-400">({sectors.length})</span>
         </button>
 
-        {/* Nouveau partenaire */}
         <button
           type="button"
           onClick={openCreate}
@@ -250,6 +285,45 @@ export default function PartnersManager({
 
 /* ---------- Sous-composants ---------- */
 
+function StatCard({
+  icon,
+  label,
+  value,
+  color,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  color: "navy" | "express" | "emerald";
+}) {
+  const colorClasses = {
+    navy: "bg-navy-900 text-white",
+    express: "bg-express-600 text-white",
+    emerald: "bg-emerald-600 text-white",
+  };
+
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4">
+      <span
+        className={
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl " +
+          colorClasses[color]
+        }
+      >
+        {icon}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-500">
+          {label}
+        </p>
+        <p className="mt-0.5 text-[22px] font-bold leading-none text-navy-900">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function SectorPill({
   active,
   onClick,
@@ -291,7 +365,6 @@ function EmptyState({
   onCreate: () => void;
   total: number;
 }) {
-  // Cas 1 : aucun partenaire en base
   if (total === 0) {
     return (
       <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-16 text-center">
@@ -318,7 +391,6 @@ function EmptyState({
     );
   }
 
-  // Cas 2 : filtres actifs sans résultat
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white px-6 py-16 text-center">
       <Search className="mx-auto h-8 w-8 text-zinc-300" strokeWidth={1.5} />

@@ -8,6 +8,21 @@ export default async function AdminPartnersPage() {
     getPartnerSectorsWithCount(),
   ]);
 
+  // Calcul des stats
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const stats = {
+    total: partners.length,
+    sectors: sectors.length,
+    withWhatsApp: partners.filter(
+      (p) => p.whatsapp && p.whatsapp.trim() !== "",
+    ).length,
+    addedThisMonth: partners.filter(
+      (p) => new Date(p.created_at) >= startOfMonth,
+    ).length,
+  };
+
   return (
     <div>
       <div className="mb-8">
@@ -23,7 +38,11 @@ export default async function AdminPartnersPage() {
         </p>
       </div>
 
-      <PartnersManager partners={partners} sectors={sectors} />
+      <PartnersManager
+        partners={partners}
+        sectors={sectors}
+        stats={stats}
+      />
     </div>
   );
 }
