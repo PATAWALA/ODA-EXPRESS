@@ -768,18 +768,78 @@ export async function uploadPartnerProductImageAction(formData: FormData) {
     return { error: "Aucun fichier reçu." };
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    return { error: "Le fichier dépasse 5 Mo." };
+  // Tailles max par catégorie
+  const MAX_SIZES = {
+    image: 5 * 1024 * 1024,
+    document: 20 * 1024 * 1024,
+    video: 50 * 1024 * 1024,
+    archive: 50 * 1024 * 1024,
+  };
+
+  // Types MIME acceptés
+  const ALLOWED_MIME: Record<string, keyof typeof MAX_SIZES> = {
+    "image/jpeg": "image",
+    "image/png": "image",
+    "image/webp": "image",
+    "image/gif": "image",
+    "image/svg+xml": "image",
+    "application/pdf": "document",
+    "application/msword": "document",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      "document",
+    "application/vnd.ms-excel": "document",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+      "document",
+    "application/vnd.ms-powerpoint": "document",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+      "document",
+    "video/mp4": "video",
+    "video/webm": "video",
+    "video/quicktime": "video",
+    "application/zip": "archive",
+    "application/x-zip-compressed": "archive",
+  };
+
+  // Détection de la catégorie (MIME puis extension)
+  let category = ALLOWED_MIME[file.type];
+  if (!category) {
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+    const extMap: Record<string, keyof typeof MAX_SIZES> = {
+      jpg: "image",
+      jpeg: "image",
+      png: "image",
+      webp: "image",
+      gif: "image",
+      svg: "image",
+      pdf: "document",
+      doc: "document",
+      docx: "document",
+      xls: "document",
+      xlsx: "document",
+      ppt: "document",
+      pptx: "document",
+      mp4: "video",
+      webm: "video",
+      mov: "video",
+      zip: "archive",
+    };
+    category = extMap[ext];
   }
 
-  const allowed = ["image/jpeg", "image/png", "image/webp"];
-  if (!allowed.includes(file.type)) {
-    return { error: "Format non supporté (JPG, PNG, WebP uniquement)." };
+  if (!category) {
+    return { error: "Format non supporté." };
+  }
+
+  // Vérifier la taille
+  const maxSize = MAX_SIZES[category];
+  if (file.size > maxSize) {
+    const mb = Math.round(maxSize / (1024 * 1024));
+    return { error: `Fichier trop volumineux (max ${mb} Mo).` };
   }
 
   const supabase = await createClient();
 
-  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "bin";
   const fileName = `partner-products/${Date.now()}-${Math.random()
     .toString(36)
     .slice(2, 9)}.${ext}`;
@@ -801,7 +861,7 @@ export async function uploadPartnerProductImageAction(formData: FormData) {
     .getPublicUrl(fileName);
 
   return {
-    success: "Produit uploadé.",
+    success: "Fichier uploadé.",
     url: urlData.publicUrl,
   };
 }
