@@ -15,6 +15,8 @@ import {
   Sparkles,
   QrCode,
   Download,
+  Factory,
+  Truck,
 } from "lucide-react";
 import PartnerCard from "./PartnerCard";
 import PartnerModal from "./PartnerModal";
@@ -25,6 +27,7 @@ import { deletePartnerAction } from "@/app/admin/actions";
 import type {
   PartnerWithSector,
   PartnerSector,
+  PartnerType,
 } from "@/lib/supabase/types";
 
 interface SectorWithCount extends PartnerSector {
@@ -44,6 +47,8 @@ interface PartnersManagerProps {
   stats: Stats;
 }
 
+type TypeFilter = "all" | PartnerType;
+
 export default function PartnersManager({
   partners,
   sectors,
@@ -52,6 +57,7 @@ export default function PartnersManager({
   const router = useRouter();
 
   const [search, setSearch] = useState("");
+  const [activeType, setActiveType] = useState<TypeFilter>("all");
   const [activeSectorId, setActiveSectorId] = useState<string>("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingPartner, setEditingPartner] =
@@ -66,12 +72,19 @@ export default function PartnersManager({
   const filtered = useMemo(() => {
     let result = partners;
 
+    // Filtre par type (supplier / logistic)
+    if (activeType !== "all") {
+      result = result.filter((p) => p.type === activeType);
+    }
+
+    // Filtre par catégorie
     if (activeSectorId === "none") {
       result = result.filter((p) => !p.sector_id);
     } else if (activeSectorId !== "all") {
       result = result.filter((p) => p.sector_id === activeSectorId);
     }
 
+    // Recherche
     const q = search.trim().toLowerCase();
     if (q) {
       result = result.filter((p) => {
@@ -87,12 +100,27 @@ export default function PartnersManager({
     }
 
     return result;
-  }, [partners, activeSectorId, search]);
+  }, [partners, activeType, activeSectorId, search]);
 
+  /* ------- Comptes ------- */
+  const suppliersCount = useMemo(
+    () => partners.filter((p) => p.type === "supplier").length,
+    [partners],
+  );
+  const logisticsCount = useMemo(
+    () => partners.filter((p) => p.type === "logistic").length,
+    [partners],
+  );
   const withoutSector = useMemo(
     () => partners.filter((p) => !p.sector_id).length,
     [partners],
   );
+
+  /* ------- Catégories filtrées par type ------- */
+  const visibleSectors = useMemo(() => {
+    if (activeType === "all") return sectors;
+    return sectors.filter((s) => s.type === activeType);
+  }, [sectors, activeType]);
 
   function openCreate() {
     setEditingPartner(null);
@@ -125,8 +153,9 @@ export default function PartnersManager({
 
     const headers = [
       "Nom",
+      "Type",
       "Contact",
-      "Secteur",
+      "Catégorie",
       "WhatsApp",
       "Téléphone",
       "Email",
@@ -139,6 +168,7 @@ export default function PartnersManager({
 
     const rows = filtered.map((p) => [
       p.name,
+      p.type === "logistic" ? "Logistic" : "Supplier",
       p.contact_name ?? "",
       p.sector?.name ?? "",
       p.whatsapp ?? "",
@@ -159,14 +189,13 @@ export default function PartnersManager({
       )
       .join("\n");
 
-    // BOM pour Excel (accents corrects)
     const blob = new Blob(["\uFEFF" + csv], {
       type: "text/csv;charset=utf-8;",
     });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `partenaires-oda-sources-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `partenaires-oda-${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -185,17 +214,17 @@ export default function PartnersManager({
           color="navy"
         />
         <StatCard
-          icon={<LayoutGrid className="h-5 w-5" strokeWidth={1.75} />}
-          value={stats.sectors}
-          title="Secteurs"
-          description="Domaines disponibles"
+          icon={<Factory className="h-5 w-5" strokeWidth={1.75} />}
+          value={suppliersCount}
+          title="Suppliers"
+          description="Fournisseurs et usines"
           color="express"
         />
         <StatCard
-          icon={<MessageCircle className="h-5 w-5" strokeWidth={1.75} />}
-          value={stats.withWhatsApp}
-          title="Sur WhatsApp"
-          description="Joignables directement"
+          icon={<Truck className="h-5 w-5" strokeWidth={1.75} />}
+          value={logisticsCount}
+          title="Logistics"
+          description="Services logistiques"
           color="emerald"
         />
         <StatCard
@@ -218,7 +247,7 @@ export default function PartnersManager({
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher un partenaire (nom, ville, contact...)"
+            placeholder="Rechercher un partenaire..."
             className="w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-10 pr-4 text-[13px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
           />
           {search && (
@@ -238,7 +267,7 @@ export default function PartnersManager({
           className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300"
         >
           <SlidersHorizontal className="h-3.5 w-3.5" strokeWidth={2} />
-          Secteurs
+          Catégories
           <span className="text-zinc-400">({sectors.length})</span>
         </button>
 
@@ -248,7 +277,7 @@ export default function PartnersManager({
           className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-navy-900 transition hover:border-navy-300"
         >
           <Download className="h-3.5 w-3.5" strokeWidth={2} />
-          Export CSV
+          Export
         </button>
 
         <button
@@ -266,21 +295,60 @@ export default function PartnersManager({
           className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
         >
           <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-          Nouveau partenaire
+          Nouveau
         </button>
       </div>
 
-      {/* Filtres par secteur */}
+      {/* Filtres : Type de partenaire */}
+      <div className="mb-3 -mx-1 flex flex-wrap items-center gap-2 px-1">
+        <SectorPill
+          active={activeType === "all"}
+          onClick={() => {
+            setActiveType("all");
+            setActiveSectorId("all");
+          }}
+        >
+          Tous ({partners.length})
+        </SectorPill>
+
+        <SectorPill
+          active={activeType === "supplier"}
+          onClick={() => {
+            setActiveType("supplier");
+            setActiveSectorId("all");
+          }}
+          icon={<Factory className="h-3 w-3" strokeWidth={2.5} />}
+        >
+          Suppliers ({suppliersCount})
+        </SectorPill>
+
+        <SectorPill
+          active={activeType === "logistic"}
+          onClick={() => {
+            setActiveType("logistic");
+            setActiveSectorId("all");
+          }}
+          icon={<Truck className="h-3 w-3" strokeWidth={2.5} />}
+        >
+          Logistics ({logisticsCount})
+        </SectorPill>
+      </div>
+
+      {/* Filtres : Catégories (filtrées par type) */}
       <div className="mb-6 -mx-1 flex flex-wrap items-center gap-2 px-1">
+        <span className="text-[10.5px] font-bold uppercase tracking-[0.15em] text-zinc-400">
+          Catégories :
+        </span>
+
         <SectorPill
           active={activeSectorId === "all"}
           onClick={() => setActiveSectorId("all")}
           icon={<Building2 className="h-3 w-3" strokeWidth={2.5} />}
         >
-          Tous ({partners.length})
+          Toutes
         </SectorPill>
 
-        {sectors.map((s) => (
+        {visibleSectors.map((s) => (
           <SectorPill
             key={s.id}
             active={activeSectorId === s.id}
@@ -296,8 +364,14 @@ export default function PartnersManager({
             active={activeSectorId === "none"}
             onClick={() => setActiveSectorId("none")}
           >
-            Sans secteur ({withoutSector})
+            Sans catégorie ({withoutSector})
           </SectorPill>
+        )}
+
+        {visibleSectors.length === 0 && activeType !== "all" && (
+          <span className="text-[11px] italic text-zinc-400">
+            Aucune catégorie pour ce type
+          </span>
         )}
       </div>
 
@@ -305,10 +379,11 @@ export default function PartnersManager({
       {filtered.length === 0 ? (
         <EmptyState
           hasSearch={!!search}
-          hasSector={activeSectorId !== "all"}
+          hasSector={activeSectorId !== "all" || activeType !== "all"}
           onReset={() => {
             setSearch("");
             setActiveSectorId("all");
+            setActiveType("all");
           }}
           onCreate={openCreate}
           total={partners.length}
@@ -458,8 +533,8 @@ function EmptyState({
           Aucun partenaire pour l&apos;instant
         </p>
         <p className="mx-auto mt-2 max-w-sm text-[12.5px] leading-relaxed text-zinc-500">
-          Ajoutez vos premiers contacts (transitaires, fournisseurs,
-          cabinets...) pour les retrouver en un clic plus tard.
+          Ajoutez vos premiers contacts (suppliers ou logisticiens) pour les
+          retrouver en un clic plus tard.
         </p>
         <button
           type="button"
@@ -482,9 +557,9 @@ function EmptyState({
       <p className="mx-auto mt-2 max-w-sm text-[12.5px] leading-relaxed text-zinc-500">
         {hasSearch
           ? "Aucun partenaire ne correspond à votre recherche."
-          : "Aucun partenaire dans ce secteur."}
+          : "Aucun partenaire dans ces filtres."}
       </p>
-      {(hasSearch || hasSector) && (
+      {hasSector && (
         <button
           type="button"
           onClick={onReset}

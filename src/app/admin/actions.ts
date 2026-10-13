@@ -561,7 +561,10 @@ export async function savePartnerAction(
     return { error: "Le nom du partenaire est obligatoire." };
   }
 
+  const type = String(formData.get("type") ?? "supplier").trim();
   const sectorId = String(formData.get("sector_id") ?? "").trim() || null;
+  const contactName =
+    String(formData.get("contact_name") ?? "").trim() || null;
   const whatsapp = String(formData.get("whatsapp") ?? "").trim() || null;
   const phone = String(formData.get("phone") ?? "").trim() || null;
   const email = String(formData.get("email") ?? "").trim() || null;
@@ -573,7 +576,9 @@ export async function savePartnerAction(
 
   const payload = {
     name,
+    type,
     sector_id: sectorId,
+    contact_name: contactName,
     whatsapp,
     phone,
     email,
@@ -627,13 +632,14 @@ export async function deletePartnerAction(id: string) {
 export async function createPartnerSectorAction(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   if (!name) {
-    return { error: "Le nom du secteur est obligatoire." };
+    return { error: "Le nom de la catégorie est obligatoire." };
   }
 
   const description =
     String(formData.get("description") ?? "").trim() || null;
+  const type = String(formData.get("type") ?? "supplier").trim();
 
-  const result = await createPartnerSector({ name, description });
+  const result = await createPartnerSector({ name, description, type });
 
   if (!result.ok) {
     return { error: result.error ?? "Erreur lors de la création." };
@@ -643,7 +649,7 @@ export async function createPartnerSectorAction(formData: FormData) {
   revalidatePath("/admin/partners/secteurs");
 
   return {
-    success: `Le secteur « ${name} » a été créé.`,
+    success: `La catégorie « ${name} » a été créée.`,
     sector: result.data,
   };
 }
@@ -657,13 +663,14 @@ export async function updatePartnerSectorAction(
 ) {
   const name = String(formData.get("name") ?? "").trim();
   if (!name) {
-    return { error: "Le nom du secteur est obligatoire." };
+    return { error: "Le nom de la catégorie est obligatoire." };
   }
 
   const description =
     String(formData.get("description") ?? "").trim() || null;
+  const type = String(formData.get("type") ?? "supplier").trim();
 
-  const result = await updatePartnerSector(id, { name, description });
+  const result = await updatePartnerSector(id, { name, description, type });
 
   if (!result.ok) {
     return { error: result.error ?? "Erreur lors de la mise à jour." };
@@ -672,7 +679,7 @@ export async function updatePartnerSectorAction(
   revalidatePath("/admin/partners");
   revalidatePath("/admin/partners/secteurs");
 
-  return { success: `Le secteur « ${name} » a été mis à jour.` };
+  return { success: `La catégorie « ${name} » a été mise à jour.` };
 }
 
 /**
@@ -842,3 +849,4 @@ export async function deletePartnerProductAction(
   revalidatePath("/admin/partners");
   return { success: "Produit supprimé." };
 }
+

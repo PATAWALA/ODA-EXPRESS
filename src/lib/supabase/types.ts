@@ -278,18 +278,21 @@ export type Database = {
           id: string;
           name: string;
           description: string | null;
+          type: string;
           created_at: string;
         };
         Insert: {
           id?: string;
           name: string;
           description?: string | null;
+          type?: string;
           created_at?: string;
         };
         Update: {
           id?: string;
           name?: string;
           description?: string | null;
+          type?: string;
           created_at?: string;
         };
         Relationships: [];
@@ -298,6 +301,7 @@ export type Database = {
         Row: {
           id: string;
           name: string;
+          type: string;
           sector_id: string | null;
           contact_name: string | null;
           whatsapp: string | null;
@@ -314,6 +318,7 @@ export type Database = {
         Insert: {
           id?: string;
           name: string;
+          type?: string;
           sector_id?: string | null;
           contact_name?: string | null;
           whatsapp?: string | null;
@@ -330,6 +335,7 @@ export type Database = {
         Update: {
           id?: string;
           name?: string;
+          type?: string;
           sector_id?: string | null;
           contact_name?: string | null;
           whatsapp?: string | null;
@@ -443,6 +449,8 @@ export type PartnerProductUpdate =
   Database["public"]["Tables"]["partner_products"]["Update"];
 
 /* ---------- Types composites ---------- */
+
+export type PartnerType = "supplier" | "logistic";
 
 export type PartnerWithSector = Partner & {
   sector: PartnerSector | null;
