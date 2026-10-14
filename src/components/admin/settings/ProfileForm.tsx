@@ -129,10 +129,11 @@ function EmailSection({ currentEmail }: { currentEmail: string }) {
   );
 }
 
-/* ---------- Mot de passe (2 étapes) ---------- */
+/* ---------- Mot de passe (2 étapes + mot de passe actuel) ---------- */
 
 function PasswordSection() {
   const [step, setStep] = useState<1 | 2>(1);
+  const [current, setCurrent] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [state, setState] = useState<{
@@ -143,7 +144,15 @@ function PasswordSection() {
 
   function goToStep2(e: React.FormEvent) {
     e.preventDefault();
-    // ✅ 6 caractères minimum (au lieu de 8)
+
+    if (!current) {
+      setState({
+        loading: false,
+        error: "Le mot de passe actuel est obligatoire.",
+        success: null,
+      });
+      return;
+    }
     if (password.length < 6) {
       setState({
         loading: false,
@@ -152,6 +161,15 @@ function PasswordSection() {
       });
       return;
     }
+    if (password === current) {
+      setState({
+        loading: false,
+        error: "Le nouveau mot de passe doit être différent de l'actuel.",
+        success: null,
+      });
+      return;
+    }
+
     setState({ loading: false, error: null, success: null });
     setStep(2);
   }
@@ -171,6 +189,7 @@ function PasswordSection() {
     setState({ loading: true, error: null, success: null });
 
     const formData = new FormData();
+    formData.append("current", current);
     formData.append("password", password);
     formData.append("confirm", confirm);
 
@@ -185,6 +204,7 @@ function PasswordSection() {
         error: null,
         success: result?.success ?? "Mot de passe mis à jour.",
       });
+      setCurrent("");
       setPassword("");
       setConfirm("");
       setStep(1);
@@ -192,6 +212,7 @@ function PasswordSection() {
   }
 
   function cancel() {
+    setCurrent("");
     setPassword("");
     setConfirm("");
     setState({ loading: false, error: null, success: null });
@@ -205,13 +226,42 @@ function PasswordSection() {
     >
       {/* Indicateur d'étapes */}
       <div className="mb-5 flex items-center gap-3">
-        <StepIndicator active={step === 1} done={step === 2} number={1} label="Nouveau" />
+        <StepIndicator
+          active={step === 1}
+          done={step === 2}
+          number={1}
+          label="Nouveau"
+        />
         <span className="h-px flex-1 bg-zinc-200" />
-        <StepIndicator active={step === 2} done={false} number={2} label="Confirmation" />
+        <StepIndicator
+          active={step === 2}
+          done={false}
+          number={2}
+          label="Confirmation"
+        />
       </div>
 
       {step === 1 ? (
         <form onSubmit={goToStep2} className="space-y-4">
+          {/* Mot de passe actuel — nécessaire pour la ré-authentification Supabase */}
+          <label className="block">
+            <span className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
+              Mot de passe actuel
+            </span>
+            <input
+              type="password"
+              name="current"
+              required
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+              placeholder="••••••••"
+              className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700"
+            />
+            <p className="mt-2 text-[11.5px] text-zinc-500">
+              Nécessaire pour des raisons de sécurité.
+            </p>
+          </label>
+
           <PasswordInput
             name="password"
             label="Nouveau mot de passe"
