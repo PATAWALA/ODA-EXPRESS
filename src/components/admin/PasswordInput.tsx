@@ -13,6 +13,8 @@ interface PasswordInputProps {
   defaultValue?: string;
   hint?: string;
   mono?: boolean;
+  /** Valeur contrôlée (optionnel) */
+  value?: string;
   /** Callback appelé à chaque changement (optionnel) */
   onChange?: (value: string) => void;
 }
@@ -26,9 +28,12 @@ export default function PasswordInput({
   defaultValue,
   hint,
   mono,
+  value,
   onChange,
 }: PasswordInputProps) {
   const [visible, setVisible] = useState(false);
+
+  const isControlled = value !== undefined;
 
   return (
     <label className="block">
@@ -44,9 +49,10 @@ export default function PasswordInput({
           name={name}
           required={required}
           minLength={minLength}
-          defaultValue={defaultValue}
+          {...(isControlled
+            ? { value, onChange: (e) => onChange?.(e.target.value) }
+            : { defaultValue, onChange: (e) => onChange?.(e.target.value) })}
           placeholder={placeholder}
-          onChange={(e) => onChange?.(e.target.value)}
           className={cn(
             "w-full rounded-2xl border border-zinc-200 bg-white py-3 pl-4 pr-12 text-[13.5px] text-navy-900 outline-none transition placeholder:text-zinc-400 focus:border-navy-700",
             mono && "font-mono",

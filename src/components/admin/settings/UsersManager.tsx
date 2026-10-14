@@ -244,6 +244,8 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
             label="Mot de passe provisoire *"
             required
             minLength={6}
+            value={form.password}
+            onChange={(v) => update("password", v)}
             placeholder="Minimum 6 caractères"
             hint="Notez ce mot de passe et transmettez-le à la personne concernée."
           />
@@ -300,6 +302,8 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
             label="Confirmer le mot de passe *"
             required
             minLength={6}
+            value={form.confirm}
+            onChange={(v) => update("confirm", v)}
             placeholder="Retapez le mot de passe"
             hint="Le mot de passe doit être identique à celui saisi à l'étape 1."
           />
