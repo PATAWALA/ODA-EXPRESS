@@ -308,35 +308,27 @@ export async function updateProfileEmailAction(formData: FormData) {
 }
 
 export async function updateProfilePasswordAction(formData: FormData) {
-  const current = String(formData.get("current") ?? "");
   const password = String(formData.get("password") ?? "");
   const confirm = String(formData.get("confirm") ?? "");
 
-  if (password.length < 8)
-    return { error: "Le mot de passe doit contenir au moins 8 caractères." };
+  if (password.length < 6)
+    return { error: "Le mot de passe doit contenir au moins 6 caractères." };
   if (password !== confirm)
     return { error: "Les deux mots de passe ne correspondent pas." };
-  if (!current)
-    return { error: "Le mot de passe actuel est obligatoire." };
 
   const supabase = await createClient();
-
-  // 1) Récupérer l'email de l'utilisateur courant
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user?.email) return { error: "Session invalide, reconnectez-vous." };
-
-  // 2) Ré-authentification (fresh login) pour lever la contrainte Supabase
-  const { error: reauthError } = await supabase.auth.signInWithPassword({
-    email: user.email,
-    password: current,
-  });
-  if (reauthError) return { error: "Mot de passe actuel incorrect." };
-
-  // 3) Changement effectif
   const { error } = await supabase.auth.updateUser({ password });
-  if (error) return { error: error.message };
 
-  // 4) IMPORTANT : revalider pour que la nouvelle session cookie soit propagée
+  if (error) {
+    // Log temporaire pour voir l'erreur exacte de Supabase
+    console.error("[updateProfilePasswordAction]", {
+      status: error.status,
+      code: error.code,
+      message: error.message,
+    });
+    return { error: error.message };
+  }
+
   revalidatePath("/admin", "layout");
   return { success: "Mot de passe mis à jour." };
 }
