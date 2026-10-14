@@ -134,6 +134,7 @@ export default function PublicPartnerForm({
       sector_id: selectedSector,
       contact_name: String(formData.get("contact_name") ?? "").trim(),
       wechat: String(formData.get("wechat") ?? "").trim(),
+      whatsapp: String(formData.get("whatsapp") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
       country: String(formData.get("country") ?? "").trim(),
       city: String(formData.get("city") ?? "").trim(),
@@ -318,29 +319,41 @@ export default function PublicPartnerForm({
           hint="Interlocuteur principal chez ce partenaire"
         />
 
-        {/* WeChat + Email */}
+        {/* WeChat + WhatsApp */}
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
             label="WeChat"
             name="wechat"
             placeholder="zhang_wei_88"
-            hint="Identifiant ou numéro WeChat"
+            hint="Pour les partenaires en Chine"
           />
+          <Input
+            label="WhatsApp"
+            name="whatsapp"
+            placeholder="+86 195 1566 0197"
+            hint="Format international"
+          />
+        </div>
+
+        {/* Email + Site web */}
+        <div className="grid gap-4 sm:grid-cols-2">
           <Input
             label="Email"
             name="email"
             type="email"
             placeholder="contact@exemple.com"
           />
+          <Input
+            label="Site web"
+            name="website"
+            placeholder="https://..."
+          />
         </div>
-
-        {/* Site web */}
-        <Input label="Site web" name="website" placeholder="https://..." />
 
         {/* Pays + Ville */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <Input label="Pays" name="country" placeholder="Chine..." />
-          <Input label="Ville" name="city" placeholder="Guangzhou..." />
+          <Input label="Pays" name="country" placeholder="Chine, Émirats..." />
+          <Input label="Ville" name="city" placeholder="Guangzhou, Dubaï..." />
         </div>
 
         {/* Description */}

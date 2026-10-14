@@ -11,13 +11,13 @@ export async function POST(request: Request) {
     const contactName =
       String(body.contact_name ?? "").trim() || null;
     const wechat = String(body.wechat ?? "").trim() || null;
+    const whatsapp = String(body.whatsapp ?? "").trim() || null;
     const email = String(body.email ?? "").trim() || null;
     const country = String(body.country ?? "").trim() || null;
     const city = String(body.city ?? "").trim() || null;
     const description = String(body.description ?? "").trim() || null;
     const website = String(body.website ?? "").trim() || null;
 
-    // Fichiers produits (déjà uploadés par le client)
     const productFiles: string[] = Array.isArray(body.product_files)
       ? body.product_files.filter(
           (u: unknown) => typeof u === "string" && u.length > 0,
@@ -48,6 +48,7 @@ export async function POST(request: Request) {
         sector_id: sectorId,
         contact_name: contactName,
         wechat,
+        whatsapp,
         email,
         country,
         city,
@@ -78,7 +79,6 @@ export async function POST(request: Request) {
 
       if (productsError) {
         console.error("[api/partners/register] products", productsError);
-        // On ne bloque pas — le partenaire est créé
       }
     }
 

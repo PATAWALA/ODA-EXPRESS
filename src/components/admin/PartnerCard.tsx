@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   Building2,
+  MessageCircle,
   Globe2,
   MapPin,
   ImageIcon,
@@ -61,7 +62,6 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
             {partner.name}
           </h3>
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-            {/* Badge type */}
             {partner.type === "logistic" ? (
               <span className="inline-flex items-center gap-1 rounded-2xl bg-emerald-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-emerald-700">
                 <Truck className="h-2.5 w-2.5" strokeWidth={2.5} />
@@ -74,7 +74,6 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
               </span>
             )}
 
-            {/* Badge catégorie */}
             {partner.sector ? (
               <span className="inline-flex items-center gap-1 rounded-2xl bg-navy-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-navy-700">
                 <Building2 className="h-2.5 w-2.5" strokeWidth={2.5} />
@@ -118,7 +117,7 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
 
         {/* Badges + CTA */}
         <div className="flex items-center justify-between gap-2 pt-1">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {productsCount > 0 && (
               <span className="inline-flex items-center gap-1 rounded-2xl border border-zinc-200 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-500">
                 <ImageIcon className="h-2.5 w-2.5" strokeWidth={2} />
@@ -130,6 +129,13 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
                 <MessageSquare className="h-3 w-3" strokeWidth={2.5} />
                 WeChat
+              </span>
+            )}
+
+            {partner.whatsapp && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+                <MessageCircle className="h-3 w-3" strokeWidth={2.5} />
+                WhatsApp
               </span>
             )}
           </div>

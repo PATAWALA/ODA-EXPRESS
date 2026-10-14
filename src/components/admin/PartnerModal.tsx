@@ -353,15 +353,26 @@ export default function PartnerModal({
             hint="Interlocuteur principal chez ce partenaire"
           />
 
-          {/* WeChat + Email */}
+          {/* WeChat + WhatsApp */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               label="WeChat"
               name="wechat"
               defaultValue={partner?.wechat ?? ""}
               placeholder="zhang_wei_88"
-              hint="Identifiant ou numéro WeChat"
+              hint="Pour les partenaires en Chine"
             />
+            <Input
+              label="WhatsApp"
+              name="whatsapp"
+              defaultValue={partner?.whatsapp ?? ""}
+              placeholder="+86 195 1566 0197"
+              hint="Format international"
+            />
+          </div>
+
+          {/* Email + Site web */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               label="Email"
               name="email"
@@ -369,15 +380,13 @@ export default function PartnerModal({
               defaultValue={partner?.email ?? ""}
               placeholder="contact@exemple.com"
             />
+            <Input
+              label="Site web"
+              name="website"
+              defaultValue={partner?.website ?? ""}
+              placeholder="https://..."
+            />
           </div>
-
-          {/* Site web */}
-          <Input
-            label="Site web"
-            name="website"
-            defaultValue={partner?.website ?? ""}
-            placeholder="https://..."
-          />
 
           {/* Pays + Ville */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -385,13 +394,13 @@ export default function PartnerModal({
               label="Pays"
               name="country"
               defaultValue={partner?.country ?? ""}
-              placeholder="Chine, Bénin..."
+              placeholder="Chine, Émirats..."
             />
             <Input
               label="Ville"
               name="city"
               defaultValue={partner?.city ?? ""}
-              placeholder="Guangzhou, Cotonou..."
+              placeholder="Guangzhou, Dubaï..."
             />
           </div>
 

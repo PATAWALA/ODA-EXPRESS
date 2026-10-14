@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   Building2,
   MapPin,
+  MessageCircle,
   Mail,
   Globe2,
   Pencil,
@@ -13,6 +14,8 @@ import {
   User,
   MessageSquare,
   Check,
+  Factory,
+  Truck,
 } from "lucide-react";
 import PartnerModal from "./PartnerModal";
 import PartnerGallery from "./PartnerGallery";
@@ -116,10 +119,12 @@ export default function PartnerDetail({
           <div className="mt-3 flex flex-wrap items-center gap-2">
             {partner.type === "logistic" ? (
               <span className="inline-flex items-center gap-1 rounded-2xl bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-700">
+                <Truck className="h-2.5 w-2.5" strokeWidth={2.5} />
                 Logistic
               </span>
             ) : (
               <span className="inline-flex items-center gap-1 rounded-2xl bg-express-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-express-700">
+                <Factory className="h-2.5 w-2.5" strokeWidth={2.5} />
                 Supplier
               </span>
             )}
@@ -226,6 +231,28 @@ export default function PartnerDetail({
                 </li>
               )}
 
+              {partner.whatsapp && (
+                <li className="flex items-start gap-3">
+                  <MessageCircle
+                    className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
+                    strokeWidth={1.75}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-zinc-400">
+                      WhatsApp
+                    </p>
+                    <a
+                      href={`https://wa.me/${partner.whatsapp.replace(/[^0-9]/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-0.5 block text-[13px] font-semibold text-navy-900 transition hover:text-emerald-700"
+                    >
+                      {partner.whatsapp}
+                    </a>
+                  </div>
+                </li>
+              )}
+
               {partner.email && (
                 <li className="flex items-start gap-3">
                   <Mail
@@ -275,6 +302,7 @@ export default function PartnerDetail({
 
             {!partner.contact_name &&
               !partner.wechat &&
+              !partner.whatsapp &&
               !partner.email &&
               !partner.website && (
                 <p className="text-[12.5px] italic text-zinc-400">
