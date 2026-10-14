@@ -333,6 +333,40 @@ export async function updateProfilePasswordAction(formData: FormData) {
   return { success: "Mot de passe mis à jour." };
 }
 
+/* ---------- UTILISATEURS ---------- */
+
+export async function createUserAction(formData: FormData) {
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "");
+  const name = String(formData.get("name") ?? "").trim();
+
+  if (!email || !email.includes("@"))
+    return { error: "Email invalide." };
+
+  if (password.length < 6)
+    return { error: "Le mot de passe doit contenir au moins 6 caractères." };
+
+  const admin = createAdminClient();
+  const { error } = await admin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+    user_metadata: { name: name || email },
+  });
+
+  if (error) {
+    console.error("[createUserAction]", {
+      status: error.status,
+      code: error.code,
+      message: error.message,
+    });
+    return { error: error.message };
+  }
+
+  revalidatePath("/admin/parametres");
+  return { success: `Utilisateur ${email} créé avec succès.` };
+}
+
 export async function deleteUserAction(userId: string) {
   const admin = createAdminClient();
   await admin.auth.admin.deleteUser(userId);

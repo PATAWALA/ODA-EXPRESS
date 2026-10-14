@@ -143,10 +143,11 @@ function PasswordSection() {
 
   function goToStep2(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 8) {
+    // ✅ 6 caractères minimum (au lieu de 8)
+    if (password.length < 6) {
       setState({
         loading: false,
-        error: "Le mot de passe doit contenir au moins 8 caractères.",
+        error: "Le mot de passe doit contenir au moins 6 caractères.",
         success: null,
       });
       return;
@@ -200,7 +201,7 @@ function PasswordSection() {
   return (
     <Section
       title="Mot de passe"
-      description="Minimum 8 caractères. En 2 étapes : saisie puis confirmation."
+      description="Minimum 6 caractères. En 2 étapes : saisie puis confirmation."
     >
       {/* Indicateur d'étapes */}
       <div className="mb-5 flex items-center gap-3">
@@ -215,8 +216,8 @@ function PasswordSection() {
             name="password"
             label="Nouveau mot de passe"
             required
-            minLength={8}
-            hint="8 caractères minimum"
+            minLength={6}
+            hint="6 caractères minimum"
           />
 
           {state.error && <Feedback state={state} />}
@@ -241,7 +242,7 @@ function PasswordSection() {
             name="confirm"
             label="Confirmer le mot de passe"
             required
-            minLength={8}
+            minLength={6}
             hint="Retapez le même mot de passe"
           />
 
@@ -270,7 +271,6 @@ function PasswordSection() {
         </form>
       )}
 
-      {/* Message succès après étape 2 */}
       {step === 1 && state.success && (
         <div className="mt-4">
           <Feedback state={state} />
