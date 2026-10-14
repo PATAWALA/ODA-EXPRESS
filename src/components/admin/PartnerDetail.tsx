@@ -12,11 +12,11 @@ import {
   Trash2,
   Plus,
   User,
-  MessageSquare,
   Check,
   Factory,
   Truck,
 } from "lucide-react";
+import { WeChatIcon } from "@/components/icons/WeChatIcon";
 import PartnerModal from "./PartnerModal";
 import PartnerGallery from "./PartnerGallery";
 import PartnerProductsUploader from "./PartnerProductsUploader";
@@ -205,10 +205,7 @@ export default function PartnerDetail({
 
               {partner.wechat && (
                 <li className="flex items-start gap-3">
-                  <MessageSquare
-                    className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700"
-                    strokeWidth={1.75}
-                  />
+                  <WeChatIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                   <div className="min-w-0 flex-1">
                     <p className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-zinc-400">
                       WeChat

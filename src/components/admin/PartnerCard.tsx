@@ -8,10 +8,10 @@ import {
   MapPin,
   ImageIcon,
   ArrowRight,
-  MessageSquare,
   Factory,
   Truck,
 } from "lucide-react";
+import { WeChatIcon } from "@/components/icons/WeChatIcon";
 import type { PartnerWithSector } from "@/lib/supabase/types";
 
 interface PartnerCardProps {
@@ -127,7 +127,7 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
 
             {partner.wechat && (
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
-                <MessageSquare className="h-3 w-3" strokeWidth={2.5} />
+                <WeChatIcon className="h-3 w-3" />
                 WeChat
               </span>
             )}
