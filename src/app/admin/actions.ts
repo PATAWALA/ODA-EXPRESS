@@ -565,8 +565,7 @@ export async function savePartnerAction(
   const sectorId = String(formData.get("sector_id") ?? "").trim() || null;
   const contactName =
     String(formData.get("contact_name") ?? "").trim() || null;
-  const whatsapp = String(formData.get("whatsapp") ?? "").trim() || null;
-  const phone = String(formData.get("phone") ?? "").trim() || null;
+  const wechat = String(formData.get("wechat") ?? "").trim() || null;
   const email = String(formData.get("email") ?? "").trim() || null;
   const country = String(formData.get("country") ?? "").trim() || null;
   const city = String(formData.get("city") ?? "").trim() || null;
@@ -579,8 +578,7 @@ export async function savePartnerAction(
     type,
     sector_id: sectorId,
     contact_name: contactName,
-    whatsapp,
-    phone,
+    wechat,
     email,
     country,
     city,

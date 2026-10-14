@@ -6,20 +6,20 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const name = String(body.name ?? "").trim();
+    const type = String(body.type ?? "supplier").trim();
     const sectorId = String(body.sector_id ?? "").trim() || null;
     const contactName =
       String(body.contact_name ?? "").trim() || null;
-    const whatsapp = String(body.whatsapp ?? "").trim() || null;
+    const wechat = String(body.wechat ?? "").trim() || null;
     const email = String(body.email ?? "").trim() || null;
     const country = String(body.country ?? "").trim() || null;
     const city = String(body.city ?? "").trim() || null;
-    const description =
-      String(body.description ?? "").trim() || null;
+    const description = String(body.description ?? "").trim() || null;
     const website = String(body.website ?? "").trim() || null;
 
-    // Images produits (déjà uploadées par le client)
-    const productImages: string[] = Array.isArray(body.product_images)
-      ? body.product_images.filter(
+    // Fichiers produits (déjà uploadés par le client)
+    const productFiles: string[] = Array.isArray(body.product_files)
+      ? body.product_files.filter(
           (u: unknown) => typeof u === "string" && u.length > 0,
         )
       : [];
@@ -44,9 +44,10 @@ export async function POST(request: Request) {
       .from("partners")
       .insert({
         name,
+        type,
         sector_id: sectorId,
         contact_name: contactName,
-        whatsapp,
+        wechat,
         email,
         country,
         city,
@@ -64,9 +65,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Ajouter les produits s'il y en a
-    if (productImages.length > 0) {
-      const products = productImages.map((url) => ({
+    // 2. Ajouter les fichiers s'il y en a
+    if (productFiles.length > 0) {
+      const products = productFiles.map((url) => ({
         partner_id: partner.id,
         image_url: url,
       }));

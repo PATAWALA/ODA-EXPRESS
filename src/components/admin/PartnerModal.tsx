@@ -53,16 +53,13 @@ export default function PartnerModal({
 
   const isEdit = !!partner;
 
-  // Secteurs filtrés par type sélectionné
   const filteredSectors = sectors.filter((s) => s.type === selectedType);
 
   useEffect(() => {
     if (open) {
       setSectors(initialSectors);
       setSelectedSectorId(partner?.sector_id ?? "");
-      setSelectedType(
-        (partner?.type as PartnerType) ?? "supplier",
-      );
+      setSelectedType((partner?.type as PartnerType) ?? "supplier");
       setShowNewSector(false);
       setNewSectorName("");
       setSectorError(null);
@@ -269,7 +266,7 @@ export default function PartnerModal({
             </div>
           </div>
 
-          {/* Catégorie (filtrée par type) */}
+          {/* Catégorie */}
           <div>
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
@@ -328,11 +325,7 @@ export default function PartnerModal({
               onChange={(e) => setSelectedSectorId(e.target.value)}
               className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
             >
-              <option value="">
-                — Aucune catégorie ({selectedType === "supplier"
-                  ? "supplier"
-                  : "logistic"}) —
-              </option>
+              <option value="">— Aucune catégorie —</option>
               {filteredSectors.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.name}
@@ -360,25 +353,15 @@ export default function PartnerModal({
             hint="Interlocuteur principal chez ce partenaire"
           />
 
-          {/* WhatsApp + Téléphone */}
+          {/* WeChat + Email */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
-              label="WhatsApp"
-              name="whatsapp"
-              defaultValue={partner?.whatsapp ?? ""}
-              placeholder="+86 195 1566 0197"
-              hint="Format international"
+              label="WeChat"
+              name="wechat"
+              defaultValue={partner?.wechat ?? ""}
+              placeholder="zhang_wei_88"
+              hint="Identifiant ou numéro WeChat"
             />
-            <Input
-              label="Téléphone"
-              name="phone"
-              defaultValue={partner?.phone ?? ""}
-              placeholder="+86 20 1234 5678"
-            />
-          </div>
-
-          {/* Email + Site web */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               label="Email"
               name="email"
@@ -386,13 +369,15 @@ export default function PartnerModal({
               defaultValue={partner?.email ?? ""}
               placeholder="contact@exemple.com"
             />
-            <Input
-              label="Site web"
-              name="website"
-              defaultValue={partner?.website ?? ""}
-              placeholder="https://..."
-            />
           </div>
+
+          {/* Site web */}
+          <Input
+            label="Site web"
+            name="website"
+            defaultValue={partner?.website ?? ""}
+            placeholder="https://..."
+          />
 
           {/* Pays + Ville */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

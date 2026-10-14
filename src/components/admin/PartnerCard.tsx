@@ -3,11 +3,13 @@
 import Link from "next/link";
 import {
   Building2,
-  MessageCircle,
   Globe2,
   MapPin,
   ImageIcon,
   ArrowRight,
+  MessageSquare,
+  Factory,
+  Truck,
 } from "lucide-react";
 import type { PartnerWithSector } from "@/lib/supabase/types";
 
@@ -24,12 +26,7 @@ function getInitials(name: string): string {
   ).toUpperCase();
 }
 
-function cleanWhatsApp(number: string): string {
-  return number.replace(/[^0-9]/g, "");
-}
-
 export default function PartnerCard({ partner }: PartnerCardProps) {
-  const whatsapp = partner.whatsapp?.trim();
   const country = partner.country?.trim();
   const city = partner.city?.trim();
   const location = [city, country].filter(Boolean).join(", ");
@@ -63,16 +60,28 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
           <h3 className="truncate text-[15px] font-bold tracking-tight text-navy-900">
             {partner.name}
           </h3>
-          {partner.sector ? (
-            <span className="mt-1.5 inline-flex items-center gap-1 rounded-2xl bg-navy-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-navy-700">
-              <Building2 className="h-2.5 w-2.5" strokeWidth={2.5} />
-              {partner.sector.name}
-            </span>
-          ) : (
-            <span className="mt-1.5 inline-flex items-center rounded-2xl bg-zinc-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-500">
-              Sans secteur
-            </span>
-          )}
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {/* Badge type */}
+            {partner.type === "logistic" ? (
+              <span className="inline-flex items-center gap-1 rounded-2xl bg-emerald-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-emerald-700">
+                <Truck className="h-2.5 w-2.5" strokeWidth={2.5} />
+                Logistic
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-2xl bg-express-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-express-700">
+                <Factory className="h-2.5 w-2.5" strokeWidth={2.5} />
+                Supplier
+              </span>
+            )}
+
+            {/* Badge catégorie */}
+            {partner.sector ? (
+              <span className="inline-flex items-center gap-1 rounded-2xl bg-navy-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-navy-700">
+                <Building2 className="h-2.5 w-2.5" strokeWidth={2.5} />
+                {partner.sector.name}
+              </span>
+            ) : null}
+          </div>
         </div>
       </div>
 
@@ -107,7 +116,7 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
           </p>
         )}
 
-        {/* Badges + CTA "Voir détails" */}
+        {/* Badges + CTA */}
         <div className="flex items-center justify-between gap-2 pt-1">
           <div className="flex items-center gap-2">
             {productsCount > 0 && (
@@ -117,15 +126,14 @@ export default function PartnerCard({ partner }: PartnerCardProps) {
               </span>
             )}
 
-            {whatsapp && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
-                <MessageCircle className="h-3 w-3" strokeWidth={2.5} />
-                WhatsApp
+            {partner.wechat && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                <MessageSquare className="h-3 w-3" strokeWidth={2.5} />
+                WeChat
               </span>
             )}
           </div>
 
-          {/* Indicateur "Voir détails" */}
           <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy-700 transition group-hover:text-express-600">
             Détails
             <ArrowRight

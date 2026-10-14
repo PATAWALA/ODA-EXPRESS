@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import {
   Building2,
   MapPin,
-  MessageCircle,
   Mail,
-  Phone,
   Globe2,
   Pencil,
   Trash2,
   Plus,
   User,
+  MessageSquare,
+  Check,
 } from "lucide-react";
 import PartnerModal from "./PartnerModal";
 import PartnerGallery from "./PartnerGallery";
@@ -45,10 +45,6 @@ function getInitials(name: string): string {
   ).toUpperCase();
 }
 
-function cleanWhatsApp(number: string): string {
-  return number.replace(/[^0-9]/g, "");
-}
-
 export default function PartnerDetail({
   partner,
   sectors,
@@ -59,9 +55,9 @@ export default function PartnerDetail({
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [addProductsOpen, setAddProductsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const location = [partner.city, partner.country].filter(Boolean).join(", ");
-  const whatsapp = partner.whatsapp?.trim();
 
   async function handleDelete() {
     setDeleting(true);
@@ -80,6 +76,13 @@ export default function PartnerDetail({
   async function handleProductUploaded(url: string) {
     await addPartnerProductAction(partner.id, url);
     router.refresh();
+  }
+
+  function copyWeChat() {
+    if (!partner.wechat) return;
+    navigator.clipboard.writeText(partner.wechat);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
   return (
@@ -111,6 +114,16 @@ export default function PartnerDetail({
           </h1>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
+            {partner.type === "logistic" ? (
+              <span className="inline-flex items-center gap-1 rounded-2xl bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-700">
+                Logistic
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-2xl bg-express-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-express-700">
+                Supplier
+              </span>
+            )}
+
             {partner.sector ? (
               <span className="inline-flex items-center gap-1 rounded-2xl bg-navy-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-navy-700">
                 <Building2 className="h-2.5 w-2.5" strokeWidth={2.5} />
@@ -118,7 +131,7 @@ export default function PartnerDetail({
               </span>
             ) : (
               <span className="inline-flex items-center rounded-2xl bg-zinc-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-500">
-                Sans secteur
+                Sans catégorie
               </span>
             )}
 
@@ -185,44 +198,30 @@ export default function PartnerDetail({
                 </li>
               )}
 
-              {whatsapp && (
+              {partner.wechat && (
                 <li className="flex items-start gap-3">
-                  <MessageCircle
-                    className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
+                  <MessageSquare
+                    className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700"
                     strokeWidth={1.75}
                   />
                   <div className="min-w-0 flex-1">
                     <p className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-zinc-400">
-                      WhatsApp
+                      WeChat
                     </p>
-                    <a
-                      href={`https://wa.me/${cleanWhatsApp(whatsapp)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-0.5 block text-[13px] font-semibold text-navy-900 transition hover:text-emerald-700"
+                    <button
+                      type="button"
+                      onClick={copyWeChat}
+                      title="Cliquer pour copier"
+                      className="mt-0.5 inline-flex items-center gap-1.5 break-all text-left text-[13px] font-semibold text-navy-900 transition hover:text-emerald-700"
                     >
-                      {whatsapp}
-                    </a>
-                  </div>
-                </li>
-              )}
-
-              {partner.phone && (
-                <li className="flex items-start gap-3">
-                  <Phone
-                    className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400"
-                    strokeWidth={1.75}
-                  />
-                  <div className="min-w-0">
-                    <p className="text-[10.5px] font-bold uppercase tracking-[0.12em] text-zinc-400">
-                      Téléphone
-                    </p>
-                    <a
-                      href={`tel:${partner.phone}`}
-                      className="mt-0.5 block text-[13px] font-semibold text-navy-900 transition hover:text-navy-700"
-                    >
-                      {partner.phone}
-                    </a>
+                      {partner.wechat}
+                      {copied && (
+                        <Check
+                          className="h-3 w-3 shrink-0 text-emerald-600"
+                          strokeWidth={3}
+                        />
+                      )}
+                    </button>
                   </div>
                 </li>
               )}
@@ -275,8 +274,7 @@ export default function PartnerDetail({
             </ul>
 
             {!partner.contact_name &&
-              !whatsapp &&
-              !partner.phone &&
+              !partner.wechat &&
               !partner.email &&
               !partner.website && (
                 <p className="text-[12.5px] italic text-zinc-400">
@@ -291,10 +289,10 @@ export default function PartnerDetail({
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
-                Photos produits
+                Fichiers produits
               </p>
               <p className="mt-1 text-[12px] text-zinc-500">
-                {partner.products.length} photo
+                {partner.products.length} fichier
                 {partner.products.length > 1 ? "s" : ""}
               </p>
             </div>
@@ -305,17 +303,16 @@ export default function PartnerDetail({
               className="inline-flex items-center gap-2 rounded-2xl bg-navy-900 px-4 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-navy-800"
             >
               <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-              Ajouter des photos
+              Ajouter des fichiers
             </button>
           </div>
 
-          {/* Uploader */}
           {addProductsOpen && (
             <div className="mb-6 rounded-2xl border border-navy-100 bg-navy-50/30 p-4">
               <PartnerProductsUploader
                 onUploaded={handleProductUploaded}
-                label="Nouvelles photos"
-                hint="Ajoutez autant de photos que vous voulez"
+                label="Nouveaux fichiers"
+                hint="Images, PDF, Word, Excel, PowerPoint, ZIP, vidéo"
               />
               <button
                 type="button"
@@ -327,7 +324,6 @@ export default function PartnerDetail({
             </div>
           )}
 
-          {/* Galerie */}
           <PartnerGallery partnerId={partner.id} products={partner.products} />
         </div>
       </div>
@@ -347,7 +343,7 @@ export default function PartnerDetail({
         onClose={() => !deleting && setDeleteOpen(false)}
         onConfirm={handleDelete}
         title="Supprimer ce partenaire ?"
-        message={`« ${partner.name} » sera définitivement supprimé avec toutes ses photos. Cette action est irréversible.`}
+        message={`« ${partner.name} » sera définitivement supprimé avec tous ses fichiers. Cette action est irréversible.`}
         confirmLabel="Supprimer"
         cancelLabel="Annuler"
         variant="danger"

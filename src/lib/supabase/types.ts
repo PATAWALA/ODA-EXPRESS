@@ -304,6 +304,7 @@ export type Database = {
           type: string;
           sector_id: string | null;
           contact_name: string | null;
+          wechat: string | null;
           whatsapp: string | null;
           phone: string | null;
           email: string | null;
@@ -321,6 +322,7 @@ export type Database = {
           type?: string;
           sector_id?: string | null;
           contact_name?: string | null;
+          wechat?: string | null;
           whatsapp?: string | null;
           phone?: string | null;
           email?: string | null;
@@ -338,6 +340,7 @@ export type Database = {
           type?: string;
           sector_id?: string | null;
           contact_name?: string | null;
+          wechat?: string | null;
           whatsapp?: string | null;
           phone?: string | null;
           email?: string | null;

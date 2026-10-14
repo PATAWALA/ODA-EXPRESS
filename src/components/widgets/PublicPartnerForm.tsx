@@ -9,16 +9,19 @@ import {
   X,
   Loader2,
   ImagePlus,
+  MessageSquare,
 } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import type { PartnerSector } from "@/lib/supabase/types";
 
-interface UploadedImage {
+interface UploadedFile {
   localId: string;
   previewUrl: string;
   uploadedUrl: string | null;
   uploading: boolean;
   error: string | null;
+  fileName: string;
+  fileType: string;
 }
 
 export default function PublicPartnerForm({
@@ -30,45 +33,40 @@ export default function PublicPartnerForm({
   const [error, setError] = useState<string | null>(null);
   const [createdName, setCreatedName] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
-  const [images, setImages] = useState<UploadedImage[]>([]);
+  const [selectedType, setSelectedType] = useState<"supplier" | "logistic">(
+    "supplier",
+  );
+  const [images, setImages] = useState<UploadedFile[]>([]);
   const [globalImageError, setGlobalImageError] = useState<string | null>(
     null,
   );
   const inputRef = useRef<HTMLInputElement>(null);
 
-  /* ---------- Gestion des images ---------- */
+  const filteredSectors = sectors.filter((s) => s.type === selectedType);
+
+  /* ---------- Gestion des fichiers ---------- */
 
   function onFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
     if (files.length === 0) return;
 
-    // Validation
-    for (const file of files) {
-      if (file.size > 5 * 1024 * 1024) {
-        setGlobalImageError(`${file.name} dépasse 5 Mo.`);
-        return;
-      }
-      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-        setGlobalImageError(
-          `${file.name} : format non accepté (JPG, PNG, WebP).`,
-        );
-        return;
-      }
-    }
-
     setGlobalImageError(null);
 
-    const newImages: UploadedImage[] = files.map((file) => ({
+    const newFiles: UploadedFile[] = files.map((file) => ({
       localId: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      previewUrl: URL.createObjectURL(file),
+      previewUrl: file.type.startsWith("image/")
+        ? URL.createObjectURL(file)
+        : "",
       uploadedUrl: null,
       uploading: true,
       error: null,
+      fileName: file.name,
+      fileType: file.type,
     }));
 
-    setImages((prev) => [...prev, ...newImages]);
+    setImages((prev) => [...prev, ...newFiles]);
 
-    newImages.forEach(async (img, index) => {
+    newFiles.forEach(async (fileItem, index) => {
       const file = files[index];
       const formData = new FormData();
       formData.append("file", file);
@@ -82,7 +80,7 @@ export default function PublicPartnerForm({
 
         setImages((prev) =>
           prev.map((item) =>
-            item.localId === img.localId
+            item.localId === fileItem.localId
               ? {
                   ...item,
                   uploading: false,
@@ -95,7 +93,7 @@ export default function PublicPartnerForm({
       } catch {
         setImages((prev) =>
           prev.map((item) =>
-            item.localId === img.localId
+            item.localId === fileItem.localId
               ? { ...item, uploading: false, error: "Erreur réseau" }
               : item,
           ),
@@ -106,10 +104,10 @@ export default function PublicPartnerForm({
     if (inputRef.current) inputRef.current.value = "";
   }
 
-  function removeImage(localId: string) {
+  function removeFile(localId: string) {
     setImages((prev) => {
-      const img = prev.find((i) => i.localId === localId);
-      if (img) URL.revokeObjectURL(img.previewUrl);
+      const f = prev.find((i) => i.localId === localId);
+      if (f && f.previewUrl) URL.revokeObjectURL(f.previewUrl);
       return prev.filter((i) => i.localId !== localId);
     });
   }
@@ -119,29 +117,29 @@ export default function PublicPartnerForm({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // Bloquer si des images sont en cours d'upload
     if (images.some((i) => i.uploading)) {
-      setError("Veuillez patienter pendant l'upload des images.");
+      setError("Veuillez patienter pendant l'upload des fichiers.");
       return;
     }
 
     const formData = new FormData(e.currentTarget);
 
-    const productImages = images
+    const productFiles = images
       .map((i) => i.uploadedUrl)
       .filter((u): u is string => u !== null);
 
     const payload = {
       name: String(formData.get("name") ?? "").trim(),
+      type: selectedType,
       sector_id: selectedSector,
       contact_name: String(formData.get("contact_name") ?? "").trim(),
-      whatsapp: String(formData.get("whatsapp") ?? "").trim(),
+      wechat: String(formData.get("wechat") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
       country: String(formData.get("country") ?? "").trim(),
       city: String(formData.get("city") ?? "").trim(),
       description: String(formData.get("description") ?? "").trim(),
       website: String(formData.get("website") ?? "").trim(),
-      product_images: productImages,
+      product_files: productFiles,
       _hp: String(formData.get("_hp") ?? "").trim(),
     };
 
@@ -175,7 +173,7 @@ export default function PublicPartnerForm({
     }
   }
 
-  /* ---------- Écran de succès ---------- */
+  /* ---------- Succès ---------- */
   if (state === "done") {
     return (
       <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 sm:p-8">
@@ -203,6 +201,7 @@ export default function PublicPartnerForm({
             setState("idle");
             setCreatedName("");
             setSelectedSector("");
+            setSelectedType("supplier");
             setImages([]);
           }}
           className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-emerald-700"
@@ -228,6 +227,90 @@ export default function PublicPartnerForm({
           placeholder="Ex. Guangzhou Transit Co."
         />
 
+        {/* Type de partenaire */}
+        <div>
+          <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
+            Type de partenaire *
+          </label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedType("supplier");
+                setSelectedSector("");
+              }}
+              className={
+                "flex flex-col items-center gap-1.5 rounded-2xl border px-3 py-3 text-center transition " +
+                (selectedType === "supplier"
+                  ? "border-navy-900 bg-navy-50"
+                  : "border-zinc-200 bg-white hover:border-navy-300")
+              }
+            >
+              <span
+                className={
+                  "text-[12px] font-bold uppercase tracking-[0.08em] " +
+                  (selectedType === "supplier"
+                    ? "text-navy-900"
+                    : "text-zinc-500")
+                }
+              >
+                Supplier
+              </span>
+              <span className="text-[10px] leading-tight text-zinc-500">
+                Fournisseur / Usine
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedType("logistic");
+                setSelectedSector("");
+              }}
+              className={
+                "flex flex-col items-center gap-1.5 rounded-2xl border px-3 py-3 text-center transition " +
+                (selectedType === "logistic"
+                  ? "border-navy-900 bg-navy-50"
+                  : "border-zinc-200 bg-white hover:border-navy-300")
+              }
+            >
+              <span
+                className={
+                  "text-[12px] font-bold uppercase tracking-[0.08em] " +
+                  (selectedType === "logistic"
+                    ? "text-navy-900"
+                    : "text-zinc-500")
+                }
+              >
+                Logistic
+              </span>
+              <span className="text-[10px] leading-tight text-zinc-500">
+                Service logistique
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Catégorie */}
+        <div>
+          <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
+            Catégorie
+          </label>
+          <select
+            value={selectedSector}
+            onChange={(e) => setSelectedSector(e.target.value)}
+            className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
+          >
+            <option value="">— Aucune catégorie —</option>
+            {filteredSectors.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Nom du contact */}
         <Input
           label="Nom du contact"
           name="contact_name"
@@ -235,35 +318,13 @@ export default function PublicPartnerForm({
           hint="Interlocuteur principal chez ce partenaire"
         />
 
-        {/* Secteur */}
-        <div>
-          <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
-            Secteur d&apos;activité
-          </label>
-          <select
-            value={selectedSector}
-            onChange={(e) => setSelectedSector(e.target.value)}
-            className="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-[13.5px] text-navy-900 outline-none transition focus:border-navy-700"
-          >
-            <option value="">— Sélectionner un secteur —</option>
-            {sectors.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.name}
-              </option>
-            ))}
-          </select>
-          {sectors.length === 0 && (
-            <p className="mt-2 text-[11.5px] text-zinc-500">
-              Aucun secteur disponible pour l&apos;instant.
-            </p>
-          )}
-        </div>
-
+        {/* WeChat + Email */}
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label="WhatsApp"
-            name="whatsapp"
-            placeholder="+86 195 1566 0197"
+            label="WeChat"
+            name="wechat"
+            placeholder="zhang_wei_88"
+            hint="Identifiant ou numéro WeChat"
           />
           <Input
             label="Email"
@@ -273,48 +334,62 @@ export default function PublicPartnerForm({
           />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input label="Pays" name="country" placeholder="Chine, Bénin..." />
-          <Input label="Ville" name="city" placeholder="Guangzhou, Cotonou..." />
-        </div>
-
+        {/* Site web */}
         <Input label="Site web" name="website" placeholder="https://..." />
 
+        {/* Pays + Ville */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label="Pays" name="country" placeholder="Chine..." />
+          <Input label="Ville" name="city" placeholder="Guangzhou..." />
+        </div>
+
+        {/* Description */}
         <Textarea
-          label="Notes / Description"
+          label="Description / Notes"
           name="description"
           rows={3}
           placeholder="Que faites-vous ? Avec qui travaillez-vous ?"
         />
 
-        {/* Uploader photos produits */}
+        {/* Uploader fichiers */}
         <div className="border-t border-zinc-100 pt-5">
           <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500">
-            Photos produits{" "}
+            Fichiers produits{" "}
             <span className="font-medium normal-case tracking-normal text-zinc-400">
               (optionnel · illimité)
             </span>
           </label>
           <p className="mb-3 text-[11.5px] leading-relaxed text-zinc-500">
-            Ajoutez des photos de vos produits. JPG, PNG, WebP · 5 Mo max par
-            image.
+            Ajoutez des photos, PDF, documents, vidéos ou archives.
           </p>
 
           {images.length > 0 && (
             <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
-              {images.map((img) => (
+              {images.map((item) => (
                 <div
-                  key={img.localId}
+                  key={item.localId}
                   className="group relative aspect-square overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.previewUrl}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
+                  {item.previewUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.previewUrl}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-2 text-center">
+                      <MessageSquare
+                        className="h-5 w-5 text-zinc-400"
+                        strokeWidth={1.75}
+                      />
+                      <p className="line-clamp-2 break-all text-[9px] font-semibold leading-tight text-zinc-600">
+                        {item.fileName}
+                      </p>
+                    </div>
+                  )}
 
-                  {img.uploading && (
+                  {item.uploading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-navy-950/50">
                       <Loader2
                         className="h-4 w-4 animate-spin text-white"
@@ -323,7 +398,7 @@ export default function PublicPartnerForm({
                     </div>
                   )}
 
-                  {img.error && (
+                  {item.error && (
                     <div className="absolute inset-0 flex items-center justify-center bg-red-950/60 p-1">
                       <span className="text-center text-[9px] font-bold text-white">
                         Échec
@@ -331,7 +406,7 @@ export default function PublicPartnerForm({
                     </div>
                   )}
 
-                  {!img.uploading && !img.error && (
+                  {!item.uploading && !item.error && (
                     <div className="absolute bottom-1 left-1 flex h-5 w-5 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
                       <CheckCircle2 className="h-3 w-3" strokeWidth={3} />
                     </div>
@@ -339,7 +414,7 @@ export default function PublicPartnerForm({
 
                   <button
                     type="button"
-                    onClick={() => removeImage(img.localId)}
+                    onClick={() => removeFile(item.localId)}
                     className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-2xl bg-white/95 text-zinc-600 shadow-md backdrop-blur transition hover:bg-white hover:text-red-600"
                     aria-label="Retirer"
                   >
@@ -356,7 +431,7 @@ export default function PublicPartnerForm({
             className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-zinc-300 bg-zinc-50/50 px-4 py-4 text-[11.5px] font-bold uppercase tracking-[0.1em] text-zinc-500 transition hover:border-navy-700 hover:bg-navy-50/50 hover:text-navy-900"
           >
             <ImagePlus className="h-4 w-4" strokeWidth={2} />
-            Ajouter des photos produits
+            Ajouter des fichiers
             {images.length > 0 && (
               <span className="text-zinc-400">({images.length})</span>
             )}
@@ -365,8 +440,8 @@ export default function PublicPartnerForm({
           <input
             ref={inputRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp"
             multiple
+            accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,video/mp4,video/webm,video/quicktime,application/zip"
             onChange={onFilesChange}
             className="hidden"
           />
@@ -380,12 +455,7 @@ export default function PublicPartnerForm({
 
         {/* Honeypot */}
         <div className="hidden">
-          <input
-            type="text"
-            name="_hp"
-            tabIndex={-1}
-            autoComplete="off"
-          />
+          <input type="text" name="_hp" tabIndex={-1} autoComplete="off" />
         </div>
 
         {error && (
