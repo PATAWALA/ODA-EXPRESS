@@ -107,10 +107,10 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
       });
       return;
     }
-    if (form.password.length < 8) {
+    if (form.password.length < 6) {
       setState({
         loading: false,
-        error: "Le mot de passe doit contenir au moins 8 caractères.",
+        error: "Le mot de passe doit contenir au moins 6 caractères.",
         success: null,
       });
       return;
@@ -243,8 +243,8 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
             name="password"
             label="Mot de passe provisoire *"
             required
-            minLength={8}
-            placeholder="Minimum 8 caractères"
+            minLength={6}
+            placeholder="Minimum 6 caractères"
             hint="Notez ce mot de passe et transmettez-le à la personne concernée."
           />
 
@@ -299,7 +299,7 @@ function CreateUserForm({ onDone }: { onDone: () => void }) {
             name="confirm"
             label="Confirmer le mot de passe *"
             required
-            minLength={8}
+            minLength={6}
             placeholder="Retapez le mot de passe"
             hint="Le mot de passe doit être identique à celui saisi à l'étape 1."
           />
@@ -484,4 +484,3 @@ function UserRow({ user }: { user: UserItem }) {
     </>
   );
 }
-
