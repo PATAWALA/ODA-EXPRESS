@@ -308,20 +308,41 @@ export async function updateProfileEmailAction(formData: FormData) {
 }
 
 export async function updateProfilePasswordAction(formData: FormData) {
+  const current = String(formData.get("current") ?? "");
   const password = String(formData.get("password") ?? "");
   const confirm = String(formData.get("confirm") ?? "");
 
+  if (!current)
+    return { error: "Le mot de passe actuel est obligatoire." };
   if (password.length < 6)
     return { error: "Le mot de passe doit contenir au moins 6 caractères." };
   if (password !== confirm)
     return { error: "Les deux mots de passe ne correspondent pas." };
+  if (password === current)
+    return { error: "Le nouveau mot de passe doit être différent de l'actuel." };
 
   const supabase = await createClient();
+
+  // 1) Récupérer l'utilisateur connecté
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user?.email)
+    return { error: "Session invalide. Reconnectez-vous." };
+
+  // 2) Ré-authentification → lève la contrainte Supabase
+  const { error: reauthError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: current,
+  });
+  if (reauthError)
+    return { error: "Mot de passe actuel incorrect." };
+
+  // 3) Changement effectif
   const { error } = await supabase.auth.updateUser({ password });
 
   if (error) {
-    // Log temporaire pour voir l'erreur exacte de Supabase
-    console.error("[updateProfilePasswordAction]", {
+    console.error("=== ERREUR SUPABASE ===", {
       status: error.status,
       code: error.code,
       message: error.message,
