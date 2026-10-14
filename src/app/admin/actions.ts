@@ -308,6 +308,7 @@ export async function updateProfileEmailAction(formData: FormData) {
 }
 
 export async function updateProfilePasswordAction(formData: FormData) {
+  const current = String(formData.get("current") ?? "");
   const password = String(formData.get("password") ?? "");
   const confirm = String(formData.get("confirm") ?? "");
 
@@ -315,38 +316,29 @@ export async function updateProfilePasswordAction(formData: FormData) {
     return { error: "Le mot de passe doit contenir au moins 8 caractères." };
   if (password !== confirm)
     return { error: "Les deux mots de passe ne correspondent pas." };
+  if (!current)
+    return { error: "Le mot de passe actuel est obligatoire." };
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.updateUser({ password });
 
-  if (error) return { error: error.message };
-  return { success: "Mot de passe mis à jour." };
-}
+  // 1) Récupérer l'email de l'utilisateur courant
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user?.email) return { error: "Session invalide, reconnectez-vous." };
 
-/* ---------- UTILISATEURS ---------- */
-
-export async function createUserAction(formData: FormData) {
-  const email = String(formData.get("email") ?? "").trim();
-  const password = String(formData.get("password") ?? "");
-  const name = String(formData.get("name") ?? "").trim();
-
-  if (!email || !email.includes("@"))
-    return { error: "Email invalide." };
-  if (password.length < 8)
-    return { error: "Le mot de passe doit contenir au moins 8 caractères." };
-
-  const admin = createAdminClient();
-  const { error } = await admin.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
-    user_metadata: { name: name || email },
+  // 2) Ré-authentification (fresh login) pour lever la contrainte Supabase
+  const { error: reauthError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: current,
   });
+  if (reauthError) return { error: "Mot de passe actuel incorrect." };
 
+  // 3) Changement effectif
+  const { error } = await supabase.auth.updateUser({ password });
   if (error) return { error: error.message };
 
-  revalidatePath("/admin/parametres");
-  return { success: `Utilisateur ${email} créé avec succès.` };
+  // 4) IMPORTANT : revalider pour que la nouvelle session cookie soit propagée
+  revalidatePath("/admin", "layout");
+  return { success: "Mot de passe mis à jour." };
 }
 
 export async function deleteUserAction(userId: string) {
