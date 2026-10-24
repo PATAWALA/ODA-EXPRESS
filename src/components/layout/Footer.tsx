@@ -24,7 +24,7 @@ const SERVICES = [
 export default function Footer() {
   return (
     <footer className="border-t border-zinc-200 bg-navy-950 text-white">
-      <Container>
+      <Container size="xl">
         <div className="grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-16 lg:py-20">
           {/* Colonne 1 : identité */}
           <div>
@@ -32,16 +32,19 @@ export default function Footer() {
             <img
               src="/brand/logo/logo-white-1920.png"
               alt="ODA Sources"
-              className="h-auto w-[180px]"
+              className="h-auto w-[200px]"
             />
 
-            <p className="mt-6 max-w-xs text-[13px] leading-relaxed text-navy-200">
-              Votre partenaire stratégique pour vos opérations en Chine.
-              Sourcing, contrôle qualité, shipping et accompagnement complet.
+            <p className="mt-6 max-w-xs text-[14.5px] leading-relaxed text-navy-200">
+              Votre partenaire stratégique pour vos opérations en Chine.{" "}
+              <strong className="font-semibold text-white">
+                Sourcing, contrôle qualité, shipping
+              </strong>{" "}
+              et accompagnement complet.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <span className="rounded-2xl border border-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/80">
+              <span className="rounded-2xl border border-white/15 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white/80">
                 Chine 🇨🇳
               </span>
             </div>
@@ -49,15 +52,15 @@ export default function Footer() {
 
           {/* Colonne 2 : navigation */}
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-express-400">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-express-400">
               Navigation
             </p>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-5 space-y-3">
               {NAV.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-[13px] text-navy-200 transition hover:text-white"
+                    className="text-[14.5px] text-navy-200 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -68,15 +71,15 @@ export default function Footer() {
 
           {/* Colonne 3 : services */}
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-express-400">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-express-400">
               Nos services
             </p>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-5 space-y-3">
               {SERVICES.map((service) => (
                 <li key={service}>
                   <Link
                     href="/services"
-                    className="text-[13px] text-navy-200 transition hover:text-white"
+                    className="text-[14.5px] text-navy-200 transition hover:text-white"
                   >
                     {service}
                   </Link>
@@ -87,27 +90,27 @@ export default function Footer() {
 
           {/* Colonne 4 : contact */}
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-express-400">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-express-400">
               Contact direct
             </p>
 
-            <ul className="mt-5 space-y-4">
+            <ul className="mt-5 space-y-5">
               <li>
                 <a
                   href="https://wa.me/8619515660197"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-start gap-3 text-[13px] text-navy-200 transition hover:text-white"
+                  className="group flex items-start gap-3 text-[14.5px] text-navy-200 transition hover:text-white"
                 >
                   <PhoneCall
-                    className="mt-0.5 h-4 w-4 shrink-0 text-express-400"
+                    className="mt-0.5 h-4.5 w-4.5 shrink-0 text-express-400"
                     strokeWidth={1.75}
                   />
                   <span>
                     <span className="block font-semibold text-white">
                       +86 195 1566 0197
                     </span>
-                    <span className="mt-0.5 block text-[11.5px] text-navy-300">
+                    <span className="mt-0.5 block text-[12.5px] text-navy-300">
                       WhatsApp · réponse sous 24 h
                     </span>
                   </span>
@@ -117,27 +120,27 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:odaxpress10@gmail.com"
-                  className="flex items-start gap-3 text-[13px] text-navy-200 transition hover:text-white"
+                  className="flex items-start gap-3 text-[14.5px] text-navy-200 transition hover:text-white"
                 >
                   <Mail
-                    className="mt-0.5 h-4 w-4 shrink-0 text-express-400"
+                    className="mt-0.5 h-4.5 w-4.5 shrink-0 text-express-400"
                     strokeWidth={1.75}
                   />
                   <span>odaxpress10@gmail.com</span>
                 </a>
               </li>
 
-              <li className="flex items-start gap-3 text-[13px] text-navy-200">
+              <li className="flex items-start gap-3 text-[14.5px] text-navy-200">
                 <MapPin
-                  className="mt-0.5 h-4 w-4 shrink-0 text-express-400"
+                  className="mt-0.5 h-4.5 w-4.5 shrink-0 text-express-400"
                   strokeWidth={1.75}
                 />
                 <span>Chine 🇨🇳</span>
               </li>
 
-              <li className="flex items-start gap-3 text-[13px] text-navy-200">
+              <li className="flex items-start gap-3 text-[14.5px] text-navy-200">
                 <Clock
-                  className="mt-0.5 h-4 w-4 shrink-0 text-express-400"
+                  className="mt-0.5 h-4.5 w-4.5 shrink-0 text-express-400"
                   strokeWidth={1.75}
                 />
                 <span>Lundi au samedi · 9h — 19h</span>
@@ -146,11 +149,11 @@ export default function Footer() {
 
             <Link
               href="/contact"
-              className="group mt-6 inline-flex items-center gap-2 rounded-2xl border border-white/20 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:border-white/50 hover:bg-white/5"
+              className="group mt-6 inline-flex items-center gap-2 rounded-2xl border border-white/20 px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition hover:border-white/50 hover:bg-white/5"
             >
               Se faire accompagner
               <ArrowUpRight
-                className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 strokeWidth={2.5}
               />
             </Link>
@@ -159,7 +162,7 @@ export default function Footer() {
 
         {/* Barre légale */}
         <div className="flex flex-col gap-4 border-t border-white/10 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[11.5px] text-navy-300">
+          <p className="text-[12.5px] text-navy-300">
             © {new Date().getFullYear()} ODA SOURCES IMPORT & EXPORT CO.,
             LIMITED.{" "}
             <Link
@@ -169,7 +172,7 @@ export default function Footer() {
               Tous droits réservés.
             </Link>
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11.5px] text-navy-300">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[12.5px] text-navy-300">
             <Link href="/mentions-legales" className="transition hover:text-white">
               Mentions légales
             </Link>

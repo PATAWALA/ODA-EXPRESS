@@ -1,101 +1,189 @@
-import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { getArticle, getRelatedArticles } from "@/content/articles";
 import { Container } from "@/components/ui/Container";
-import { ButtonLink } from "@/components/ui/Button";
-import {
-  getArticleBySlug,
-  getRelatedArticles,
-} from "@/lib/data/articles";
 
-interface PageProps {
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.odasources.com";
+
+// 1. Génération des métadonnées dynamiques (Title, Description, OG)
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateMetadata({ params }: PageProps) {
+}): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
-  if (!article) return { title: "Article introuvable" };
+  const article = getArticle(slug);
+
+  if (!article) {
+    return { title: "Article introuvable" };
+  }
+
   return {
     title: article.title,
     description: article.excerpt,
+    alternates: {
+      canonical: `/actualites/${article.slug}`,
+    },
     openGraph: {
+      type: "article",
       title: article.title,
       description: article.excerpt,
-      images: [{ url: article.image, width: 1400, height: 800, alt: article.title }],
-      type: "article",
+      url: `${SITE_URL}/actualites/${article.slug}`,
+      images: [
+        {
+          url: article.image,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+      publishedTime: article.date,
+      authors: [article.author],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+      images: [article.image],
     },
   };
 }
 
-export default async function ArticlePage({ params }: PageProps) {
+// 2. Page de l'article avec JSON-LD (Article + BreadcrumbList)
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+  const article = getArticle(slug);
 
-  if (!article) notFound();
+  if (!article) {
+    notFound();
+  }
 
-  const related = await getRelatedArticles(slug, 3);
+  const relatedArticles = getRelatedArticles(article.slug);
 
   return (
     <>
-      <section className="border-b border-zinc-200 bg-white">
-        <Container>
-          <div className="py-12 sm:py-16 lg:py-20">
-            <Link
-              href="/actualites"
-              className="inline-flex items-center gap-2 text-[11.5px] font-bold uppercase tracking-[0.15em] text-zinc-500 transition hover:text-navy-900"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-              Toutes les actualités
-            </Link>
+      {/* JSON-LD : Article + BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Article",
+                "@id": `${SITE_URL}/actualites/${article.slug}/#article`,
+                headline: article.title,
+                description: article.excerpt,
+                image: article.image,
+                datePublished: article.date,
+                author: {
+                  "@type": "Person",
+                  name: article.author,
+                },
+                publisher: {
+                  "@id": `${SITE_URL}/#organization`,
+                },
+                mainEntityOfPage: {
+                  "@type": "WebPage",
+                  "@id": `${SITE_URL}/actualites/${article.slug}`,
+                },
+              },
+              {
+                "@type": "BreadcrumbList",
+                "@id": `${SITE_URL}/actualites/${article.slug}/#breadcrumb`,
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Accueil",
+                    item: SITE_URL,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Actualités",
+                    item: `${SITE_URL}/actualites`,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: article.title,
+                    item: `${SITE_URL}/actualites/${article.slug}`,
+                  },
+                ],
+              },
+            ],
+          }),
+        }}
+      />
 
-            <div className="mt-8 flex flex-wrap items-center gap-4 text-[10.5px] font-bold uppercase tracking-[0.2em]">
-              <span className="text-express-600">{article.category}</span>
-              <span className="text-zinc-400">·</span>
-              <span className="text-zinc-500">{article.date}</span>
-              <span className="text-zinc-400">·</span>
-              <span className="text-zinc-500">{article.readTime}</span>
+      <article className="bg-white">
+        {/* En-tête de l'article */}
+        <div className="border-b border-zinc-200">
+          <Container>
+            <div className="mx-auto max-w-4xl py-16 sm:py-20 lg:py-24">
+              <nav className="mb-6 text-sm text-zinc-500">
+                <Link href="/" className="hover:text-navy-700">Accueil</Link>
+                <span className="mx-2">/</span>
+                <Link href="/actualites" className="hover:text-navy-700">Actualités</Link>
+                <span className="mx-2">/</span>
+                <span className="text-navy-700">{article.title}</span>
+              </nav>
+
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
+                {article.category}
+              </p>
+
+              <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-tight text-navy-900 sm:text-[44px] lg:text-[52px]">
+                {article.title}
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-zinc-600">
+                {article.excerpt}
+              </p>
+
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-zinc-500">
+                <span>Par {article.author}</span>
+                <span>•</span>
+                <span>{article.date}</span>
+                <span>•</span>
+                <span>{article.readTime} de lecture</span>
+              </div>
             </div>
+          </Container>
+        </div>
 
-            <h1 className="mt-6 max-w-4xl text-[32px] font-bold leading-[1.15] tracking-[-0.02em] text-navy-900 sm:text-[42px] lg:text-[48px]">
-              {article.title}
-            </h1>
+        {/* Image de couverture */}
+        <div className="relative mx-auto aspect-[21/9] max-w-5xl overflow-hidden rounded-xl my-8 sm:my-12">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 100vw, 1024px"
+          />
+        </div>
 
-            <p className="mt-6 max-w-3xl text-[16px] leading-[1.7] text-zinc-600">
-              {article.excerpt}
-            </p>
-
-            <p className="mt-8 text-[12.5px] font-semibold text-express-600">
-              Par {article.author}
-            </p>
-          </div>
-
-          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-zinc-200">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={article.image}
-              alt={article.title}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-white py-16 sm:py-20">
+        {/* Contenu de l'article */}
         <Container>
-          <div className="mx-auto max-w-3xl">
-            {article.keyPoints && article.keyPoints.length > 0 && (
-              <div className="mb-12 rounded-2xl border border-zinc-200 bg-zinc-50/50 p-6 sm:p-8">
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-600">
-                  À retenir
-                </p>
-                <ul className="mt-5 space-y-3">
-                  {article.keyPoints.map((point) => (
-                    <li
-                      key={point}
-                      className="flex gap-3 text-[14px] leading-relaxed text-navy-900"
-                    >
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-express-600" />
+          <div className="mx-auto max-w-3xl py-8 sm:py-12">
+            {article.keyPoints && (
+              <div className="mb-10 rounded-xl border border-navy-100 bg-navy-50/50 p-6">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-navy-700">
+                  Points clés
+                </h2>
+                <ul className="mt-4 space-y-2">
+                  {article.keyPoints.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2 text-[15px] text-zinc-700">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-express-500" />
                       {point}
                     </li>
                   ))}
@@ -103,75 +191,46 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
             )}
 
-            <div className="space-y-6">
-              {article.content.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-[15.5px] leading-[1.85] text-zinc-700"
-                >
-                  {paragraph}
-                </p>
+            <div className="prose prose-lg max-w-none prose-headings:text-navy-900 prose-p:text-zinc-700 prose-p:leading-[1.8] prose-a:text-express-600">
+              {article.content.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
               ))}
-            </div>
-
-            <div className="mt-16 rounded-2xl border border-zinc-200 bg-navy-950 p-8 sm:p-10">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-express-400">
-                Passer à l&apos;action
-              </p>
-              <h2 className="mt-5 text-[22px] font-bold leading-tight tracking-tight text-white sm:text-[26px]">
-                Un produit en tête ? Parlons-en.
-              </h2>
-              <p className="mt-4 text-[14px] leading-[1.75] text-navy-200">
-                Nous trouvons le fournisseur, vérifions la marchandise et
-                coordonnons l&apos;expédition vers votre ville.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/contact" variant="white" size="md" className="group">
-                  Se faire accompagner
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" strokeWidth={2.5} />
-                </ButtonLink>
-              </div>
             </div>
           </div>
         </Container>
-      </section>
 
-      {related.length > 0 && (
-        <section className="border-t border-zinc-200 bg-zinc-50/50 py-16 sm:py-20">
-          <Container>
-            <h2 className="text-[22px] font-bold tracking-tight text-navy-900 sm:text-[26px]">
-              À lire aussi
-            </h2>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((other) => (
-                <Link
-                  key={other.slug}
-                  href={`/actualites/${other.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:border-navy-300"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={other.image}
-                      alt={other.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <span className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-express-600">
-                      {other.category}
-                    </span>
-                    <h3 className="mt-3 text-[15px] font-bold leading-tight tracking-tight text-navy-900 group-hover:text-express-600">
-                      {other.title}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
+        {/* Articles similaires */}
+        {relatedArticles.length > 0 && (
+          <div className="border-t border-zinc-200 bg-zinc-50">
+            <Container>
+              <div className="mx-auto max-w-5xl py-16">
+                <h2 className="text-[24px] font-bold tracking-tight text-navy-900 sm:text-[28px]">
+                  À lire aussi
+                </h2>
+                <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {relatedArticles.map((rel) => (
+                    <Link
+                      key={rel.slug}
+                      href={`/actualites/${rel.slug}`}
+                      className="group rounded-xl border border-zinc-200 bg-white p-5 transition hover:border-navy-300 hover:shadow-sm"
+                    >
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-express-600">
+                        {rel.category}
+                      </p>
+                      <h3 className="mt-2 text-[16px] font-bold leading-snug text-navy-900 group-hover:text-express-600">
+                        {rel.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 text-[14px] text-zinc-500">
+                        {rel.excerpt}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </Container>
+          </div>
+        )}
+      </article>
     </>
   );
 }

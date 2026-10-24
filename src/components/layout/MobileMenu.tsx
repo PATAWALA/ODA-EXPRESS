@@ -74,7 +74,7 @@ export default function MobileMenu({ open, onClose }: Props) {
 
       {/* Drawer */}
       <aside
-        className="relative flex h-full w-full flex-col bg-white shadow-2xl sm:w-[380px] sm:border-r sm:border-zinc-200"
+        className="relative flex h-full w-full flex-col bg-white shadow-2xl sm:w-[400px] sm:border-r sm:border-zinc-200"
         style={{
           animation: "oda-slide-in 300ms cubic-bezier(0.32, 0.72, 0, 1) both",
         }}
@@ -92,9 +92,9 @@ export default function MobileMenu({ open, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Fermer le menu"
-            className="flex h-9 w-9 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-500 transition hover:border-navy-900 hover:text-navy-900"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-200 text-zinc-500 transition hover:border-navy-900 hover:text-navy-900"
           >
-            <X className="h-4 w-4" strokeWidth={1.75} />
+            <X className="h-5 w-5" strokeWidth={1.75} />
           </button>
         </div>
 
@@ -116,7 +116,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                     {/* Numéro */}
                     <span
                       className={cn(
-                        "w-6 shrink-0 text-[11px] font-bold uppercase tracking-[0.2em] transition",
+                        "w-6 shrink-0 text-[12px] font-bold uppercase tracking-[0.2em] transition",
                         active
                           ? "text-express-600"
                           : "text-zinc-400 group-hover:text-express-600",
@@ -129,7 +129,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                     <div className="min-w-0 flex-1">
                       <p
                         className={cn(
-                          "text-[17px] font-bold leading-tight tracking-tight transition",
+                          "text-[18px] font-bold leading-tight tracking-tight transition",
                           active
                             ? "text-navy-900"
                             : "text-navy-900 group-hover:text-express-600",
@@ -137,7 +137,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                       >
                         {link.label}
                       </p>
-                      <p className="mt-1 text-[12px] leading-snug text-zinc-500">
+                      <p className="mt-1 text-[13px] leading-snug text-zinc-500">
                         {link.subtitle}
                       </p>
                     </div>
@@ -164,11 +164,11 @@ export default function MobileMenu({ open, onClose }: Props) {
           <Link
             href="/contact"
             onClick={onClose}
-            className="group inline-flex w-full items-center justify-between gap-3 rounded-2xl bg-express-600 px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700"
+            className="group inline-flex w-full items-center justify-between gap-3 rounded-2xl bg-express-600 px-5 py-4 text-[13px] font-bold uppercase tracking-[0.1em] text-white transition hover:bg-express-700"
           >
             Se faire accompagner
             <ArrowRight
-              className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+              className="h-4 w-4 transition group-hover:translate-x-0.5"
               strokeWidth={2.5}
             />
           </Link>
