@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Fraunces } from "next/font/google";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import SectionDivider from "@/components/ui/SectionDivider";
 
@@ -215,7 +216,9 @@ export default function Hero() {
               jusqu&apos;à votre destination.
             </p>
 
+            {/* Boutons */}
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              {/* CTA principal : blanc sur navy */}
               <ButtonLink
                 href="/contact"
                 variant="white"
@@ -229,18 +232,17 @@ export default function Hero() {
                 />
               </ButtonLink>
 
-              <ButtonLink
+              {/* ✅ SOLUTION : lien stylisé au lieu du ButtonLink outline */}
+              <Link
                 href="/services"
-                variant="outline"
-                size="lg"
-                className="group border-white/30 text-white hover:border-white/60 hover:bg-white/10"
+                className="group inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/5 px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur transition-all duration-300 hover:border-white/60 hover:bg-white/10"
               >
                 Nos services
                 <ArrowRight
                   className="h-4 w-4 transition group-hover:translate-x-0.5"
                   strokeWidth={2.5}
                 />
-              </ButtonLink>
+              </Link>
             </div>
 
             {/* Petit badge stats en bas */}
