@@ -45,12 +45,12 @@ export default function TrustBar() {
         className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-navy-100/40 via-express-100/30 to-navy-100/40 blur-3xl"
       />
 
-      <Container className="relative">
+      <Container size="xl" className="relative">
         <div className="grid gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
           {POINTS.map((point) => (
             <div
               key={point.title}
-              className="group relative overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/60 p-6 transition-all duration-300 hover:to-navy-100/70 sm:p-7"
+              className="group relative overflow-hidden bg-gradient-to-br from-white via-white to-navy-50/60 p-6 transition-all duration-300 hover:to-navy-100/70 sm:p-8"
             >
               <div
                 aria-hidden
@@ -62,19 +62,19 @@ export default function TrustBar() {
 
               <span
                 className={
-                  "relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-md transition-all duration-300 group-hover:scale-105 " +
+                  "relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-md transition-all duration-300 group-hover:scale-105 " +
                   point.gradient +
                   " " +
                   point.hover
                 }
               >
-                <point.icon className="h-5 w-5" strokeWidth={1.6} />
+                <point.icon className="h-5.5 w-5.5" strokeWidth={1.6} />
               </span>
 
-              <p className="relative mt-5 text-[14px] font-bold tracking-tight text-navy-900">
+              <p className="relative mt-5 text-[16px] font-bold tracking-tight text-navy-900">
                 {point.title}
               </p>
-              <p className="relative mt-1.5 text-[13px] leading-relaxed text-zinc-600">
+              <p className="relative mt-2 text-[14.5px] leading-relaxed text-zinc-600">
                 {point.description}
               </p>
 

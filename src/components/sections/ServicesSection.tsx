@@ -18,7 +18,7 @@ export default function ServicesSection() {
 
   return (
     <section className="border-b border-zinc-200/60 bg-zinc-50/40 py-20 sm:py-24 lg:py-28">
-      <Container>
+      <Container size="xl">
         <SectionTitle
           badge="Nos expertises"
           title="Cinq pôles intégrés pour sécuriser chaque étape"
@@ -26,26 +26,26 @@ export default function ServicesSection() {
         />
 
         {/* Cartes services */}
-        <div className="mx-auto mt-16 max-w-5xl space-y-3">
+        <div className="mx-auto mt-16 max-w-6xl space-y-4">
           {SERVICES.map((service, index) => {
             const isOpen = openSlug === service.slug;
 
             return (
               <div
                 key={service.slug}
-                className="overflow-hidden rounded-2xl border border-zinc-200 bg-white"
+                className="overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-shadow hover:shadow-md"
               >
                 {/* En-tête cliquable */}
                 <button
                   type="button"
                   onClick={() => toggle(service.slug)}
                   aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-6 px-6 py-6 text-left transition hover:bg-zinc-50/60"
+                  className="group flex w-full items-center gap-6 px-6 py-7 text-left transition hover:bg-zinc-50/60 sm:px-8"
                 >
                   {/* Numéro */}
                   <span
                     className={cn(
-                      "hidden shrink-0 text-[12px] font-bold uppercase tracking-[0.2em] transition sm:block",
+                      "hidden shrink-0 text-[13px] font-bold uppercase tracking-[0.2em] transition sm:block",
                       isOpen ? "text-express-600" : "text-zinc-400",
                     )}
                   >
@@ -55,21 +55,21 @@ export default function ServicesSection() {
                   {/* Icône */}
                   <span
                     className={cn(
-                      "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition",
+                      "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border transition",
                       isOpen
                         ? "border-express-600 bg-express-600 text-white"
                         : "border-zinc-200 bg-white text-navy-900 group-hover:border-navy-300",
                     )}
                   >
-                    <service.icon className="h-5 w-5" strokeWidth={1.6} />
+                    <service.icon className="h-5.5 w-5.5" strokeWidth={1.6} />
                   </span>
 
                   {/* Titre + court */}
                   <div className="min-w-0 flex-1">
-                    <p className="text-[16px] font-bold tracking-tight text-navy-900 sm:text-[18px]">
+                    <p className="text-[18px] font-bold tracking-tight text-navy-900 sm:text-[20px]">
                       {service.title}
                     </p>
-                    <p className="mt-1 truncate text-[13px] text-zinc-500">
+                    <p className="mt-1.5 truncate text-[14.5px] text-zinc-500">
                       {service.short}
                     </p>
                   </div>
@@ -77,7 +77,7 @@ export default function ServicesSection() {
                   {/* Plus / croix */}
                   <span
                     className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border transition",
+                      "flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border transition",
                       isOpen
                         ? "border-express-600 bg-express-600 text-white"
                         : "border-zinc-200 bg-white text-navy-900 group-hover:border-navy-300",
@@ -85,7 +85,7 @@ export default function ServicesSection() {
                   >
                     <Plus
                       className={cn(
-                        "h-4 w-4 transition-transform duration-300",
+                        "h-4.5 w-4.5 transition-transform duration-300",
                         isOpen && "rotate-45",
                       )}
                       strokeWidth={2}
@@ -102,23 +102,23 @@ export default function ServicesSection() {
                       : "max-h-0 opacity-0",
                   )}
                 >
-                  <div className="grid gap-8 px-6 pb-10 sm:pl-[100px] lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+                  <div className="grid gap-8 px-6 pb-10 sm:pl-[110px] sm:pr-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
                     {/* Colonne texte */}
                     <div>
-                      <p className="text-[14px] leading-[1.75] text-zinc-600">
+                      <p className="text-[15.5px] leading-[1.8] text-zinc-600">
                         {service.intro}
                       </p>
 
-                      <ul className="mt-6 space-y-2.5">
+                      <ul className="mt-6 space-y-3">
                         {service.features.map((feature) => (
                           <li key={feature} className="flex gap-3">
-                            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-2xl border border-express-600/30 bg-express-600/5">
+                            <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl border border-express-600/30 bg-express-600/5">
                               <Check
-                                className="h-2.5 w-2.5 text-express-600"
+                                className="h-3 w-3 text-express-600"
                                 strokeWidth={3}
                               />
                             </span>
-                            <span className="text-[13.5px] leading-relaxed text-navy-900">
+                            <span className="text-[15px] leading-relaxed text-navy-900">
                               {feature}
                             </span>
                           </li>
@@ -127,7 +127,7 @@ export default function ServicesSection() {
 
                       <Link
                         href={`/services#${service.slug}`}
-                        className="group mt-6 inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-express-600 transition hover:gap-3"
+                        className="group mt-7 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-express-600 transition hover:gap-3"
                       >
                         En savoir plus
                         <ArrowRight
@@ -154,8 +154,8 @@ export default function ServicesSection() {
         </div>
 
         {/* CTA bas de section */}
-        <div className="mx-auto mt-14 flex max-w-5xl flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
-          <p className="text-[14px] text-zinc-600">
+        <div className="mx-auto mt-14 flex max-w-6xl flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
+          <p className="text-[15.5px] text-zinc-600">
             Un besoin spécifique qui sort de ces 5 pôles ?
           </p>
 

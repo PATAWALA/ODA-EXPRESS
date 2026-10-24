@@ -97,13 +97,13 @@ function StepItem({
         </div>
 
         <div className={cn("flex-1 pb-14", baseAnim, visibleState)}>
-          <span className="text-[12px] font-bold uppercase tracking-[0.22em] text-express-600">
+          <span className="text-[13px] font-bold uppercase tracking-[0.22em] text-express-600">
             Étape {step.number}
           </span>
-          <h3 className="mt-2 text-[18px] font-bold leading-tight tracking-tight text-navy-900">
+          <h3 className="mt-2 text-[19px] font-bold leading-tight tracking-tight text-navy-900">
             {step.title}
           </h3>
-          <p className="mt-2 text-[14px] leading-[1.75] text-navy-800/80">
+          <p className="mt-2 text-[15px] leading-[1.75] text-navy-800/80">
             {step.description}
           </p>
         </div>
@@ -117,13 +117,13 @@ function StepItem({
           visibleState,
         )}
       >
-        <span className="text-[12px] font-bold uppercase tracking-[0.22em] text-express-600">
+        <span className="text-[13px] font-bold uppercase tracking-[0.22em] text-express-600">
           Étape {step.number}
         </span>
-        <h3 className="mt-4 text-[20px] font-bold leading-tight tracking-tight text-navy-900">
+        <h3 className="mt-4 text-[22px] font-bold leading-tight tracking-tight text-navy-900">
           {step.title}
         </h3>
-        <p className="mt-3 text-[14px] leading-[1.75] text-navy-800/80 lg:max-w-xs">
+        <p className="mt-3 text-[15.5px] leading-[1.75] text-navy-800/80 lg:max-w-xs">
           {step.description}
         </p>
       </div>
@@ -135,17 +135,14 @@ export default function ProcessSection() {
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-to-b from-navy-50 via-[#eef3fb] to-white py-20 sm:py-24 lg:py-28">
-        {/* Halo bleu en haut à droite */}
         <div
           aria-hidden
           className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-navy-200/50 via-navy-100/25 to-transparent blur-3xl"
         />
-        {/* Halo express en bas à gauche */}
         <div
           aria-hidden
           className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-express-100/50 via-navy-100/20 to-transparent blur-3xl"
         />
-        {/* Motif de points discret */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -156,7 +153,7 @@ export default function ProcessSection() {
           }}
         />
 
-        <Container className="relative">
+        <Container size="xl" className="relative">
           <SectionTitle
             badge="Notre méthode"
             title="Comment nous travaillons, concrètement"
@@ -193,7 +190,7 @@ export default function ProcessSection() {
         </Container>
       </section>
 
-      {/* ✅ SVG curve : vers Products (navy-50) — plus ample que tilt */}
+      {/* ✅ SVG inchangé */}
       <SectionDivider
         variant="curve"
         bg="white"
