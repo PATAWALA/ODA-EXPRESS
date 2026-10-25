@@ -131,7 +131,7 @@ export default function Hero() {
                   src={src}
                   alt=""
                   className={
-                    "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 " +
+                    "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 " +
                     (index === active ? "opacity-100" : "opacity-0")
                   }
                 />
@@ -161,22 +161,32 @@ export default function Hero() {
               src={src}
               alt=""
               className={
-                "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 " +
+                "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 " +
                 (index === active ? "opacity-100" : "opacity-0")
               }
             />
           ))}
-          {/* Voile navy pour lisibilité du texte blanc */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/75 to-navy-950/60" />
+
+          {/* ✅ Voile très léger : l'image reste nette et visible */}
+          {/* Voile horizontal : seulement 60% à gauche, 20% à droite */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950/60 via-navy-950/35 to-navy-950/15" />
+          {/* Voile vertical : très léger, juste pour la lisibilité en haut/bas */}
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/30 via-transparent to-navy-950/40" />
         </div>
 
         {/* Contenu centré */}
         <div className="relative mx-auto flex min-h-[560px] w-full max-w-[1440px] items-center justify-center px-20 py-24 xl:px-28">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-express-400">
+            <p
+              className="text-[12px] font-bold uppercase tracking-[0.22em] text-express-400"
+              style={{ textShadow: "0 2px 8px rgba(1,18,52,0.9), 0 0 20px rgba(1,18,52,0.6)" }}
+            >
               ODA SOURCES
             </p>
-            <p className="mt-2 text-[12px] font-bold uppercase tracking-[0.18em] text-navy-300">
+            <p
+              className="mt-2 text-[12px] font-bold uppercase tracking-[0.18em] text-navy-100"
+              style={{ textShadow: "0 2px 8px rgba(1,18,52,0.9)" }}
+            >
               Sourcing · Vérification · Contrôle qualité · Shipping
             </p>
 
@@ -185,6 +195,7 @@ export default function Hero() {
               style={{
                 fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontWeight: 500,
+                textShadow: "0 4px 24px rgba(1,18,52,0.95), 0 2px 8px rgba(1,18,52,0.9)",
               }}
             >
               Votre partenaire en Chine,
@@ -194,7 +205,10 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-2xl text-[17px] leading-[1.7] text-navy-100">
+            <p
+              className="mx-auto mt-7 max-w-2xl text-[17px] leading-[1.7] text-navy-50"
+              style={{ textShadow: "0 2px 12px rgba(1,18,52,0.95), 0 1px 4px rgba(1,18,52,0.9)" }}
+            >
               Nous accompagnons{" "}
               <strong className="font-semibold text-white">entreprises</strong>,{" "}
               <strong className="font-semibold text-white">commerçants</strong>{" "}
@@ -218,7 +232,6 @@ export default function Hero() {
 
             {/* Boutons */}
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              {/* CTA principal : blanc sur navy */}
               <ButtonLink
                 href="/contact"
                 variant="white"
@@ -232,7 +245,6 @@ export default function Hero() {
                 />
               </ButtonLink>
 
-              {/* ✅ SOLUTION : lien stylisé au lieu du ButtonLink outline */}
               <Link
                 href="/services"
                 className="group inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/5 px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur transition-all duration-300 hover:border-white/60 hover:bg-white/10"
