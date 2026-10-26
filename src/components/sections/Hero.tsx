@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Fraunces } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -14,22 +13,10 @@ const fraunces = Fraunces({
   weight: ["400", "500", "600", "700"],
 });
 
-const IMAGES = [
-  "/team/fondateur-voiture-noire.jpeg",
-  "/team/equipe-showroom.jpeg",
-  "/team/fondateur-voiture-blanche.jpeg",
-];
+// ✅ UNE SEULE IMAGE FIXE (plus de carrousel)
+const HERO_IMAGE = "/team/fondateur-voiture-noire.jpeg";
 
 export default function Hero() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((i) => (i + 1) % IMAGES.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <section className={`relative overflow-hidden bg-navy-50 ${fraunces.variable}`}>
       {/* Halos décoratifs (inchangés) */}
@@ -121,21 +108,15 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Colonne image mobile (inchangée) */}
+          {/* Colonne image mobile (une seule image) */}
           <div className="relative order-2">
             <div className="relative h-full min-h-[380px] overflow-hidden rounded-2xl shadow-[0_30px_70px_-25px_rgba(1,18,52,0.3)]">
-              {IMAGES.map((src, index) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={src}
-                  src={src}
-                  alt=""
-                  className={
-                    "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 " +
-                    (index === active ? "opacity-100" : "opacity-0")
-                  }
-                />
-              ))}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HERO_IMAGE}
+                alt="Équipe ODA Sources en Chine"
+                className="h-full w-full object-cover object-center"
+              />
 
               <div className="absolute bottom-6 left-6 rounded-2xl bg-white/95 px-5 py-4 shadow-xl backdrop-blur">
                 <p className="text-[20px] font-bold leading-none text-navy-900">
@@ -150,52 +131,53 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ============ DESKTOP : image en fond + texte centré ============ */}
+      {/* ============ DESKTOP : image fixe en fond + texte centré ============ */}
       <div className="relative hidden lg:block">
-        {/* Image de fond (carrousel) */}
+        {/* Image de fond fixe (pas de carrousel) */}
         <div className="absolute inset-0">
-          {IMAGES.map((src, index) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={src}
-              src={src}
-              alt=""
-              className={
-                "absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 " +
-                (index === active ? "opacity-100" : "opacity-0")
-              }
-            />
-          ))}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={HERO_IMAGE}
+            alt="Équipe ODA Sources en Chine"
+            className="h-full w-full object-cover object-center"
+          />
 
-          {/* ✅ Voile très léger : l'image reste nette et visible */}
-          {/* Voile horizontal : seulement 60% à gauche, 20% à droite */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950/60 via-navy-950/35 to-navy-950/15" />
-          {/* Voile vertical : très léger, juste pour la lisibilité en haut/bas */}
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/30 via-transparent to-navy-950/40" />
+          {/* ✅ VOILE INTELLIGENT : plus sombre au centre (derrière le texte), plus clair sur les bords */}
+          {/* Voile principal : radial gradient centré sur le texte */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 80% at 50% 50%, rgba(1,18,52,0.92) 0%, rgba(1,18,52,0.75) 40%, rgba(1,18,52,0.45) 70%, rgba(1,18,52,0.25) 100%)",
+            }}
+          />
+          {/* Voile vertical supplémentaire pour le haut et le bas */}
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/60 via-transparent to-navy-950/70" />
         </div>
 
         {/* Contenu centré */}
-        <div className="relative mx-auto flex min-h-[560px] w-full max-w-[1440px] items-center justify-center px-20 py-24 xl:px-28">
+        <div className="relative mx-auto flex min-h-[600px] w-full max-w-[1440px] items-center justify-center px-20 py-24 xl:px-28">
           <div className="mx-auto max-w-3xl text-center">
             <p
-              className="text-[12px] font-bold uppercase tracking-[0.22em] text-express-400"
-              style={{ textShadow: "0 2px 8px rgba(1,18,52,0.9), 0 0 20px rgba(1,18,52,0.6)" }}
+              className="text-[13px] font-bold uppercase tracking-[0.22em] text-express-400"
+              style={{ textShadow: "0 2px 12px rgba(0,0,0,1), 0 0 30px rgba(1,18,52,0.9)" }}
             >
               ODA SOURCES
             </p>
             <p
-              className="mt-2 text-[12px] font-bold uppercase tracking-[0.18em] text-navy-100"
-              style={{ textShadow: "0 2px 8px rgba(1,18,52,0.9)" }}
+              className="mt-2 text-[13px] font-bold uppercase tracking-[0.18em] text-navy-100"
+              style={{ textShadow: "0 2px 12px rgba(0,0,0,1), 0 0 20px rgba(1,18,52,0.9)" }}
             >
               Sourcing · Vérification · Contrôle qualité · Shipping
             </p>
 
             <h1
-              className="mt-6 text-[48px] leading-[1.1] tracking-[-0.02em] text-white xl:text-[56px]"
+              className="mt-6 text-[52px] leading-[1.1] tracking-[-0.02em] text-white xl:text-[60px]"
               style={{
                 fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontWeight: 500,
-                textShadow: "0 4px 24px rgba(1,18,52,0.95), 0 2px 8px rgba(1,18,52,0.9)",
+                textShadow:
+                  "0 4px 30px rgba(0,0,0,1), 0 2px 12px rgba(0,0,0,0.95), 0 0 60px rgba(1,18,52,0.8)",
               }}
             >
               Votre partenaire en Chine,
@@ -206,25 +188,28 @@ export default function Hero() {
             </h1>
 
             <p
-              className="mx-auto mt-7 max-w-2xl text-[17px] leading-[1.7] text-navy-50"
-              style={{ textShadow: "0 2px 12px rgba(1,18,52,0.95), 0 1px 4px rgba(1,18,52,0.9)" }}
+              className="mx-auto mt-8 max-w-2xl text-[18px] leading-[1.7] text-white"
+              style={{
+                textShadow:
+                  "0 3px 20px rgba(0,0,0,1), 0 2px 8px rgba(0,0,0,0.95), 0 0 40px rgba(1,18,52,0.8)",
+              }}
             >
               Nous accompagnons{" "}
-              <strong className="font-semibold text-white">entreprises</strong>,{" "}
-              <strong className="font-semibold text-white">commerçants</strong>{" "}
+              <strong className="font-bold text-white">entreprises</strong>,{" "}
+              <strong className="font-bold text-white">commerçants</strong>{" "}
               et{" "}
-              <strong className="font-semibold text-white">investisseurs</strong>{" "}
+              <strong className="font-bold text-white">investisseurs</strong>{" "}
               dans leurs achats en Chine :{" "}
-              <strong className="font-semibold text-white">
+              <strong className="font-bold text-white">
                 recherche et vérification de fournisseurs
               </strong>
               ,{" "}
-              <strong className="font-semibold text-white">négociation</strong>,{" "}
-              <strong className="font-semibold text-white">
+              <strong className="font-bold text-white">négociation</strong>,{" "}
+              <strong className="font-bold text-white">
                 contrôle qualité
               </strong>{" "}
               et{" "}
-              <strong className="font-semibold text-white">
+              <strong className="font-bold text-white">
                 organisation de l&apos;expédition internationale
               </strong>{" "}
               jusqu&apos;à votre destination.
@@ -236,7 +221,7 @@ export default function Hero() {
                 href="/contact"
                 variant="white"
                 size="lg"
-                className="group shadow-lg"
+                className="group shadow-2xl"
               >
                 Se faire accompagner
                 <ArrowRight
@@ -247,7 +232,7 @@ export default function Hero() {
 
               <Link
                 href="/services"
-                className="group inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/5 px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur transition-all duration-300 hover:border-white/60 hover:bg-white/10"
+                className="group inline-flex items-center gap-2 rounded-2xl border-2 border-white/40 bg-navy-950/40 px-7 py-3.5 text-[14px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur-md transition-all duration-300 hover:border-white/80 hover:bg-navy-950/60"
               >
                 Nos services
                 <ArrowRight
@@ -258,11 +243,11 @@ export default function Hero() {
             </div>
 
             {/* Petit badge stats en bas */}
-            <div className="mt-12 inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 backdrop-blur">
-              <span className="text-[22px] font-bold leading-none text-white">
+            <div className="mt-12 inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-navy-950/50 px-6 py-3.5 backdrop-blur-md">
+              <span className="text-[24px] font-bold leading-none text-white">
                 +500
               </span>
-              <span className="text-[13px] leading-tight text-navy-200">
+              <span className="text-[14px] leading-tight text-white">
                 projets accompagnés
                 <br />
                 depuis la Chine
